@@ -17,8 +17,8 @@ white = (255,255,255)
 
 clock = pygame.time.Clock()
 quit = False
-carImg = pygame.image.load('assets/container_schip.png')
-    
+carImg = pygame.image.load('container_schip.png')
+
 
 
 
