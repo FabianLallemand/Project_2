@@ -16,7 +16,7 @@ black = (0,0,0)
 white = (255,255,255)
 
 clock = pygame.time.Clock()
-crashed = False
+quit = False
 carImg = pygame.image.load('container_schip.png')
 
 
@@ -32,10 +32,10 @@ x_change = 0
 y_change = 0
 car_speed = 0
 
-while not crashed:
+while not quit:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
-            crashed = True
+            quit = True
 
         ############################
         if event.type == pygame.KEYDOWN:
