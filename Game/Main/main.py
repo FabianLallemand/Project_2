@@ -12,6 +12,7 @@ pygame.init()
  
 display_width = 800
 display_height = 600
+display_resolution = (display_width,display_height)
 
 #game colors 
 black = (0,0,0)
@@ -134,6 +135,7 @@ def game_loop():
                  
 
         gameDisplay.fill(black)
+        playboard.Grid.draw(display_resolution,x,y,bright_grey,1)
         #location ship
         ship(x,y)
 
