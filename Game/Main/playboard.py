@@ -47,6 +47,3 @@ class Grid:
         self.current_cell.Color = color
         self.current_cell.Border = border
 
-
-
-Grid.draw()

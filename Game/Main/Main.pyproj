@@ -5,7 +5,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>a32d3b18-adfe-4ee2-a356-a5b7c731d3ec</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>testbob.py</StartupFile>
+    <StartupFile>main.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -23,7 +23,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="playboard.py" />
-    <Compile Include="testbob.py" />
+    <Compile Include="main.py" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
