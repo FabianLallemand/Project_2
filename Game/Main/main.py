@@ -134,7 +134,7 @@ def game_loop():
 
         gameDisplay.fill(black)
         #location ship
-        ship(400,280)
+        ship(x,y)
 
         
         pygame.display.update()
