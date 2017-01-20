@@ -3,7 +3,10 @@ PyGame Battleship
 Fabian Lallemand, Tim van Leeuwen, Bob Verkaik & Damian van Vuuren
 """
 import pygame
+import Playboard
 
+
+Cell.draw
 pygame.init()
 
 display_width = 1000

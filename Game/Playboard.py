@@ -14,7 +14,7 @@ class Cell:
                 pygame.draw.rect(self.Screen, (self.Color), [self.X, self.Y, self.Width, self.Length], self.Border)
 
             def update(self):
-                pass
+                pass    
 
 class Grid:
     def __init__(self, display_resolution, color, border):
@@ -39,7 +39,7 @@ class Grid:
 
     def draw(self):
         for cell in self.Cellstorage:
-            cell.draw()
+            Cell.draw()
 
 
     def update(self, x, y, color, border):
@@ -49,3 +49,4 @@ class Grid:
 
 
 
+Grid.draw()
