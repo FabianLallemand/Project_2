@@ -46,3 +46,7 @@ class Grid:
         self.current_cell = self.get(x, y)
         self.current_cell.Color = color
         self.current_cell.Border = border
+
+
+
+Grid.draw()
