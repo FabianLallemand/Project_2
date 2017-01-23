@@ -1,20 +1,20 @@
 import pygame
 
 class Cell:
-        def __init__(self, display_resolution, x, y, color, border):
-            self.Height = 25
-            self.Width = 25
-            self.X  = 0
-            self.Y = 0
-            self.Screen = display_resolution
-            self.Color = color
-            self.Border = border
+    def __init__(self, display_resolution, x, y, color, border):
+        self.Height = 20
+        self.Width = 20
+        self.X  = x
+        self.Y = y
+        self.Screen = display_resolution
+        self.Color = color
+        self.Border = border
 
-            def Draw(self):
-                pygame.draw.rect(self.Screen, (self.Color), [self.X, self.Y, self.Width, self.Length], self.Border)
+    def draw(self):
+        pygame.draw.rect(self.Screen, self.Color, (self.X, self.Y, self.Width, self.Height), self.Border)
 
-            def update(self):
-                pass    
+    def update(self):
+        pass    
 
 class Grid:
     def __init__(self, display_resolution, color, border):
@@ -27,7 +27,7 @@ class Grid:
 
         for height in range(1, self.Grid_Height + 1):
             for width in range(1, self.Grid_Length + 1):
-                self.Cellstorage(Cell(self.Screen, height * 20, width * 20, self.Color, self.Border))
+                 self.Cellstorage.append(Cell(self.Screen, height * 20, width * 20, self.Color, self.Border))
 
 
     def get(self, x, y):
@@ -38,8 +38,8 @@ class Grid:
         return None
 
     def draw(self):
-        for cell in self.Cellstorage:
-            Cell.draw()
+        for cells in self.Cellstorage:
+            cells.draw()
 
 
     def update(self, x, y, color, border):
@@ -47,3 +47,5 @@ class Grid:
         self.current_cell.Color = color
         self.current_cell.Border = border
 
+    def border(self):
+        pass

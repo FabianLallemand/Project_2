@@ -9,7 +9,7 @@ import random
 import playboard
 
 pygame.init()
- 
+
 display_width = 800
 display_height = 600
 display_resolution = (display_width,display_height)
@@ -49,7 +49,7 @@ def ship(x,y):
 def text_objects(text, font):
     textSurface = font.render(text, True, grey)
     return textSurface, textSurface.get_rect()
- 
+    
 def message_display(text):
     largeText = pygame.font.Font('freesansbold.ttf',115)
     TextSurf, TextRect = text_objects(text, largeText)
@@ -65,7 +65,7 @@ def quitgame():
     pygame.quit()
     quit()
     
-    #msg = text x= location y = location w = width h = height ic = green ac = bright green
+    #msg = text x=   location y = location w = width h = height ic = green ac = bright green
 def button(msg,x,y,w,h,ic,ac,action=None):
     mouse = pygame.mouse.get_pos()
     click = pygame.mouse.get_pressed()
@@ -131,13 +131,14 @@ def game_loop():
             elif state == PAUSE:
                 gameDisplay.blit(pause_text,(300,300))
                 pygame.display.flip()
-                clock.tick(60)
+                clock.tick(60)  
                  
 
         gameDisplay.fill(black)
-        playboard.Grid.draw(display_resolution,x,y,bright_grey,1)
+        bord  = playboard.Grid(gameDisplay, white , 1)
+        bord.draw()
         #location ship
-        ship(x,y)
+        ship(x,y)   
 
         
         pygame.display.update()
@@ -178,7 +179,7 @@ def game_intro():
         clock.tick(15)
            
 
-game_intro()
+#game_intro()
 game_loop()
 pygame.quit()
 quit()
