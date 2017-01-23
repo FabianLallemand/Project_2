@@ -179,7 +179,7 @@ def game_intro():
         clock.tick(15)
            
 
-#game_intro()
+game_intro()
 game_loop()
 pygame.quit()
 quit()
