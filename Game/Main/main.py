@@ -7,29 +7,11 @@ import pygame
 import time
 import random
 import playboard
+import globals
 
 pygame.init()
-
-display_width = 800
-display_height = 600
-display_resolution = (display_width,display_height)
-
-#game colors 
-black = (0,0,0)
-white = (255,255,255)
-grey = (105,105,105)
-
-red = (200,0,0)
-green = (0,200,0)
-
-#bright game colors
-bright_red = (255,0,0)
-bright_green = (0,255,0)
-bright_black = (1,1,1)
-bright_grey = (211,211,211)
-
  
-gameDisplay = pygame.display.set_mode((display_width,display_height))
+gameDisplay = pygame.display.set_mode((globals.display_width,globals.display_height))
 pygame.display.set_caption('Battleship')
 clock = pygame.time.Clock()
  
@@ -47,18 +29,19 @@ def ship(x,y):
     gameDisplay.blit(shipimg,(x,y))
  
 def text_objects(text, font):
-    textSurface = font.render(text, True, grey)
+    textSurface = font.render(text, True, globals.black)
     return textSurface, textSurface.get_rect()
     
 def message_display(text):
     largeText = pygame.font.Font('freesansbold.ttf',115)
     TextSurf, TextRect = text_objects(text, largeText)
-    TextRect.center = ((display_width/2),(display_height/2))
+    TextRect.center = ((display_width/2),(display_height/display_width))
     gameDisplay.blit(TextSurf, TextRect)
  
     pygame.display.update()
  
     time.sleep(2)
+
 
     
 def quitgame():
@@ -78,19 +61,19 @@ def button(msg,x,y,w,h,ic,ac,action=None):
     else:
         pygame.draw.rect(gameDisplay, ic,(x,y,w,h))       
     #button text
-    smallText = pygame.font.SysFont("freesansbold.ttf",20)
+    smallText = pygame.font.SysFont("freesansbold.ttf",22)
     textSurf, textRect = text_objects(msg, smallText)
     textRect.center = ( (x+(w/2)), (y+(h/2)) )
     gameDisplay.blit(textSurf, textRect)
 
 def game_loop():
-    x = (display_width * 0.45)
-    y = (display_height * 0.8)
+    x = (globals.display_width * 0.45)
+    y = (globals.display_height * 0.8)
     
     x_change = 0
     y_change = 0
     #Pause
-    pause_text = pygame.font.SysFont('freesansbold.ttf', 50).render('Paused', True, white)
+    pause_text = pygame.font.SysFont('freesansbold.ttf', 50).render('Paused', True, globals.white)
     RUNNING, PAUSE = 0, 1
     state = RUNNING
 
@@ -134,8 +117,8 @@ def game_loop():
                 clock.tick(60)  
                  
 
-        gameDisplay.fill(black)
-        bord  = playboard.Grid(gameDisplay, white , 1)
+        gameDisplay.fill(globals.black)
+        bord  = playboard.Grid(gameDisplay, globals.white , 1)
         bord.draw()
         #location ship
         ship(x,y)   
@@ -160,24 +143,54 @@ def game_intro():
 
         #Background code
         BackGround = Background('assets/background.jpg', [0,0])        
-        gameDisplay.fill(white)
+        gameDisplay.fill(globals.white)
         gameDisplay.blit(BackGround.image, BackGround.rect)
 
         #Title
         largeText = pygame.font.Font('freesansbold.ttf',115)
         TextSurf, TextRect = text_objects("Battleport", largeText)
-        TextRect.center = ((display_width/2),(display_height/2))
+        TextRect.center = ((globals.display_width/2),(globals.display_height/2))
         gameDisplay.blit(TextSurf, TextRect)
         
         mouse = pygame.mouse.get_pos()
 
-        button("Start Game!",150,450,100,50,green,bright_green,game_loop)
-        button("Quit Game!",550,450,100,50,red,bright_red,quitgame)
-        button("Settings",350,450,100,50,grey,bright_grey,"game_settings")   
-       
+        button("Start Game!",150,450,100,50,globals.green,globals.bright_green,game_loop)
+        button("Quit Game!",350,450,100,50,globals.red,globals.bright_red,quitgame)
+        button("Settings",250,450,100,50,globals.grey,globals.bright_grey,"game_settings")   
+        button("Instructies",450,450,100,50,globals.blue,globals.bright_blue,instructions)
+
         pygame.display.update()
         clock.tick(15)
-           
+
+def instructions():
+
+    instr = True
+    gameDisplay.fill(globals.white)
+    pygame.display.update()
+            
+
+    while instr:
+        for event in pygame.event.get():
+            print(event)     
+
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                quit()
+
+
+        smalltext = pygame.font.Font('freesansbold.ttf',20)
+        TextSurf, TextRect = text_objects("Battleport", smalltext)
+        TextRect.center = ((10,10))
+        gameDisplay.blit(TextSurf, TextRect)
+
+        mouse = pygame.mouse.get_pos()
+
+        button("Go back !",550,450,100,50,globals.red,globals.bright_red,game_intro())
+
+
+        pygame.display.update()
+        clock.tick(60)
+
 
 game_intro()
 game_loop()
