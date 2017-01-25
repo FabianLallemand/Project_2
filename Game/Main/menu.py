@@ -64,8 +64,8 @@ def instructions():
               
         mouse = pygame.mouse.get_pos()
    
-        button("Back!",650,450,100,50,globals.orange,globals.bright_red,game_intro)
+        text.button("Back!",650,450,100,50,globals.orange,globals.bright_red,game_intro)
        
 
         pygame.display.update()
-        clock.tick(60)
+        globals.clock.tick(60)
