@@ -1,5 +1,6 @@
 import pygame
 
+
 class Cell:
     def __init__(self, display_resolution, x, y, color, border):
         self.Height = 20
@@ -13,8 +14,14 @@ class Cell:
     def draw(self):
         pygame.draw.rect(self.Screen, self.Color, (self.X, self.Y, self.Width, self.Height), self.Border)
 
-    def update(self):
-        pass    
+    def update(self, color, border):
+        self.Color = color
+        self.Border = border
+
+
+
+
+
 
 class Grid:
     def __init__(self, display_resolution, color, border):
@@ -31,7 +38,7 @@ class Grid:
 
 
     def get(self, x, y):
-        for position in self.cell_list:
+        for position in self.Cellstorage:
             if position.X == x * 20 and position.Y == y * 20:
                 return position
 
@@ -46,6 +53,3 @@ class Grid:
         self.current_cell = self.get(x, y)
         self.current_cell.Color = color
         self.current_cell.Border = border
-
-    def border(self):
-        pass

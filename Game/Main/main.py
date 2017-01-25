@@ -7,6 +7,7 @@ import pygame
 import time
 import random
 import playboard
+import ships
 
 pygame.init()
 
@@ -135,10 +136,14 @@ def game_loop():
                  
 
         gameDisplay.fill(black)
-        bord  = playboard.Grid(gameDisplay, white , 1)
-        bord.draw()
+        board  = playboard.Grid(gameDisplay, white , 1)
+        ship1  = ships.Ship(green, 3, 10,10, 2, 1, board, 1,3)
+        
+        ship1.draw()
+        board.draw()
+       
         #location ship
-        ship(x,y)   
+        #ship(x,y)   
 
         
         pygame.display.update()
@@ -173,13 +178,43 @@ def game_intro():
 
         button("Start Game!",150,450,100,50,green,bright_green,game_loop)
         button("Quit Game!",550,450,100,50,red,bright_red,quitgame)
-        button("Settings",350,450,100,50,grey,bright_grey,"game_settings")   
-       
+        #button("Settings",350,450,100,50,grey,bright_grey, instructions)  
+      
+
+
         pygame.display.update()
         clock.tick(15)
-           
 
-game_intro()
+#def instructions():
+
+#        instr = True
+#        gameDisplay.fill(white)
+#        pygame.display.update()
+            
+
+#        while instr:
+#            for event in pygame.event.get():
+#                print(event)     
+
+#                if event.type == pygame.QUIT:
+#                    pygame.quit()
+#                    quit()
+
+
+#            smalltext = pygame.font.Font('freesansbold.ttf',20)
+#            TextSurf, TextRect = text_objects("Battleport lalallalalalalalalalla", smalltext)
+#            TextRect.center = ((10,10))
+#            gameDisplay.blit(TextSurf, TextRect)
+
+#            mouse = pygame.mouse.get_pos()
+
+#            button("Go back !",550,450,100,50,red,bright_red,game_intro())
+
+
+#            pygame.display.update()
+#            clock.tick(15)
+            
+#game_intro()
 game_loop()
 pygame.quit()
 quit()

@@ -24,6 +24,7 @@
   <ItemGroup>
     <Compile Include="playboard.py" />
     <Compile Include="main.py" />
+    <Compile Include="ships.py" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
