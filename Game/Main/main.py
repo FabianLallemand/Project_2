@@ -187,7 +187,7 @@ def instructions():
               
         mouse = pygame.mouse.get_pos()
    
-        button("Back!",650,450,100,50,globals.blue,globals.bright_blue,game_intro)
+        button("Back!",650,450,100,50,globals.orange,globals.bright_orange,game_intro)
        
 
         pygame.display.update()
