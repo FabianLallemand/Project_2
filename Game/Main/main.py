@@ -30,6 +30,7 @@ def ship(x,y):
  
 def text_objects(text, font):
     textSurface = font.render(text, True, globals.black)
+    #titleSurface = font.render(text, True, globals.white)
     return textSurface, textSurface.get_rect()
     
 def message_display(text):
@@ -151,7 +152,7 @@ def game_intro():
         #Title
         largeText = pygame.font.Font('freesansbold.ttf',115)
         TextSurf, TextRect = text_objects("Battleport", largeText)
-        TextRect.center = ((globals.display_width/2),(globals.display_height/2))
+        TextRect.center = ((300),(150))
         gameDisplay.blit(TextSurf, TextRect)
         
         mouse = pygame.mouse.get_pos()
@@ -187,14 +188,15 @@ def instructions():
               
         mouse = pygame.mouse.get_pos()
    
-        button("Back!",650,450,100,50,globals.orange,globals.bright_orange,game_intro)
+        button("Back!",650,450,100,50,globals.orange,globals.bright_red,game_intro)
        
 
         pygame.display.update()
         clock.tick(60)
-    
+  
 
 game_intro()
 game_loop()
 pygame.quit()
 quit()
+
