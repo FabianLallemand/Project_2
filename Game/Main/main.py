@@ -12,7 +12,7 @@ import globals
 pygame.init()
  
 gameDisplay = pygame.display.set_mode((globals.display_width,globals.display_height))
-pygame.display.set_caption('Battleship')
+pygame.display.set_caption('Battleport')
 clock = pygame.time.Clock()
  
 shipimg = pygame.image.load('assets/container_schip.png')
@@ -135,7 +135,9 @@ def game_intro():
 
     while intro:
         for event in pygame.event.get():
-            print(event)     
+            click = pygame.mouse.get_pressed()
+            print(event)
+            print(click)     
 
             if event.type == pygame.QUIT:
                 pygame.quit()
@@ -157,7 +159,7 @@ def game_intro():
         button("Start Game!",150,450,100,50,globals.green,globals.bright_green,game_loop)
         button("Quit Game!",350,450,100,50,globals.red,globals.bright_red,quitgame)
         button("Settings",250,450,100,50,globals.grey,globals.bright_grey,"game_settings")   
-        button("Instructies",450,450,100,50,globals.blue,globals.bright_blue,instructions)
+        button("Game Rules",450,450,100,50,globals.blue,globals.bright_blue,instructions)
 
         pygame.display.update()
         clock.tick(15)
@@ -166,9 +168,15 @@ def instructions():
 
     instr = True
     gameDisplay.fill(globals.white)
-    pygame.display.update()
+    
             
+    gamerules = pygame.image.load('assets/gamerules.png')
+    gameDisplay.blit(gamerules, (0,0))
 
+
+    pygame.display.update()
+
+    
     while instr:
         for event in pygame.event.get():
             print(event)     
@@ -176,21 +184,15 @@ def instructions():
             if event.type == pygame.QUIT:
                 pygame.quit()
                 quit()
-
-
-        smalltext = pygame.font.Font('freesansbold.ttf',20)
-        TextSurf, TextRect = text_objects("Battleport", smalltext)
-        TextRect.center = ((10,10))
-        gameDisplay.blit(TextSurf, TextRect)
-
+              
         mouse = pygame.mouse.get_pos()
-
-        button("Go back !",550,450,100,50,globals.red,globals.bright_red,game_intro())
-
+   
+        button("Back!",650,450,100,50,globals.blue,globals.bright_blue,game_intro)
+       
 
         pygame.display.update()
         clock.tick(60)
-
+    
 
 game_intro()
 game_loop()
