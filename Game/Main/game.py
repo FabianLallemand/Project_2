@@ -1,6 +1,5 @@
-import pygame
-import globals
-import text
+import pygame, globals, text, ships, time, playboard
+
 pygame.init()
 import ships
 import time

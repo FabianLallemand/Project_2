@@ -1,5 +1,4 @@
-import pygame
-import globals
+import pygame, globals
 
 def text_objects(text, font):
     textSurface = font.render(text, True, globals.black)
