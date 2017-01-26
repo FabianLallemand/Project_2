@@ -32,7 +32,7 @@ def game_intro():
         
         mouse = pygame.mouse.get_pos()
 
-        text.button("Start Game!",50,450,100,50,globals.green,globals.bright_green,game.game_loop)
+        text.button("Start Game!",50,450,100,50,globals.green,globals.bright_green,game.program)
         text.button("Settings",250,450,100,50,globals.grey,globals.bright_grey,None)
         text.button("Quit Game!",450,450,100,50,globals.red,globals.bright_red,globals.quitgame)
         text.button("Game Rules",650,450,100,50,globals.blue,globals.bright_blue,instructions)

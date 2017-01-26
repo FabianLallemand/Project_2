@@ -14,6 +14,6 @@ pygame.init()
 pygame.display.set_caption('Battleport')
     
 menu.game_intro()
-menu.game_loop()
+#menu.game_loop()
 pygame.quit()
 quit()

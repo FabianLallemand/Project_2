@@ -20,9 +20,6 @@ class Cell:
 
 
 
-
-
-
 class Grid:
     def __init__(self, display_resolution, color, border):
         self.Grid_Height = 20
