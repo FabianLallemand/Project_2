@@ -1,9 +1,6 @@
 import pygame, globals, text, ships, time, playboard
 
 pygame.init()
-import ships
-import time
-import playboard
 
 class Game:
     def __init__(self):
