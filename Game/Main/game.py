@@ -8,7 +8,7 @@ import playboard
 
 
 def game_loop():
-    globals.gameDisplay.fill(globals.black)
+
     pause_text = pygame.font.SysFont('freesansbold.ttf', 50).render('Paused', True, globals.white)
     RUNNING, PAUSE = 0, 1
     state = RUNNING
@@ -17,29 +17,23 @@ def game_loop():
 
     shipposx = 10
     shipposy = 10
+
     shiplength = 3
 
     while not gameExit:
+
+
+        globals.gameDisplay.fill(globals.black)
         board  = playboard.Grid(globals.gameDisplay,globals.white , 1)
-        
+        board.draw
 
 
 
 
         for event in pygame.event.get():
-        #    if event.type == pygame.QUIT:
-        #        pygame.quit()
-        #        quit()
-        #    click = pygame.mouse.get_pressed()
-        #    if click[0] == 1:
-        #        print("schip plaatsen")
-        #        mouse = pygame.mouse.get_pos()
-        #        mousex = int(mouse[0]/20)
-        #        print(mousex)
-        #        ship1  = ships.Ship(globals.green, shiplength, mousex,21-shiplength, 2, 1, board, 1,3)
-        #        ship1.draw()
-            
-
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                quit()
             #Pause key
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_p:
@@ -66,9 +60,8 @@ def game_loop():
                         shipposy += 0
                     else:
                         shipposy += 1
-            
-    
-            ship1  = ships.Ship(globals.green, shiplength, shipposx,shipposy, 2, 1, board, 1,3)
+                           
+
 
             while state == PAUSE:
                 globals.gameDisplay.blit(pause_text,(300,300))
@@ -78,10 +71,15 @@ def game_loop():
                     if event.type == pygame.KEYDOWN:
                         if event.key == pygame.K_u: state = RUNNING
                  
-      
-        
+                 
 
+        globals.gameDisplay.fill(globals.black)
+        board  = playboard.Grid(globals.gameDisplay,globals.white , 1)
+
+        ship1  = ships.Ship(globals.green, shiplength, shipposx,shipposy, 2, 1, board, 1,3)
+        
+        ship1.draw()
         board.draw()
-        ship.draw()
+        
         pygame.display.update()
         globals.clock.tick(60)
