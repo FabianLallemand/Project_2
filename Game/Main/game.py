@@ -1,10 +1,9 @@
 import pygame
 import globals
 import text
-pygame.init()
 import ships
 import playboard
-
+pygame.init()
 
 
 def game_loop():
@@ -32,17 +31,21 @@ def game_loop():
                 for event in pygame.event.get():
                     if event.type == pygame.KEYDOWN:
                         if event.key == pygame.K_u: state = RUNNING
-                 
-                 
+               
 
         globals.gameDisplay.fill(globals.black)
         board  = playboard.Grid(globals.gameDisplay, globals.white , 1)
         board.draw()
 
-        ship1  = ships.Ship(globals.green, 3, 10,10, 2, 1, board, 1,3)
+        ship1 = ships.Ship(globals.green, 3, 1,1, 2, 1, board, 1,3)
+        ship2 = ships.Ship(globals.red, 3, 20,18, 2, 1, board, 1,3)
         
         ship1.draw()
+        ship2.draw()
         board.draw()
+
+
+
         
         pygame.display.update()
         globals.clock.tick(60)

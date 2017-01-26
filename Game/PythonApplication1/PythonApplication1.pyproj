@@ -3,15 +3,15 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>a32d3b18-adfe-4ee2-a356-a5b7c731d3ec</ProjectGuid>
+    <ProjectGuid>a3c6e4fd-d6b8-491d-96a1-f3e6d062ebc1</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>main.py</StartupFile>
+    <StartupFile>PythonApplication1.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
     <OutputPath>.</OutputPath>
-    <Name>Main</Name>
-    <RootNamespace>Main</RootNamespace>
+    <Name>PythonApplication1</Name>
+    <RootNamespace>PythonApplication1</RootNamespace>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <DebugSymbols>true</DebugSymbols>
@@ -22,16 +22,7 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="players">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="globals.py" />
-    <Compile Include="main.py" />
-    <Compile Include="menu.py" />
-    <Compile Include="game.py" />
-    <Compile Include="ships.py" />
-    <Compile Include="text.py" />
-    <Compile Include="playboard.py" />
+    <Compile Include="PythonApplication1.py" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
