@@ -9,11 +9,17 @@ import random
 import playboard
 import globals
 import menu
+import game
+
 
 pygame.init()
 pygame.display.set_caption('Battleport')
-    
-menu.game_intro()
-menu.game_loop()
+  
+
+###############################
+#menu.game_intro()
+game.game_loop()
+#############################3
+
 pygame.quit()
 quit()
