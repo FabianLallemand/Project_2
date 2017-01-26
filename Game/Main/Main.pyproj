@@ -22,7 +22,7 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="players">
+    <Compile Include="player.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="globals.py" />
