@@ -15,6 +15,9 @@ def game_loop():
 
     gameExit = False
 
+    shipposx = 20
+    shipposy = 10
+
     while not gameExit:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -22,8 +25,20 @@ def game_loop():
                 quit()
             #Pause key
             if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_p: state = PAUSE
-                if event.key == pygame.K_u: state = RUNNING
+                if event.key == pygame.K_p:
+                    state = PAUSE
+                if event.key == pygame.K_u:
+                    state = RUNNING
+                if event.key == pygame.K_LEFT:
+                    shipposx += -1
+                if event.key == pygame.K_RIGHT:
+                    shipposx += 1
+                if event.key == pygame.K_UP:
+                    shipposy += -1
+                if event.key == pygame.K_DOWN:
+                    shipposy += 1
+                           
+
 
             while state == PAUSE:
                 globals.gameDisplay.blit(pause_text,(300,300))
@@ -36,10 +51,10 @@ def game_loop():
                  
 
         globals.gameDisplay.fill(globals.black)
-        board  = playboard.Grid(globals.gameDisplay, globals.white , 1)
+        board  = playboard.Grid(globals.gameDisplay,globals.white , 1)
         board.draw()
 
-        ship1  = ships.Ship(globals.green, 3, 10,10, 2, 1, board, 1,3)
+        ship1  = ships.Ship(globals.green, 3, shipposx,shipposy, 2, 1, board, 1,3)
         
         ship1.draw()
         board.draw()
