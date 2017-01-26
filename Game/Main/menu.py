@@ -1,7 +1,4 @@
-import pygame
-import globals
-import text #
-import game
+import pygame, globals, text , game
 
 #game intro and button's
 

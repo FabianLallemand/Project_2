@@ -1,14 +1,9 @@
 """
-PyGame Battleship
+PyGame Battleport
 Fabian Lallemand, Tim van Leeuwen, Bob Verkaik & Damian van Vuuren
 """
 
-import pygame
-import time
-import random
-import playboard
-import globals
-import menu
+import pygame, time, random, playboard, globals, menu
 
 pygame.init()
 pygame.display.set_caption('Battleport')

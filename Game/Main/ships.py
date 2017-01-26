@@ -1,5 +1,4 @@
-import pygame
-import playboard
+import pygame, playboard
 
 
 class Ship:
