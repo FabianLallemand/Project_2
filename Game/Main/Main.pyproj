@@ -26,6 +26,9 @@
     <Compile Include="main.py" />
     <Compile Include="menu.py" />
     <Compile Include="game.py" />
+    <Compile Include="Player.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="ships.py" />
     <Compile Include="text.py" />
     <Compile Include="playboard.py" />

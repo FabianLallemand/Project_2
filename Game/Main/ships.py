@@ -2,8 +2,6 @@ import pygame
 import playboard
 
 
-
-
 class Ship:
     def __init__(self, color, length, x, y, middle , speed, board, health, range):
         self.Color = color
@@ -17,6 +15,6 @@ class Ship:
         self.Range = range
 
     def draw(self):
-        for length in range(1, self.ShipLength + 1):
+        for length in range(self.ShipLength):
                 playboard.Grid.get(self.Board, self.PosX, self.PosY).update(self.Color, 0)
                 self.PosY += 1            

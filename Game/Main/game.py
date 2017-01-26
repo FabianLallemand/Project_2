@@ -3,6 +3,7 @@ import globals
 import text
 pygame.init()
 import ships
+import time
 import playboard
 
 
@@ -14,8 +15,12 @@ def game_loop():
     state = RUNNING
 
     gameExit = False
-
+    globals.gameDisplay.fill(globals.black)
+    shiplength = 3
     while not gameExit:
+        
+        board  = playboard.Grid(globals.gameDisplay, globals.white , 1)
+        
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
@@ -25,6 +30,20 @@ def game_loop():
                 if event.key == pygame.K_p: state = PAUSE
                 if event.key == pygame.K_u: state = RUNNING
 
+            click = pygame.mouse.get_pressed()
+            
+            if click[0] == 1:
+                print("schip plaatsen")
+                mouse = pygame.mouse.get_pos()
+                mousex = int(mouse[0]/20)
+                print(mousex)
+                ship1  = ships.Ship(globals.green, shiplength, mousex,21-shiplength, 2, 1, board, 1,3)
+                ship1.draw()
+                time.sleep(0.2)
+                
+                
+                
+
             while state == PAUSE:
                 globals.gameDisplay.blit(pause_text,(300,300))
                 pygame.display.flip()
@@ -32,17 +51,7 @@ def game_loop():
                 for event in pygame.event.get():
                     if event.type == pygame.KEYDOWN:
                         if event.key == pygame.K_u: state = RUNNING
-                 
-                 
 
-        globals.gameDisplay.fill(globals.black)
-        board  = playboard.Grid(globals.gameDisplay, globals.white , 1)
         board.draw()
-
-        ship1  = ships.Ship(globals.green, 3, 10,10, 2, 1, board, 1,3)
-        
-        ship1.draw()
-        board.draw()
-        
         pygame.display.update()
         globals.clock.tick(60)

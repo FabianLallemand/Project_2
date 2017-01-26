@@ -12,8 +12,7 @@ def game_intro():
     while intro:
         for event in pygame.event.get():
             click = pygame.mouse.get_pressed()
-            print(event)
-            print(click)     
+    
 
             if event.type == pygame.QUIT:
                 pygame.quit()
@@ -56,7 +55,7 @@ def instructions():
     
     while instr:
         for event in pygame.event.get():
-            print(event)     
+                
 
             if event.type == pygame.QUIT:
                 pygame.quit()
