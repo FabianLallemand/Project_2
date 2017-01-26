@@ -9,7 +9,7 @@ import playboard
 
 
 def game_loop():
-    
+    pygame.time.wait(50)
     pause_text = pygame.font.SysFont('freesansbold.ttf', 50).render('Paused', True, globals.white)
     RUNNING, PAUSE = 0, 1
     state = RUNNING
@@ -55,7 +55,7 @@ def game_loop():
                         if event.key == pygame.K_u: state = RUNNING
 
         board.draw()
-        pygame.display.update
+        pygame.display.update()
         globals.clock.tick(60)
 
 
