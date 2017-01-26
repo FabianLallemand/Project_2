@@ -82,6 +82,6 @@ def game_loop():
         
 
         board.draw()
-        
+        ship.draw()
         pygame.display.update()
         globals.clock.tick(60)
