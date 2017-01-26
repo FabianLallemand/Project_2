@@ -18,4 +18,5 @@ class Ship:
 
     def draw(self):
         for length in range(1, self.ShipLength + 1):
-                playboard.Grid.get(self.Board, self.PosX, self.PosY).update(self.Color, 0)             
+                playboard.Grid.get(self.Board, self.PosX, self.PosY).update(self.Color, 0)
+                self.PosY += 1            
