@@ -28,7 +28,7 @@ def game_intro():
         #Title
         
         TextSurf, TextRect = text.text_objects("Battleport", globals.largeText)
-        TextRect.center = ((300),(150))
+        TextRect.center = ((300),(150)) 
         globals.gameDisplay.blit(TextSurf, TextRect)
         
         mouse = pygame.mouse.get_pos()
@@ -39,7 +39,7 @@ def game_intro():
         text.button("Game Rules",650,450,100,50,globals.blue,globals.bright_blue,instructions)
 
         pygame.display.update()
-        globals.clock.tick(15)
+        globals.clock.tick(60)
 
 def instructions():
 
