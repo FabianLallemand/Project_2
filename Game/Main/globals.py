@@ -21,6 +21,7 @@ blue = (0,0,175)
 red = (200,0,0)
 green = (0,200,0)
 orange = (200,50,0)
+brown = (139,69,19)
 
 #bright game colors
 bright_red = (255,0,0)

@@ -2,6 +2,7 @@ import pygame
 import globals
 import text
 pygame.init()
+import ships
 import playboard
 
 
@@ -35,9 +36,13 @@ def game_loop():
                  
 
         globals.gameDisplay.fill(globals.black)
-        bord  = playboard.Grid(globals.gameDisplay, globals.white , 1)
-        bord.draw()
+        board  = playboard.Grid(globals.gameDisplay, globals.white , 1)
+        board.draw()
 
+        ship1  = ships.Ship(globals.green, 3, 10,10, 2, 1, board, 1,3)
+        
+        ship1.draw()
+        board.draw()
         
         pygame.display.update()
         globals.clock.tick(60)
