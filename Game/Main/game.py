@@ -29,6 +29,7 @@ class Game:
         self.board.draw()
         pygame.display.update()
         shipcnt = 0
+
         shiplength = 0
 
         while not gameExit and self.shipsplaced <4:
@@ -80,8 +81,8 @@ class Game:
             
 
         while self.shipsplaced == 4:
-            #time.sleep(5)
-            
+
+            self.shiplist[shipcnt].Color = globals.bright_green
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     pygame.quit()
@@ -90,9 +91,13 @@ class Game:
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_SPACE:
                         if shipcnt < 3:
-                           shipcnt += 1
+                            self.shiplist[shipcnt].Color = globals.green
+                            shipcnt += 1
+                            self.shiplist[shipcnt].Color = globals.bright_green
                         else:
+                            self.shiplist[shipcnt].Color = globals.green
                             shipcnt = 0
+                            self.shiplist[shipcnt].Color = globals.bright_green
 
                         
                     if event.key == pygame.K_p:
@@ -122,7 +127,6 @@ class Game:
                         else:
                             self.shiplist[shipcnt].PosY += 1
                           
-
                 while state == PAUSE:
                     globals.gameDisplay.blit(pause_text,(300,300))
                     pygame.display.flip()
@@ -141,7 +145,6 @@ class Game:
             self.ship2 = self.shiplist[1]
             self.ship3 = self.shiplist[2]
             self.ship4 = self.shiplist[3]
-
 
             self.ship1.draw()
             self.ship2.draw()
