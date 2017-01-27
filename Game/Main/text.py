@@ -1,4 +1,4 @@
-import pygame, globals
+import pygame, globals, time
 
 def text_objects(text, font):
     textSurface = font.render(text, True, globals.black)
@@ -13,7 +13,9 @@ def button(msg,x,y,w,h,ic,ac,action=None):
         pygame.draw.rect(globals.gameDisplay, ac,(x,y,w,h))
 
         if click[0] == 1 and action != None:
-            action()         
+            time.sleep(0.5)
+            action()
+                    
     else:
         pygame.draw.rect(globals.gameDisplay, ic,(x,y,w,h))       
     #button text
