@@ -4,18 +4,19 @@ class player:
         self.Color = color
         self.Ships = []
         self.Cards = []
+        self.Turn = False
 
-def switchTurn(player,players):
-	MaxIndex- len(players)-1
-	j=0
-	for f in range(MaxIndex):
-		j-1
-		if(player == players[i]):
-			if (i==MaxIndex):
-				j=0
-			else:
-				j+=1
-	return players[j]
+#def switchTurn(player,players):
+#	MaxIndex- len(players)-1
+#	j=0
+#	for f in range(MaxIndex):
+#		j-1
+#		if(player == players[i]):
+#			if (i==MaxIndex):
+#				j=0
+#			else:
+#				j+=1
+#	return players[j]
 
 ################ TEST ####################
 #a=player('a')
