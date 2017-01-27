@@ -141,7 +141,6 @@ class Game:
                         self.shiplist[shipcnt].PosY += 1
                         curshiplist = [(self.shiplist[shipcnt].PosX, (self.shiplist[shipcnt].PosY) + self.shiplist[shipcnt].ShipLength -1)]
                         self.shiplist[shipcnt].PosY += -1 
-                        print(curshiplist)
                         if self.shiplist[shipcnt].PosY == (21 - self.shiplist[shipcnt].ShipLength):
                             self.shiplist[shipcnt].PosY += 0
                         elif set(self.shipxylist1) & set(curshiplist) != set():
