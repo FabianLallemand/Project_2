@@ -24,6 +24,7 @@ bld/
 
 #Python Cache
 *.pyc
+__pycache__/
 
 # Visual Studio 2015 cache/options directory
 .vs/
