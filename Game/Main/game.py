@@ -1,12 +1,13 @@
 import pygame, globals, text, ships, time, playboard, players
 
+
 pygame.init()
 
 class Game:
     def __init__(self):
 
         self.board = playboard.Grid(globals.gameDisplay, globals.white,1)
-        self.ship1 = ships.Ship(globals.green, 4, 0,1,2,3,self.board,2,2,[])
+        self.ship1 = ships.Ship(globals.green, 4, 0,1,2,100,self.board,2,2,[])
         self.ship2 = ships.Ship(globals.green, 4, 0,1,2,2,self.board,3,3,[])
         self.ship3 = ships.Ship(globals.green, 4, 0,1,2,2,self.board,3,3,[])
         self.ship4 = ships.Ship(globals.green, 4, 0,1,2,1,self.board,4,4,[])
@@ -19,13 +20,18 @@ class Game:
         self.player2 = players.Player("Player2",globals.red,globals.bright_red)
         self.shipxylist1 = []
         self.curshiplist = []
-        self.shipcnt = 0
+        self.shipcnt = 0    
         self.shipsinrange = []
         self.firecnt = 0
         self.damageship = 0
         self.deadships = []
-    def shipswitch(self):
+        self.GameStopped = False
 
+        #Database connections opzetten
+       # self.db = mysql.connect(user='battleport', password='ditiseengeheim', database='highscores')
+        #self.cursor = db.cursor()
+
+    def shipswitch(self):
         if self.shipcnt < 3 and self.player1.Turn:
             self.shiplist[self.shipcnt].Color = self.player1.iColor
             self.shipcnt += 1
@@ -205,8 +211,8 @@ class Game:
             pygame.display.update()
             
             globals.clock.tick(60)    
-
-        while self.player1.shipsplaced == 4 and self.player2.shipsplaced == 4:
+            
+        while self.player1.shipsplaced == 4 and self.player2.shipsplaced == 4 and not(self.GameStopped):
             #self.deadships = []
             self.shipxylist1 =[]
             self.curshiplist = []
@@ -376,6 +382,18 @@ class Game:
             if self.ship8.Health <= 0:
                 self.ship8.Color = globals.brown
                 self.deadships = self.deadships + [7]
+
+
+            if self.ship1.Health == 0 and self.ship2.Health == 0 and self.ship3.Health == 0 and self.ship4.Health == 0:
+                print("Player2 wins")
+                self.GameStopped = True
+            elif self.ship5.Health == 0 and self.ship6.Health == 0 and self.ship7.Health == 0 and self.ship8.Health == 0:
+                print("Player1 wins")
+                self.GameStopped = True
+
+
+
+
 
 
             self.ship1.draw()
