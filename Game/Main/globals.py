@@ -35,3 +35,4 @@ bright_orange = (200,100,0)
 #texts
 largeText = pygame.font.Font('freesansbold.ttf',115)
 smallText = pygame.font.SysFont("freesansbold.ttf",22)
+infoText = pygame.font.SysFont("freesansbold.ttf",18)

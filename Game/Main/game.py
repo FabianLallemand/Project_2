@@ -401,8 +401,18 @@ class Game:
 
 
 
-            
+            statsx = 500
+            statsy = 25
 
+            currentshipname = globals.smallText.render("Currentship", True, globals.white)
+            currentshiphp = globals.infoText.render("HP: " + str(self.shiplist[self.shipcnt].Health), True, globals.white)
+            currentshiprange = globals.infoText.render("Range: " + str(self.shiplist[self.shipcnt].Range), True, globals.white)
+
+
+            pygame.draw.rect(globals.gameDisplay, globals.white, (statsx, statsy , 140 , 140), 1)
+            globals.gameDisplay.blit(currentshipname, (statsx +5 , statsy+10))
+            globals.gameDisplay.blit(currentshiphp, (statsx +5 , statsy+30))
+            globals.gameDisplay.blit(currentshiprange, (statsx +5 , statsy+50))
 
             self.ship1.draw()
             self.ship2.draw()
