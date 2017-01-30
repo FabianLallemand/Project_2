@@ -376,7 +376,7 @@ class Game:
                     quit()
                 #Pause key
                 if event.type == pygame.KEYDOWN:
-                    if event.key == pygame.K_SPACE:
+                    if event.key == pygame.K_SPACE and self.firecnt ==0:
                         self.shiprotate()
 
 
