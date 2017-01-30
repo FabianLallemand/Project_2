@@ -1,4 +1,5 @@
 import pygame, globals, text, ships, time, playboard, players
+import mysql.connector as mysql
 
 pygame.init()
 
@@ -19,13 +20,18 @@ class Game:
         self.player2 = players.Player("Player2",globals.red,globals.bright_red)
         self.shipxylist1 = []
         self.curshiplist = []
-        self.shipcnt = 0
+        self.shipcnt = 0    
         self.shipsinrange = []
         self.firecnt = 0
-        self.damageship = 0
+        self.damageship = 0 
         self.deadships = []
-    def shipswitch(self):
+        self.GameStopped = False
 
+        #Database connections opzetten
+        self.db = mysql.connect(user='battleport', password='ditiseengeheim', database='highscores')
+        self.cursor = self.db.cursor()
+
+    def shipswitch(self):
         if self.shipcnt < 3 and self.player1.Turn:
             self.shiplist[self.shipcnt].Color = self.player1.iColor
             self.shipcnt += 1
@@ -205,8 +211,8 @@ class Game:
             pygame.display.update()
             
             globals.clock.tick(60)    
-
-        while self.player1.shipsplaced == 4 and self.player2.shipsplaced == 4:
+            
+        while self.player1.shipsplaced == 4 and self.player2.shipsplaced == 4 and not(self.GameStopped):
             #self.deadships = []
             self.shipxylist1 =[]
             self.curshiplist = []
@@ -241,6 +247,12 @@ class Game:
                         state = RUNNING
                     if event.key == pygame.K_t:
                         self.turn()
+                    if event.key == pygame.K_1:
+                        for i in range(0,4):
+                            self.shiplist[i].Health = 0
+                    if event.key == pygame.K_2:
+                        for i in range(4,8):
+                            self.shiplist[i].Health = 0
 
                         
                     if event.key == pygame.K_LEFT:
@@ -314,23 +326,23 @@ class Game:
             
             globals.gameDisplay.fill(globals.black)
             self.board = playboard.Grid(globals.gameDisplay, globals.white,1)
-            text.button("Press >T< to end turn",575,25,200,50,globals.blue,globals.bright_blue,self.turn)
+            text.button("End turn",675,25,100,50,globals.blue,globals.bright_blue,self.turn)
             fbuty = 100
             if self.firecnt in self.shipsinrange:
                 self.damageship = 0 + self.firecnt
-                text.button("Ship 1",575,fbuty,100,50,globals.blue,globals.bright_blue,self.damage)
+                text.button("Ship 1",675,fbuty,100,50,globals.blue,globals.bright_blue,self.damage)
                 fbuty += 60
             if self.firecnt+1 in self.shipsinrange:
                 self.damageship = 1 + self.firecnt
-                text.button("Ship 2",575,fbuty,100,50,globals.blue,globals.bright_blue,self.damage)
+                text.button("Ship 2",675,fbuty,100,50,globals.blue,globals.bright_blue,self.damage)
                 fbuty += 60
             if self.firecnt+2 in self.shipsinrange:
                 self.damageship = 2 + self.firecnt
-                text.button("Ship 3",575,fbuty,100,50,globals.blue,globals.bright_blue,self.damage)
+                text.button("Ship 3",675,fbuty,100,50,globals.blue,globals.bright_blue,self.damage)
                 fbuty += 60
             if self.firecnt +3 in self.shipsinrange:
                 self.damageship = 3 + self.firecnt  
-                text.button("Ship 4",575,fbuty,100,50,globals.blue,globals.bright_blue,self.damage)
+                text.button("Ship 4",675,fbuty,100,50,globals.blue,globals.bright_blue,self.damage)
             for x in range(0,8):
                 self.shiplist[x].Board = self.board
 
@@ -344,6 +356,8 @@ class Game:
             self.ship6 = self.shiplist[5]
             self.ship7 = self.shiplist[6]
             self.ship8 = self.shiplist[7]
+
+            self.deadships = []
 
             if self.ship1.Health <= 0:
                 self.ship1.Color = globals.brown
@@ -376,6 +390,22 @@ class Game:
             if self.ship8.Health <= 0:
                 self.ship8.Color = globals.brown
                 self.deadships = self.deadships + [7]
+
+
+            if self.ship1.Health == 0 and self.ship2.Health == 0 and self.ship3.Health == 0 and self.ship4.Health == 0:
+                print("Player2 wins")
+                self.cursor.execute("UPDATE score SET points = points + 1 WHERE name = 'Player2'")
+                self.db.commit()
+                self.GameStopped = True
+            elif self.ship5.Health == 0 and self.ship6.Health == 0 and self.ship7.Health == 0 and self.ship8.Health == 0:
+                print("Player1 wins")
+                self.cursor.execute("UPDATE score SET points = points + 1 WHERE name = 'Player1'")
+                self.db.commit()
+                self.GameStopped = True
+
+
+
+            
 
 
             self.ship1.draw()
