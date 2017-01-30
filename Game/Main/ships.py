@@ -2,7 +2,7 @@ import pygame, playboard
 
 
 class Ship:
-    def __init__(self, color, length, x, y, middle , steps, board, health, range,xylist):
+    def __init__(self, color, length, x, y, middle , steps, board, health, range,xylist,name):
         self.Color = color
         self.ShipLength = length
         self.PosX = x
@@ -13,7 +13,9 @@ class Ship:
         self.Health = health
         self.Range = range
         self.XYlist = xylist
+        self.Name = name
         self.Shots = 1
+        
 
     def draw(self):
         for length in range(1, self.ShipLength +1):

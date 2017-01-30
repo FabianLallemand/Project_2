@@ -1,5 +1,5 @@
 import pygame, globals, text, ships, time, playboard, players
-
+import mysql.connector as mysql
 
 pygame.init()
 
@@ -7,14 +7,14 @@ class Game:
     def __init__(self):
 
         self.board = playboard.Grid(globals.gameDisplay, globals.white,1)
-        self.ship1 = ships.Ship(globals.green, 4, 0,1,2,3,self.board,2,2,[])
-        self.ship2 = ships.Ship(globals.green, 4, 0,1,2,2,self.board,3,3,[])
-        self.ship3 = ships.Ship(globals.green, 4, 0,1,2,2,self.board,3,3,[])
-        self.ship4 = ships.Ship(globals.green, 4, 0,1,2,1,self.board,4,4,[])
-        self.ship5 = ships.Ship(globals.red, 4, 0,1,2,3,self.board,2,2,[])
-        self.ship6 = ships.Ship(globals.red, 4, 0,1,2,2,self.board,3,3,[])
-        self.ship7 = ships.Ship(globals.red, 4, 0,1,2,2,self.board,3,3,[])
-        self.ship8 = ships.Ship(globals.red, 4, 0,1,2,1,self.board,4,4,[])
+        self.ship1 = ships.Ship(globals.green, 4, 0,1,2,3,self.board,2,2,[],"Furgo Saltire")
+        self.ship2 = ships.Ship(globals.green, 4, 0,1,2,2,self.board,3,3,[],"Silver Whisper")
+        self.ship3 = ships.Ship(globals.green, 4, 0,1,2,2,self.board,3,3,[],"Windsurf")
+        self.ship4 = ships.Ship(globals.green, 4, 0,1,2,1,self.board,4,4,[],"Merapi")
+        self.ship5 = ships.Ship(globals.red, 4, 0,1,2,3,self.board,2,2,[],"Santa Bettina")
+        self.ship6 = ships.Ship(globals.red, 4, 0,1,2,2,self.board,3,3,[],"Sea Spirit")
+        self.ship7 = ships.Ship(globals.red, 4, 0,1,2,2,self.board,3,3,[],"Intensity")
+        self.ship8 = ships.Ship(globals.red, 4, 0,1,2,1,self.board,4,4,[],"Amadea")
         self.shiplist = [self.ship1,self.ship2,self.ship3,self.ship4,self.ship5,self.ship6,self.ship7,self.ship8]
         self.player1 = players.Player("Player1",globals.green,globals.bright_green)
         self.player2 = players.Player("Player2",globals.red,globals.bright_red)
@@ -23,13 +23,13 @@ class Game:
         self.shipcnt = 0    
         self.shipsinrange = []
         self.firecnt = 0
-        self.damageship = 0
+        self.damageship = 0 
         self.deadships = []
         self.GameStopped = False
 
         #Database connections opzetten
-       # self.db = mysql.connect(user='battleport', password='ditiseengeheim', database='highscores')
-        #self.cursor = db.cursor()
+        self.db = mysql.connect(user='battleport', password='ditiseengeheim', database='highscores')
+        self.cursor = self.db.cursor()
 
     def shipswitch(self):
         if self.shipcnt < 3 and self.player1.Turn:
@@ -394,9 +394,13 @@ class Game:
 
             if self.ship1.Health == 0 and self.ship2.Health == 0 and self.ship3.Health == 0 and self.ship4.Health == 0:
                 print("Player2 wins")
+                self.cursor.execute("UPDATE score SET points = points + 1 WHERE name = 'Player2'")
+                self.db.commit()
                 self.GameStopped = True
             elif self.ship5.Health == 0 and self.ship6.Health == 0 and self.ship7.Health == 0 and self.ship8.Health == 0:
                 print("Player1 wins")
+                self.cursor.execute("UPDATE score SET points = points + 1 WHERE name = 'Player1'")
+                self.db.commit()
                 self.GameStopped = True
 
 
