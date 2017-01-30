@@ -6,14 +6,14 @@ class Game:
     def __init__(self):
 
         self.board = playboard.Grid(globals.gameDisplay, globals.white,1)
-        self.ship1 = ships.Ship(globals.green, 4, 0,1,2,3,self.board,2,2,[])
-        self.ship2 = ships.Ship(globals.green, 4, 0,1,2,2,self.board,3,3,[])
-        self.ship3 = ships.Ship(globals.green, 4, 0,1,2,2,self.board,3,3,[])
-        self.ship4 = ships.Ship(globals.green, 4, 0,1,2,1,self.board,4,4,[])
-        self.ship5 = ships.Ship(globals.red, 4, 0,1,2,3,self.board,2,2,[])
-        self.ship6 = ships.Ship(globals.red, 4, 0,1,2,2,self.board,3,3,[])
-        self.ship7 = ships.Ship(globals.red, 4, 0,1,2,2,self.board,3,3,[])
-        self.ship8 = ships.Ship(globals.red, 4, 0,1,2,1,self.board,4,4,[])
+        self.ship1 = ships.Ship(globals.green, 4, 0,1,2,3,self.board,2,2,[],"Furgo Saltire")
+        self.ship2 = ships.Ship(globals.green, 4, 0,1,2,2,self.board,3,3,[],"Silver Whisper")
+        self.ship3 = ships.Ship(globals.green, 4, 0,1,2,2,self.board,3,3,[],"Windsurf")
+        self.ship4 = ships.Ship(globals.green, 4, 0,1,2,1,self.board,4,4,[],"Merapi")
+        self.ship5 = ships.Ship(globals.red, 4, 0,1,2,3,self.board,2,2,[],"Santa Bettina")
+        self.ship6 = ships.Ship(globals.red, 4, 0,1,2,2,self.board,3,3,[],"Sea Spirit")
+        self.ship7 = ships.Ship(globals.red, 4, 0,1,2,2,self.board,3,3,[],"Intensity")
+        self.ship8 = ships.Ship(globals.red, 4, 0,1,2,1,self.board,4,4,[],"Amadea")
         self.shiplist = [self.ship1,self.ship2,self.ship3,self.ship4,self.ship5,self.ship6,self.ship7,self.ship8]
         self.player1 = players.Player("Player1",globals.green,globals.bright_green)
         self.player2 = players.Player("Player2",globals.red,globals.bright_red)
