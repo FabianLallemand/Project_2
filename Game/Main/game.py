@@ -213,7 +213,7 @@ class Game:
             globals.clock.tick(60)    
             
         while self.player1.shipsplaced == 4 and self.player2.shipsplaced == 4 and not(self.GameStopped):
-            #self.deadships = []
+
             self.shipxylist1 =[]
             self.curshiplist = []
             for x in range(0,8):
@@ -408,15 +408,24 @@ class Game:
             statsx = 500
             statsy = 25
 
-            currentshipname = globals.smallText.render("Currentship", True, globals.white)
+            currentshipname = globals.smallText.render("Current ship: ", True, globals.white)
+            shipname = globals.infoText.render("Name: " + str(self.shiplist[self.shipcnt].Name), True, globals.white)
             currentshiphp = globals.infoText.render("HP: " + str(self.shiplist[self.shipcnt].Health), True, globals.white)
             currentshiprange = globals.infoText.render("Range: " + str(self.shiplist[self.shipcnt].Range), True, globals.white)
+            currentshipdamage = globals.infoText.render("Damage: 1", True, globals.white)
+            currentshipshots = globals.infoText.render("Shots left: " + str(self.shiplist[self.shipcnt].Shots), True, globals.white)
+            currentshipsteps = globals.infoText.render("Steps left: " + str(self.shiplist[self.shipcnt].Steps), True, globals.white)
 
 
             pygame.draw.rect(globals.gameDisplay, globals.white, (statsx, statsy , 140 , 140), 1)
             globals.gameDisplay.blit(currentshipname, (statsx +5 , statsy+10))
-            globals.gameDisplay.blit(currentshiphp, (statsx +5 , statsy+30))
-            globals.gameDisplay.blit(currentshiprange, (statsx +5 , statsy+50))
+            globals.gameDisplay.blit(shipname, (statsx +5 , statsy+28))
+            globals.gameDisplay.blit(currentshiphp, (statsx +5 , statsy+46))
+            globals.gameDisplay.blit(currentshiprange, (statsx +5 , statsy+64))
+            globals.gameDisplay.blit(currentshipdamage, (statsx +5 , statsy+82))
+            globals.gameDisplay.blit(currentshipshots, (statsx +5 , statsy+100))
+            globals.gameDisplay.blit(currentshipsteps, (statsx +5 , statsy+118))
+
 
             self.ship1.draw()
             self.ship2.draw()
