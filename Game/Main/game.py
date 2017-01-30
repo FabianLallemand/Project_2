@@ -6,13 +6,13 @@ class Game:
     def __init__(self):
 
         self.board = playboard.Grid(globals.gameDisplay, globals.white,1)
-        self.ship1 = ships.Ship(globals.green, 4, 0,1,2,2,self.board,4,2,[])
-        self.ship2 = ships.Ship(globals.green, 4, 0,1,2,2,self.board,4,3,[])
-        self.ship3 = ships.Ship(globals.green, 4, 0,1,2,2,self.board,4,3,[])
+        self.ship1 = ships.Ship(globals.green, 4, 0,1,2,2,self.board,2,2,[])
+        self.ship2 = ships.Ship(globals.green, 4, 0,1,2,2,self.board,3,3,[])
+        self.ship3 = ships.Ship(globals.green, 4, 0,1,2,2,self.board,3,3,[])
         self.ship4 = ships.Ship(globals.green, 4, 0,1,2,2,self.board,4,4,[])
-        self.ship5 = ships.Ship(globals.red, 4, 0,1,2,2,self.board,4,2,[])
-        self.ship6 = ships.Ship(globals.red, 4, 0,1,2,2,self.board,4,3,[])
-        self.ship7 = ships.Ship(globals.red, 4, 0,1,2,2,self.board,4,3,[])
+        self.ship5 = ships.Ship(globals.red, 4, 0,1,2,2,self.board,2,2,[])
+        self.ship6 = ships.Ship(globals.red, 4, 0,1,2,2,self.board,3,3,[])
+        self.ship7 = ships.Ship(globals.red, 4, 0,1,2,2,self.board,3,3,[])
         self.ship8 = ships.Ship(globals.red, 4, 0,1,2,2,self.board,4,4,[])
         self.shiplist = [self.ship1,self.ship2,self.ship3,self.ship4,self.ship5,self.ship6,self.ship7,self.ship8]
         self.player1 = players.Player("Player1",globals.green,globals.bright_green)
@@ -20,23 +20,83 @@ class Game:
         self.shipxylist1 = []
         self.curshiplist = []
         self.shipcnt = 0
-   
+        self.shipsinrange = []
+        self.firecnt = 0
+        self.damageship = 0
+        self.deadships = []
+    def shipswitch(self):
+
+        if self.shipcnt < 3 and self.player1.Turn:
+            self.shiplist[self.shipcnt].Color = self.player1.iColor
+            self.shipcnt += 1
+            self.shiplist[self.shipcnt].Color = self.player1.aColor
+        elif self.shipcnt == 3 and self.player1.Turn:
+            self.shiplist[self.shipcnt].Color = self.player1.iColor
+            self.shipcnt = 0
+            self.shiplist[self.shipcnt].Color = self.player1.aColor
+        elif self.shipcnt <7 and self.player2.Turn:
+            self.shiplist[self.shipcnt].Color = self.player2.iColor
+            self.shipcnt += 1
+            self.shiplist[self.shipcnt].Color = self.player2.aColor
+        elif self.shipcnt == 7 and self.player2.Turn:
+            self.shiplist[self.shipcnt].Color = self.player2.iColor
+            self.shipcnt = 4
+            self.shiplist[self.shipcnt].Color = self.player2.aColor
+
+        if self.shipcnt in self.deadships:
+            self.shipswitch()
+
+    def turn(self):
+
+        if self.player1.Turn:
+            self.player1.Turn = False
+            self.player2.Turn = True
+            self.shiplist[self.shipcnt].Color = self.player1.iColor
+            self.shipcnt = 4
+            if self.shipcnt in self.deadships:
+                self.shipswitch()
+  
+        else:
+            self.player1.Turn = True
+            self.player2.Turn = False
+            self.shiplist[self.shipcnt].Color = self.player2.iColor
+            self.shipcnt = 0
+            if self.shipcnt in self.deadships:
+                self.shipswitch()
 
 
     def fire(self):
-        firecnt = 0
+        self.firecnt = 0
+        fbuty = 100
         for i in range(self.shiplist[self.shipcnt].ShipLength):
             for x in range(1, 1 + self.shiplist[self.shipcnt].ShipLength):
                 self.curshiplist = self.curshiplist + [(self.shiplist[self.shipcnt].PosX + x, self.shiplist[self.shipcnt].PosY +i)] + [(self.shiplist[self.shipcnt].PosX - x, self.shiplist[self.shipcnt].PosY +i)]
 
             self.curshiplist = self.curshiplist + [(self.shiplist[self.shipcnt].PosX, self.shiplist[self.shipcnt].PosY + self.shiplist[self.shipcnt].ShipLength+i)] + [(self.shiplist[self.shipcnt].PosX, self.shiplist[self.shipcnt].PosY -1 - i)]
         if self.player1.Turn:
-            firecnt += 4
-        if set(self.shiplist[firecnt].XYlist +self.shiplist[firecnt+1].XYlist +self.shiplist[firecnt+2].XYlist +self.shiplist[firecnt+3].XYlist) & set(self.curshiplist) != set():
-            print("fire")
+            self.firecnt += 4
+        if set(self.shiplist[self.firecnt].XYlist +self.shiplist[self.firecnt+1].XYlist +self.shiplist[self.firecnt+2].XYlist +self.shiplist[self.firecnt+3].XYlist) & set(self.curshiplist) != set():
+            if set(self.shiplist[self.firecnt].XYlist) & set(self.curshiplist) != set():
+                self.shipsinrange = self.shipsinrange + [self.firecnt]
+                text.button("Ship 1",575,fbuty,100,50,globals.blue,globals.bright_blue,self.turn)
+                fbuty += 60
+            if set(self.shiplist[self.firecnt+1].XYlist) & set(self.curshiplist) != set():
+                self.shipsinrange = self.shipsinrange + [self.firecnt + 1]
+                text.button("Ship 2",575,fbuty,100,50,globals.blue,globals.bright_blue,self.turn)
+                fbuty += 60
+            if set(self.shiplist[self.firecnt+2].XYlist) & set(self.curshiplist) != set():
+                self.shipsinrange = self.shipsinrange + [self.firecnt + 2]
+                text.button("Ship 3",575,fbuty,100,50,globals.blue,globals.bright_blue,self.turn)
+                fbuty += 60
+            if set(self.shiplist[self.firecnt+3].XYlist) & set(self.curshiplist) != set():
+                self.shipsinrange = self.shipsinrange + [self.firecnt + 3]
+                text.button("Ship 4",575,fbuty,100,50,globals.blue,globals.bright_blue,self.turn)
+        pygame.display.update()
         self.curshiplist = []
         
-
+    def damage(self):
+        self.shipsinrange = []
+        self.shiplist[self.damageship].Health -= 1
 
 
     def game_loop(self):
@@ -129,6 +189,7 @@ class Game:
             globals.clock.tick(60)    
 
         while self.player1.shipsplaced == 4 and self.player2.shipsplaced == 4:
+            #self.deadships = []
             self.shipxylist1 =[]
             self.curshiplist = []
             for x in range(0,8):
@@ -151,22 +212,8 @@ class Game:
                 #Pause key
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_SPACE:
-                        if self.shipcnt < 3 and self.player1.Turn:
-                            self.shiplist[self.shipcnt].Color = self.player1.iColor
-                            self.shipcnt += 1
-                            self.shiplist[self.shipcnt].Color = self.player1.aColor
-                        elif self.shipcnt == 3 and self.player1.Turn:
-                            self.shiplist[self.shipcnt].Color = self.player1.iColor
-                            self.shipcnt = 0
-                            self.shiplist[self.shipcnt].Color = self.player1.aColor
-                        elif self.shipcnt <7 and self.player2.Turn:
-                            self.shiplist[self.shipcnt].Color = self.player2.iColor
-                            self.shipcnt += 1
-                            self.shiplist[self.shipcnt].Color = self.player2.aColor
-                        elif self.shipcnt == 7 and self.player2.Turn:
-                            self.shiplist[self.shipcnt].Color = self.player2.iColor
-                            self.shipcnt = 4
-                            self.shiplist[self.shipcnt].Color = self.player2.aColor
+                        self.shipswitch()
+
 
                     if event.key == pygame.K_f:
                         self.fire()
@@ -175,20 +222,7 @@ class Game:
                     if event.key == pygame.K_u:
                         state = RUNNING
                     if event.key == pygame.K_t:
-                        if self.player1.Turn:
-                            self.player1.Turn = False
-                            self.player2.Turn = True
-                            self.shiplist[self.shipcnt].Color = self.player1.iColor
-                            self.shipcnt = 4
-
-                            print(self.player1.Turn, self.player2.Turn)    
-                        else:
-                            self.player1.Turn = True
-                            self.player2.Turn = False
-                            self.shiplist[self.shipcnt].Color = self.player2.iColor
-                            self.shipcnt = 0
-                            print(self.player1.Turn, self.player2.Turn)
-
+                        self.turn()
 
                         
                     if event.key == pygame.K_LEFT:
@@ -249,7 +283,23 @@ class Game:
             
             globals.gameDisplay.fill(globals.black)
             self.board = playboard.Grid(globals.gameDisplay, globals.white,1)
-            text.button("Press >T< to end turn",575,25,200,50,globals.blue,globals.bright_blue,None)
+            text.button("Press >T< to end turn",575,25,200,50,globals.blue,globals.bright_blue,self.turn)
+            fbuty = 100
+            if self.firecnt in self.shipsinrange:
+                self.damageship = 0 + self.firecnt
+                text.button("Ship 1",575,fbuty,100,50,globals.blue,globals.bright_blue,self.damage)
+                fbuty += 60
+            if self.firecnt+1 in self.shipsinrange:
+                self.damageship = 1 + self.firecnt
+                text.button("Ship 2",575,fbuty,100,50,globals.blue,globals.bright_blue,self.damage)
+                fbuty += 60
+            if self.firecnt+2 in self.shipsinrange:
+                self.damageship = 2 + self.firecnt
+                text.button("Ship 3",575,fbuty,100,50,globals.blue,globals.bright_blue,self.damage)
+                fbuty += 60
+            if self.firecnt +3 in self.shipsinrange:
+                self.damageship = 3 + self.firecnt  
+                text.button("Ship 4",575,fbuty,100,50,globals.blue,globals.bright_blue,self.damage)
             for x in range(0,8):
                 self.shiplist[x].Board = self.board
 
@@ -264,14 +314,47 @@ class Game:
             self.ship7 = self.shiplist[6]
             self.ship8 = self.shiplist[7]
 
-            self.ship1.draw()
-            self.ship2.draw()
-            self.ship3.draw()
-            self.ship4.draw()
-            self.ship5.draw()
-            self.ship6.draw()
-            self.ship7.draw()
-            self.ship8.draw()
+            if self.ship1.Health > 0:
+                self.ship1.draw()
+            else:
+                self.ship1.PosX = 100
+                self.deadships = self.deadships + [0]
+            if self.ship2.Health > 0:
+                self.ship2.draw()
+            else:
+                self.ship2.PosX = 100
+                self.deadships = self.deadships + [1]
+            if self.ship3.Health > 0:
+                self.ship3.draw()
+            else:
+                self.ship3.PosX = 100
+                self.deadships = self.deadships + [2]
+            if self.ship4.Health > 0:
+                self.ship4.draw()
+            else:
+                self.ship4.PosX = 100
+                self.deadships = self.deadships + [3]
+            if self.ship5.Health > 0:
+                self.ship5.draw()
+            else:
+                self.ship5.PosX = 100
+                self.deadships = self.deadships + [4]
+            if self.ship6.Health > 0:
+                self.ship6.draw()
+            else:
+                self.ship6.PosX = 100
+                self.deadships = self.deadships + [5]
+            if self.ship7.Health > 0:
+                self.ship7.draw()
+            else:
+                self.ship7.PosX = 100
+                self.deadships = self.deadships + [6]
+            if self.ship8.Health > 0:
+                self.ship8.draw()
+            else:
+                self.ship8.PosX = 100
+                self.deadships = self.deadships + [7]
+           
             self.board.draw()
 
            
