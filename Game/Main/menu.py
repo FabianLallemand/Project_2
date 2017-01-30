@@ -1,4 +1,4 @@
-import pygame, globals, text , game
+import pygame, globals, text , game, rules
 
 #game intro and button's
 
@@ -32,7 +32,7 @@ def game_intro():
         text.button("Start Game!",50,450,100,50,globals.green,globals.bright_green,game.program)
         text.button("Settings",250,450,100,50,globals.grey,globals.bright_grey,None)
         text.button("Quit Game!",450,450,100,50,globals.red,globals.bright_red,globals.quitgame)
-        text.button("Game Rules",650,450,100,50,globals.blue,globals.bright_blue,instructions)
+        text.button("Game Rules",650,450,100,50,globals.blue,globals.bright_blue,rules.openrules)
 
         pygame.display.update()
         globals.clock.tick(60)
