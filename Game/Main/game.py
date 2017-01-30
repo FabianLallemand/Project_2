@@ -85,19 +85,19 @@ class Game:
         if self.player1.Turn:
             self.firecnt += 4
         if set(self.shiplist[self.firecnt].XYlist +self.shiplist[self.firecnt+1].XYlist +self.shiplist[self.firecnt+2].XYlist +self.shiplist[self.firecnt+3].XYlist) & set(self.curshiplist) != set():
-            if set(self.shiplist[self.firecnt].XYlist) & set(self.curshiplist) != set():
+            if set(self.shiplist[self.firecnt].XYlist) & set(self.curshiplist) != set() and self.shiplist[self.firecnt].Health > 0:
                 self.shipsinrange = self.shipsinrange + [self.firecnt]
                 text.button("Ship 1",575,fbuty,100,50,globals.blue,globals.bright_blue,self.turn)
                 fbuty += 60
-            if set(self.shiplist[self.firecnt+1].XYlist) & set(self.curshiplist) != set():
+            if set(self.shiplist[self.firecnt+1].XYlist) & set(self.curshiplist) != set() and self.shiplist[self.firecnt+1].Health > 0:
                 self.shipsinrange = self.shipsinrange + [self.firecnt + 1]
                 text.button("Ship 2",575,fbuty,100,50,globals.blue,globals.bright_blue,self.turn)
                 fbuty += 60
-            if set(self.shiplist[self.firecnt+2].XYlist) & set(self.curshiplist) != set():
+            if set(self.shiplist[self.firecnt+2].XYlist) & set(self.curshiplist) != set() and self.shiplist[self.firecnt+2].Health > 0:
                 self.shipsinrange = self.shipsinrange + [self.firecnt + 2]
                 text.button("Ship 3",575,fbuty,100,50,globals.blue,globals.bright_blue,self.turn)
                 fbuty += 60
-            if set(self.shiplist[self.firecnt+3].XYlist) & set(self.curshiplist) != set():
+            if set(self.shiplist[self.firecnt+3].XYlist) & set(self.curshiplist) != set() and self.shiplist[self.firecnt+3].Health > 0:
                 self.shipsinrange = self.shipsinrange + [self.firecnt + 3]
                 text.button("Ship 4",575,fbuty,100,50,globals.blue,globals.bright_blue,self.turn)
         pygame.display.update()
@@ -336,52 +336,54 @@ class Game:
             self.ship7 = self.shiplist[6]
             self.ship8 = self.shiplist[7]
 
-            if self.ship1.Health > 0:
-                self.ship1.draw()
-            else:
-                self.ship1.PosX = 100
+            if self.ship1.Health <= 0:
+                self.ship1.Color = globals.brown
                 self.deadships = self.deadships + [0]
-            if self.ship2.Health > 0:
-                self.ship2.draw()
-            else:
-                self.ship2.PosX = 100
+
+            if self.ship2.Health <= 0:
+                self.ship2.Color = globals.brown
                 self.deadships = self.deadships + [1]
-            if self.ship3.Health > 0:
-                self.ship3.draw()
-            else:
-                self.ship3.PosX = 100
+
+            if self.ship3.Health <= 0:
+                self.ship3.Color = globals.brown
                 self.deadships = self.deadships + [2]
-            if self.ship4.Health > 0:
-                self.ship4.draw()
-            else:
-                self.ship4.PosX = 100
+
+            if self.ship4.Health <= 0:
+                self.ship4.Color = globals.brown
                 self.deadships = self.deadships + [3]
-            if self.ship5.Health > 0:
-                self.ship5.draw()
-            else:
-                self.ship5.PosX = 100
+
+            if self.ship5.Health <= 0:
+                self.ship5.Color = globals.brown
                 self.deadships = self.deadships + [4]
-            if self.ship6.Health > 0:
-                self.ship6.draw()
-            else:
-                self.ship6.PosX = 100
+
+            if self.ship6.Health <= 0:
+                self.ship6.Color = globals.brown
                 self.deadships = self.deadships + [5]
-            if self.ship7.Health > 0:
-                self.ship7.draw()
-            else:
-                self.ship7.PosX = 100
+
+            if self.ship7.Health <= 0:
+                self.ship7.Color = globals.brown
                 self.deadships = self.deadships + [6]
-            if self.ship8.Health > 0:
-                self.ship8.draw()
-            else:
-                self.ship8.PosX = 100
+
+            if self.ship8.Health <= 0:
+                self.ship8.Color = globals.brown
                 self.deadships = self.deadships + [7]
-           
+
+
+            self.ship1.draw()
+            self.ship2.draw()
+            self.ship3.draw()
+            self.ship4.draw()
+            self.ship5.draw()
+            self.ship6.draw()
+            self.ship7.draw()
+            self.ship8.draw()
+
             self.board.draw()
 
            
             pygame.display.update()
             globals.clock.tick(60)
+
 
 def program():
     game = Game()
