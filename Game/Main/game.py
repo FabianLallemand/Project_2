@@ -6,14 +6,14 @@ class Game:
     def __init__(self):
 
         self.board = playboard.Grid(globals.gameDisplay, globals.white,1)
-        self.ship1 = ships.Ship(globals.green, 4, 0,1,2,2,self.board,2,2,[])
+        self.ship1 = ships.Ship(globals.green, 4, 0,1,2,3,self.board,2,2,[])
         self.ship2 = ships.Ship(globals.green, 4, 0,1,2,2,self.board,3,3,[])
         self.ship3 = ships.Ship(globals.green, 4, 0,1,2,2,self.board,3,3,[])
-        self.ship4 = ships.Ship(globals.green, 4, 0,1,2,2,self.board,4,4,[])
-        self.ship5 = ships.Ship(globals.red, 4, 0,1,2,2,self.board,2,2,[])
+        self.ship4 = ships.Ship(globals.green, 4, 0,1,2,1,self.board,4,4,[])
+        self.ship5 = ships.Ship(globals.red, 4, 0,1,2,3,self.board,2,2,[])
         self.ship6 = ships.Ship(globals.red, 4, 0,1,2,2,self.board,3,3,[])
         self.ship7 = ships.Ship(globals.red, 4, 0,1,2,2,self.board,3,3,[])
-        self.ship8 = ships.Ship(globals.red, 4, 0,1,2,2,self.board,4,4,[])
+        self.ship8 = ships.Ship(globals.red, 4, 0,1,2,1,self.board,4,4,[])
         self.shiplist = [self.ship1,self.ship2,self.ship3,self.ship4,self.ship5,self.ship6,self.ship7,self.ship8]
         self.player1 = players.Player("Player1",globals.green,globals.bright_green)
         self.player2 = players.Player("Player2",globals.red,globals.bright_red)
@@ -53,14 +53,23 @@ class Game:
             self.player2.Turn = True
             self.shiplist[self.shipcnt].Color = self.player1.iColor
             self.shipcnt = 4
+            self.ship1.Steps = 3
+            self.ship2.Steps = 2
+            self.ship3.Steps = 2
+            self.ship4.Steps = 1
             if self.shipcnt in self.deadships:
                 self.shipswitch()
+
   
         else:
             self.player1.Turn = True
             self.player2.Turn = False
             self.shiplist[self.shipcnt].Color = self.player2.iColor
             self.shipcnt = 0
+            self.ship5.Steps = 3
+            self.ship6.Steps = 2
+            self.ship7.Steps = 2
+            self.ship8.Steps = 1
             if self.shipcnt in self.deadships:
                 self.shipswitch()
 
@@ -226,6 +235,8 @@ class Game:
 
                         
                     if event.key == pygame.K_LEFT:
+                        if self.shiplist[self.shipcnt].Steps == 0:
+                            break
                         self.shiplist[self.shipcnt].PosX += -1
                         for i in range(self.shiplist[self.shipcnt].ShipLength):
                             self.curshiplist = self.curshiplist + [(self.shiplist[self.shipcnt].PosX, self.shiplist[self.shipcnt].PosY +i)]
@@ -238,8 +249,12 @@ class Game:
                             self.shiplist[self.shipcnt].PosX += 0
                         else:
                             self.shiplist[self.shipcnt].PosX += -1
+                            self.shiplist[self.shipcnt].Steps -=1
                     if event.key == pygame.K_RIGHT:
+                        if self.shiplist[self.shipcnt].Steps == 0:
+                            break
                         self.shiplist[self.shipcnt].PosX += 1
+                        
                         for i in range(self.shiplist[self.shipcnt].ShipLength):
                             self.curshiplist = self.curshiplist + [(self.shiplist[self.shipcnt].PosX, self.shiplist[self.shipcnt].PosY +i)]
                         self.shiplist[self.shipcnt].PosX -= 1
@@ -250,7 +265,10 @@ class Game:
                             self.shiplist[self.shipcnt].PosX += 0
                         else:
                             self.shiplist[self.shipcnt].PosX += 1
+                            self.shiplist[self.shipcnt].Steps -=1
                     if event.key == pygame.K_UP:
+                        if self.shiplist[self.shipcnt].Steps == 0:
+                            break
                         self.shiplist[self.shipcnt].PosY += -1
                         self.curshiplist = [(self.shiplist[self.shipcnt].PosX, self.shiplist[self.shipcnt].PosY)]
                         self.shiplist[self.shipcnt].PosY += 1                      
@@ -260,7 +278,10 @@ class Game:
                             self.shiplist[self.shipcnt].PosY += 0
                         else:
                             self.shiplist[self.shipcnt].PosY += -1
+                            self.shiplist[self.shipcnt].Steps -=1
                     if event.key == pygame.K_DOWN:
+                        if self.shiplist[self.shipcnt].Steps == 0:
+                            break
                         self.shiplist[self.shipcnt].PosY += 1
                         self.curshiplist = [(self.shiplist[self.shipcnt].PosX, (self.shiplist[self.shipcnt].PosY) + self.shiplist[self.shipcnt].ShipLength -1)]
                         self.shiplist[self.shipcnt].PosY += -1 
@@ -271,6 +292,7 @@ class Game:
                             self.shiplist[self.shipcnt].PosY += 0
                         else:
                             self.shiplist[self.shipcnt].PosY += 1
+                            self.shiplist[self.shipcnt].Steps -=1
                           
                 while state == PAUSE:
                     globals.gameDisplay.blit(pause_text,(300,300))

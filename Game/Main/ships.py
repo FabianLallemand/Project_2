@@ -2,13 +2,13 @@ import pygame, playboard
 
 
 class Ship:
-    def __init__(self, color, length, x, y, middle , speed, board, health, range,xylist):
+    def __init__(self, color, length, x, y, middle , steps, board, health, range,xylist):
         self.Color = color
         self.ShipLength = length
         self.PosX = x
         self.PosY = y 
         self.Middle = middle
-        self.Speed = speed
+        self.Steps = steps
         self.Board = board
         self.Health = health
         self.Range = range
