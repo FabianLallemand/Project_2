@@ -7,14 +7,14 @@ class Game:
     def __init__(self):
 
         self.board = playboard.Grid(globals.gameDisplay, globals.white,1)
-        self.ship1 = ships.Ship(globals.green, 4, 0,1,2,3,self.board,2,2,[],"Furgo Saltire")
-        self.ship2 = ships.Ship(globals.green, 4, 0,1,2,2,self.board,3,3,[],"Silver Whisper")
-        self.ship3 = ships.Ship(globals.green, 4, 0,1,2,2,self.board,3,3,[],"Windsurf")
-        self.ship4 = ships.Ship(globals.green, 4, 0,1,2,1,self.board,4,4,[],"Merapi")
-        self.ship5 = ships.Ship(globals.red, 4, 0,1,2,3,self.board,2,2,[],"Santa Bettina")
-        self.ship6 = ships.Ship(globals.red, 4, 0,1,2,2,self.board,3,3,[],"Sea Spirit")
-        self.ship7 = ships.Ship(globals.red, 4, 0,1,2,2,self.board,3,3,[],"Intensity")
-        self.ship8 = ships.Ship(globals.red, 4, 0,1,2,1,self.board,4,4,[],"Amadea")
+        self.ship1 = ships.Ship(globals.green, 4, 0,1,0,3,self.board,2,2,[],"Furgo Saltire",True)
+        self.ship2 = ships.Ship(globals.green, 4, 0,1,1,2,self.board,3,3,[],"Silver Whisper",True)
+        self.ship3 = ships.Ship(globals.green, 4, 0,1,1,2,self.board,3,3,[],"Windsurf",True)
+        self.ship4 = ships.Ship(globals.green, 4, 0,1,1,1,self.board,4,4,[],"Merapi",True)
+        self.ship5 = ships.Ship(globals.red, 4, 0,1,0,3,self.board,2,2,[],"Santa Bettina",True)
+        self.ship6 = ships.Ship(globals.red, 4, 0,1,1,2,self.board,3,3,[],"Sea Spirit",True)
+        self.ship7 = ships.Ship(globals.red, 4, 0,1,1,2,self.board,3,3,[],"Intensity",True)
+        self.ship8 = ships.Ship(globals.red, 4, 0,1,1,1,self.board,4,4,[],"Amadea",True)
         self.shiplist = [self.ship1,self.ship2,self.ship3,self.ship4,self.ship5,self.ship6,self.ship7,self.ship8]
         self.player1 = players.Player("Player1",globals.green,globals.bright_green)
         self.player2 = players.Player("Player2",globals.red,globals.bright_red)
@@ -34,7 +34,55 @@ class Game:
 
 
     def shiprotate(self):
-        pass
+
+        if self.shiplist[self.shipcnt].Offensive:
+            self.shiplist[self.shipcnt].PosX -= self.shiplist[self.shipcnt].Middle
+            self.shiplist[self.shipcnt].PosY += self.shiplist[self.shipcnt].Middle
+            for i in range(self.shiplist[self.shipcnt].ShipLength):
+                self.curshiplist = self.curshiplist + [(self.shiplist[self.shipcnt].PosX + i, self.shiplist[self.shipcnt].PosY)]
+            self.shiplist[self.shipcnt].PosX += self.shiplist[self.shipcnt].Middle
+            self.shiplist[self.shipcnt].PosY -= self.shiplist[self.shipcnt].Middle
+            if set(self.shipxylist1) & set(self.curshiplist) == set():
+                self.shiplist[self.shipcnt].Offensive = False
+                self.shiplist[self.shipcnt].Range += 1
+                self.shiplist[self.shipcnt].PosX -= self.shiplist[self.shipcnt].Middle
+                self.shiplist[self.shipcnt].PosY += self.shiplist[self.shipcnt].Middle
+            print(self.curshiplist)
+            print(self.shipxylist1)            
+
+        else:
+            self.shiplist[self.shipcnt].PosX += self.shiplist[self.shipcnt].Middle
+            self.shiplist[self.shipcnt].PosY -= self.shiplist[self.shipcnt].Middle
+            for i in range(self.shiplist[self.shipcnt].ShipLength):
+                self.curshiplist = self.curshiplist + [(self.shiplist[self.shipcnt].PosX, self.shiplist[self.shipcnt].PosY + i)]
+            self.shiplist[self.shipcnt].PosX -= self.shiplist[self.shipcnt].Middle
+            self.shiplist[self.shipcnt].PosY += self.shiplist[self.shipcnt].Middle
+            if set(self.shipxylist1) & set(self.curshiplist) == set():
+                self.shiplist[self.shipcnt].Offensive = True
+                self.shiplist[self.shipcnt].Range -= 1
+                self.shiplist[self.shipcnt].PosX += self.shiplist[self.shipcnt].Middle
+                self.shiplist[self.shipcnt].PosY -= self.shiplist[self.shipcnt].Middle
+    def shipswitch(self):
+ 
+        if self.shipcnt < 3 and self.player1.Turn:
+            self.shiplist[self.shipcnt].Color = self.player1.iColor
+            self.shipcnt += 1
+            self.shiplist[self.shipcnt].Color = self.player1.aColor
+        elif self.shipcnt == 3 and self.player1.Turn:
+            self.shiplist[self.shipcnt].Color = self.player1.iColor
+            self.shipcnt = 0
+            self.shiplist[self.shipcnt].Color = self.player1.aColor
+        elif self.shipcnt <7 and self.player2.Turn:
+            self.shiplist[self.shipcnt].Color = self.player2.iColor
+            self.shipcnt += 1
+            self.shiplist[self.shipcnt].Color = self.player2.aColor
+        elif self.shipcnt == 7 and self.player2.Turn:
+            self.shiplist[self.shipcnt].Color = self.player2.iColor
+            self.shipcnt = 4
+            self.shiplist[self.shipcnt].Color = self.player2.aColor
+ 
+        if self.shipcnt in self.deadships:
+            self.shipswitch()        
     def turn(self):
         for x in range(0,8):
             self.shiplist[x].Shots = 1
@@ -68,14 +116,20 @@ class Game:
 
     def fire(self):
         if ((self.player1.Turn and self.player1.Shots != 0) or (self.player2.Turn and self.player2.Shots != 0)) and self.shiplist[self.shipcnt].Shots != 0:
-
+            self.curshiplist = []
             self.firecnt = 0
-
-            for i in range(self.shiplist[self.shipcnt].ShipLength):
-                for x in range(1, 1 + self.shiplist[self.shipcnt].ShipLength):
-                    self.curshiplist = self.curshiplist + [(self.shiplist[self.shipcnt].PosX + x, self.shiplist[self.shipcnt].PosY +i)] + [(self.shiplist[self.shipcnt].PosX - x, self.shiplist[self.shipcnt].PosY +i)]
-
-                self.curshiplist = self.curshiplist + [(self.shiplist[self.shipcnt].PosX, self.shiplist[self.shipcnt].PosY + self.shiplist[self.shipcnt].ShipLength+i)] + [(self.shiplist[self.shipcnt].PosX, self.shiplist[self.shipcnt].PosY -1 - i)]
+            if self.shiplist[self.shipcnt].Offensive:
+                for i in range(self.shiplist[self.shipcnt].ShipLength):
+                    for x in range(1, 1 + self.shiplist[self.shipcnt].ShipLength):
+                        self.curshiplist = self.curshiplist + [(self.shiplist[self.shipcnt].PosX + x, self.shiplist[self.shipcnt].PosY +i)] + [(self.shiplist[self.shipcnt].PosX - x, self.shiplist[self.shipcnt].PosY +i)]
+                    self.curshiplist = self.curshiplist + [(self.shiplist[self.shipcnt].PosX, self.shiplist[self.shipcnt].PosY + self.shiplist[self.shipcnt].ShipLength+i)] + [(self.shiplist[self.shipcnt].PosX, self.shiplist[self.shipcnt].PosY -1 - i)]
+            
+            else:
+                for i in range(self.shiplist[self.shipcnt].ShipLength):
+                    for x in range(1, 1 + self.shiplist[self.shipcnt].Range):
+                        self.curshiplist = self.curshiplist + [(self.shiplist[self.shipcnt].PosX + i, self.shiplist[self.shipcnt].PosY +x)] + [(self.shiplist[self.shipcnt].PosX + i, self.shiplist[self.shipcnt].PosY -x)]
+            print(self.curshiplist)    
+                        
             if self.player1.Turn:
                 self.firecnt += 4
             if set(self.shiplist[self.firecnt].XYlist +self.shiplist[self.firecnt+1].XYlist +self.shiplist[self.firecnt+2].XYlist +self.shiplist[self.firecnt+3].XYlist) & set(self.curshiplist) != set():
@@ -203,11 +257,54 @@ class Game:
             for x in range(0,8):
                 self.shiplist[x].XYlist = []
             for i in range(4):
+                 
                 for c in range(self.shiplist[i].ShipLength):
-                    self.shipxylist1 = self.shipxylist1 + [(self.shiplist[i].PosX, self.shiplist[i].PosY +c)]
-                    self.shiplist[i].XYlist = self.shiplist[i].XYlist + [(self.shiplist[i].PosX, self.shiplist[i].PosY +c)]
-                    self.shipxylist1 = self.shipxylist1 + [(self.shiplist[4+i].PosX, self.shiplist[4+i].PosY +c)]
-                    self.shiplist[4+i].XYlist = self.shiplist[4+i].XYlist + [(self.shiplist[4+i].PosX, self.shiplist[4+i].PosY +c)]
+                    if (self.player1.Turn and i != self.shipcnt):
+                        if self.shiplist[i].Offensive:
+                            self.shipxylist1 = self.shipxylist1 + [(self.shiplist[i].PosX, self.shiplist[i].PosY +c)]
+                            self.shiplist[i].XYlist = self.shiplist[i].XYlist + [(self.shiplist[i].PosX, self.shiplist[i].PosY +c)]
+                        else:
+                            self.shipxylist1 = self.shipxylist1 + [(self.shiplist[i].PosX + c, self.shiplist[i].PosY)]
+                            self.shiplist[i].XYlist = self.shiplist[i].XYlist + [(self.shiplist[i].PosX +c, self.shiplist[i].PosY)]
+
+                        if self.shiplist[4+i].Offensive:
+                            self.shipxylist1 = self.shipxylist1 + [(self.shiplist[4+i].PosX, self.shiplist[4+i].PosY +c)]
+                            self.shiplist[4+i].XYlist = self.shiplist[4+i].XYlist + [(self.shiplist[4+i].PosX, self.shiplist[4+i].PosY +c)]
+                        else:
+                            self.shipxylist1 = self.shipxylist1 + [(self.shiplist[4+i].PosX +c, self.shiplist[4+i].PosY)]
+                            self.shiplist[4+i].XYlist = self.shiplist[4+i].XYlist + [(self.shiplist[4+i].PosX +c, self.shiplist[4+i].PosY)]
+
+                    elif self.player1.Turn:
+                        if self.shiplist[4+i].Offensive:
+                            self.shipxylist1 = self.shipxylist1 + [(self.shiplist[4+i].PosX, self.shiplist[4+i].PosY +c)]
+                            self.shiplist[4+i].XYlist = self.shiplist[4+i].XYlist + [(self.shiplist[4+i].PosX, self.shiplist[4+i].PosY +c)]
+                        else:
+                            self.shipxylist1 = self.shipxylist1 + [(self.shiplist[4+i].PosX +c, self.shiplist[4+i].PosY)]
+                            self.shiplist[4+i].XYlist = self.shiplist[4+i].XYlist + [(self.shiplist[4+i].PosX +c, self.shiplist[4+i].PosY)]
+
+                    if (self.player2.Turn and i+4 != self.shipcnt):
+                        if self.shiplist[i].Offensive:
+                            self.shipxylist1 = self.shipxylist1 + [(self.shiplist[i].PosX, self.shiplist[i].PosY +c)]
+                            self.shiplist[i].XYlist = self.shiplist[i].XYlist + [(self.shiplist[i].PosX, self.shiplist[i].PosY +c)]
+                        else:
+                            self.shipxylist1 = self.shipxylist1 + [(self.shiplist[i].PosX + c, self.shiplist[i].PosY)]
+                            self.shiplist[i].XYlist = self.shiplist[i].XYlist + [(self.shiplist[i].PosX +c, self.shiplist[i].PosY)]
+                        
+                        if self.shiplist[4+i].Offensive:
+                            self.shipxylist1 = self.shipxylist1 + [(self.shiplist[4+i].PosX, self.shiplist[4+i].PosY +c)]
+                            self.shiplist[4+i].XYlist = self.shiplist[4+i].XYlist + [(self.shiplist[4+i].PosX, self.shiplist[4+i].PosY +c)]
+                        else:
+                            self.shipxylist1 = self.shipxylist1 + [(self.shiplist[4+i].PosX +c, self.shiplist[4+i].PosY)]
+                            self.shiplist[4+i].XYlist = self.shiplist[4+i].XYlist + [(self.shiplist[4+i].PosX +c, self.shiplist[4+i].PosY)]
+
+                    elif self.player2.Turn:
+                        if self.shiplist[i].Offensive:
+                            self.shipxylist1 = self.shipxylist1 + [(self.shiplist[i].PosX, self.shiplist[i].PosY +c)]
+                            self.shiplist[i].XYlist = self.shiplist[i].XYlist + [(self.shiplist[i].PosX, self.shiplist[i].PosY +c)]
+                        else:
+                            self.shipxylist1 = self.shipxylist1 + [(self.shiplist[i].PosX + c, self.shiplist[i].PosY)]
+                            self.shiplist[i].XYlist = self.shiplist[i].XYlist + [(self.shiplist[i].PosX +c, self.shiplist[i].PosY)]
+
 
             if self.player1.Turn:
                 self.shiplist[self.shipcnt].Color = self.player1.aColor
@@ -300,7 +397,7 @@ class Game:
 
                         
                     if event.key == pygame.K_LEFT:
-                        if self.shiplist[self.shipcnt].Steps == 0 or self.attackcnt != 0:
+                        if self.shiplist[self.shipcnt].Steps == 0 or self.attackcnt != 0 or not self.shiplist[self.shipcnt].Offensive:
                             break
                         self.shiplist[self.shipcnt].PosX += -1
                         for i in range(self.shiplist[self.shipcnt].ShipLength):
@@ -316,7 +413,7 @@ class Game:
                             self.shiplist[self.shipcnt].PosX += -1
                             self.shiplist[self.shipcnt].Steps -=1
                     if event.key == pygame.K_RIGHT:
-                        if self.shiplist[self.shipcnt].Steps == 0 or self.attackcnt != 0:
+                        if self.shiplist[self.shipcnt].Steps == 0 or self.attackcnt != 0 or not self.shiplist[self.shipcnt].Offensive:
                             break
                         self.shiplist[self.shipcnt].PosX += 1
                         
@@ -332,7 +429,7 @@ class Game:
                             self.shiplist[self.shipcnt].PosX += 1
                             self.shiplist[self.shipcnt].Steps -=1
                     if event.key == pygame.K_UP:
-                        if self.shiplist[self.shipcnt].Steps == 0 or self.attackcnt != 0:
+                        if self.shiplist[self.shipcnt].Steps == 0 or self.attackcnt != 0 or not self.shiplist[self.shipcnt].Offensive:
                             break
                         self.shiplist[self.shipcnt].PosY += -1
                         self.curshiplist = [(self.shiplist[self.shipcnt].PosX, self.shiplist[self.shipcnt].PosY)]
@@ -345,7 +442,7 @@ class Game:
                             self.shiplist[self.shipcnt].PosY += -1
                             self.shiplist[self.shipcnt].Steps -=1
                     if event.key == pygame.K_DOWN:
-                        if self.shiplist[self.shipcnt].Steps == 0 or self.attackcnt != 0:
+                        if self.shiplist[self.shipcnt].Steps == 0 or self.attackcnt != 0 or not self.shiplist[self.shipcnt].Offensive:
                             break
                         self.shiplist[self.shipcnt].PosY += 1
                         self.curshiplist = [(self.shiplist[self.shipcnt].PosX, (self.shiplist[self.shipcnt].PosY) + self.shiplist[self.shipcnt].ShipLength -1)]

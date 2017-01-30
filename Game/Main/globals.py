@@ -10,6 +10,7 @@ def quitgame():
 
 
 shipdrawn = False
+
 display_width = 800
 display_height = 600
 display_resolution = (display_width,display_height)
