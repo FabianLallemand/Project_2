@@ -115,38 +115,39 @@ class Game:
 
 
     def fire(self):
-        if ((self.player1.Turn and self.player1.Shots != 0) or (self.player2.Turn and self.player2.Shots != 0)) and self.shiplist[self.shipcnt].Shots != 0:
-            self.curshiplist = []
-            self.firecnt = 0
-            if self.shiplist[self.shipcnt].Offensive:
-                for i in range(self.shiplist[self.shipcnt].ShipLength):
-                    for x in range(1, 1 + self.shiplist[self.shipcnt].ShipLength):
-                        self.curshiplist = self.curshiplist + [(self.shiplist[self.shipcnt].PosX + x, self.shiplist[self.shipcnt].PosY +i)] + [(self.shiplist[self.shipcnt].PosX - x, self.shiplist[self.shipcnt].PosY +i)]
-                    self.curshiplist = self.curshiplist + [(self.shiplist[self.shipcnt].PosX, self.shiplist[self.shipcnt].PosY + self.shiplist[self.shipcnt].ShipLength+i)] + [(self.shiplist[self.shipcnt].PosX, self.shiplist[self.shipcnt].PosY -1 - i)]
+        if self.firecnt == 0:
+            if ((self.player1.Turn and self.player1.Shots != 0) or (self.player2.Turn and self.player2.Shots != 0)) and self.shiplist[self.shipcnt].Shots != 0:
+                self.curshiplist = []
+                self.firecnt = 0
+                if self.shiplist[self.shipcnt].Offensive:
+                    for i in range(self.shiplist[self.shipcnt].ShipLength):
+                        for x in range(1, 1 + self.shiplist[self.shipcnt].ShipLength):
+                            self.curshiplist = self.curshiplist + [(self.shiplist[self.shipcnt].PosX + x, self.shiplist[self.shipcnt].PosY +i)] + [(self.shiplist[self.shipcnt].PosX - x, self.shiplist[self.shipcnt].PosY +i)]
+                        self.curshiplist = self.curshiplist + [(self.shiplist[self.shipcnt].PosX, self.shiplist[self.shipcnt].PosY + self.shiplist[self.shipcnt].ShipLength+i)] + [(self.shiplist[self.shipcnt].PosX, self.shiplist[self.shipcnt].PosY -1 - i)]
             
-            else:
-                for i in range(self.shiplist[self.shipcnt].ShipLength):
-                    for x in range(1, 1 + self.shiplist[self.shipcnt].Range):
-                        self.curshiplist = self.curshiplist + [(self.shiplist[self.shipcnt].PosX + i, self.shiplist[self.shipcnt].PosY +x)] + [(self.shiplist[self.shipcnt].PosX + i, self.shiplist[self.shipcnt].PosY -x)]
-            print(self.curshiplist)    
+                else:
+                    for i in range(self.shiplist[self.shipcnt].ShipLength):
+                        for x in range(1, 1 + self.shiplist[self.shipcnt].Range):
+                            self.curshiplist = self.curshiplist + [(self.shiplist[self.shipcnt].PosX + i, self.shiplist[self.shipcnt].PosY +x)] + [(self.shiplist[self.shipcnt].PosX + i, self.shiplist[self.shipcnt].PosY -x)]
+                print(self.curshiplist)    
                         
-            if self.player1.Turn:
-                self.firecnt += 4
-            if set(self.shiplist[self.firecnt].XYlist +self.shiplist[self.firecnt+1].XYlist +self.shiplist[self.firecnt+2].XYlist +self.shiplist[self.firecnt+3].XYlist) & set(self.curshiplist) != set():
-                if set(self.shiplist[self.firecnt].XYlist) & set(self.curshiplist) != set() and self.shiplist[self.firecnt].Health > 0:
-                    self.shipsinrange = self.shipsinrange + [self.firecnt]
-                    self.attackcnt += 1
-                if set(self.shiplist[self.firecnt+1].XYlist) & set(self.curshiplist) != set() and self.shiplist[self.firecnt+1].Health > 0:
-                    self.shipsinrange = self.shipsinrange + [self.firecnt + 1]
-                    self.attackcnt += 1
-                if set(self.shiplist[self.firecnt+2].XYlist) & set(self.curshiplist) != set() and self.shiplist[self.firecnt+2].Health > 0:
-                    self.shipsinrange = self.shipsinrange + [self.firecnt + 2]
-                    self.attackcnt += 1
-                if set(self.shiplist[self.firecnt+3].XYlist) & set(self.curshiplist) != set() and self.shiplist[self.firecnt+3].Health > 0:
-                    self.shipsinrange = self.shipsinrange + [self.firecnt + 3]
-                    self.attackcnt += 1
-            pygame.display.update()
-            self.curshiplist = []
+                if self.player1.Turn:
+                    self.firecnt += 4
+                if set(self.shiplist[self.firecnt].XYlist +self.shiplist[self.firecnt+1].XYlist +self.shiplist[self.firecnt+2].XYlist +self.shiplist[self.firecnt+3].XYlist) & set(self.curshiplist) != set():
+                    if set(self.shiplist[self.firecnt].XYlist) & set(self.curshiplist) != set() and self.shiplist[self.firecnt].Health > 0:
+                        self.shipsinrange = self.shipsinrange + [self.firecnt]
+                        self.attackcnt += 1
+                    if set(self.shiplist[self.firecnt+1].XYlist) & set(self.curshiplist) != set() and self.shiplist[self.firecnt+1].Health > 0:
+                        self.shipsinrange = self.shipsinrange + [self.firecnt + 1]
+                        self.attackcnt += 1
+                    if set(self.shiplist[self.firecnt+2].XYlist) & set(self.curshiplist) != set() and self.shiplist[self.firecnt+2].Health > 0:
+                        self.shipsinrange = self.shipsinrange + [self.firecnt + 2]
+                        self.attackcnt += 1
+                    if set(self.shiplist[self.firecnt+3].XYlist) & set(self.curshiplist) != set() and self.shiplist[self.firecnt+3].Health > 0:
+                        self.shipsinrange = self.shipsinrange + [self.firecnt + 3]
+                        self.attackcnt += 1
+                pygame.display.update()
+                self.curshiplist = []
         
     def damage(self):
         self.shipsinrange = []
