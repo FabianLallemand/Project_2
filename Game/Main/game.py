@@ -7,7 +7,7 @@ class Game:
     def __init__(self):
 
         self.board = playboard.Grid(globals.gameDisplay, globals.white,1)
-        self.ship1 = ships.Ship(globals.green, 4, 0,1,2,100,self.board,2,2,[])
+        self.ship1 = ships.Ship(globals.green, 4, 0,1,2,3,self.board,2,2,[])
         self.ship2 = ships.Ship(globals.green, 4, 0,1,2,2,self.board,3,3,[])
         self.ship3 = ships.Ship(globals.green, 4, 0,1,2,2,self.board,3,3,[])
         self.ship4 = ships.Ship(globals.green, 4, 0,1,2,1,self.board,4,4,[])
@@ -350,6 +350,8 @@ class Game:
             self.ship6 = self.shiplist[5]
             self.ship7 = self.shiplist[6]
             self.ship8 = self.shiplist[7]
+
+            self.deadships = []
 
             if self.ship1.Health <= 0:
                 self.ship1.Color = globals.brown
