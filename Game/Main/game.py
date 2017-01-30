@@ -26,6 +26,7 @@ class Game:
         self.damageship = 0 
         self.deadships = []
         self.GameStopped = False
+        self.attackcnt = 0
 
         #Database connections opzetten
         self.db = mysql.connect(user='battleport', password='ditiseengeheim', database='highscores')
@@ -87,7 +88,7 @@ class Game:
         if ((self.player1.Turn and self.player1.Shots != 0) or (self.player2.Turn and self.player2.Shots != 0)) and self.shiplist[self.shipcnt].Shots != 0:
 
             self.firecnt = 0
-            fbuty = 100
+
             for i in range(self.shiplist[self.shipcnt].ShipLength):
                 for x in range(1, 1 + self.shiplist[self.shipcnt].ShipLength):
                     self.curshiplist = self.curshiplist + [(self.shiplist[self.shipcnt].PosX + x, self.shiplist[self.shipcnt].PosY +i)] + [(self.shiplist[self.shipcnt].PosX - x, self.shiplist[self.shipcnt].PosY +i)]
@@ -98,18 +99,16 @@ class Game:
             if set(self.shiplist[self.firecnt].XYlist +self.shiplist[self.firecnt+1].XYlist +self.shiplist[self.firecnt+2].XYlist +self.shiplist[self.firecnt+3].XYlist) & set(self.curshiplist) != set():
                 if set(self.shiplist[self.firecnt].XYlist) & set(self.curshiplist) != set() and self.shiplist[self.firecnt].Health > 0:
                     self.shipsinrange = self.shipsinrange + [self.firecnt]
-                    fbuty += 60
+                    self.attackcnt += 1
                 if set(self.shiplist[self.firecnt+1].XYlist) & set(self.curshiplist) != set() and self.shiplist[self.firecnt+1].Health > 0:
                     self.shipsinrange = self.shipsinrange + [self.firecnt + 1]
-
-                    fbuty += 60
+                    self.attackcnt += 1
                 if set(self.shiplist[self.firecnt+2].XYlist) & set(self.curshiplist) != set() and self.shiplist[self.firecnt+2].Health > 0:
                     self.shipsinrange = self.shipsinrange + [self.firecnt + 2]
-
-                    fbuty += 60
+                    self.attackcnt += 1
                 if set(self.shiplist[self.firecnt+3].XYlist) & set(self.curshiplist) != set() and self.shiplist[self.firecnt+3].Health > 0:
                     self.shipsinrange = self.shipsinrange + [self.firecnt + 3]
-
+                    self.attackcnt += 1
             pygame.display.update()
             self.curshiplist = []
         
@@ -121,6 +120,9 @@ class Game:
         if self.player2.Turn:
             self.player2.Shots -= 1
         self.shiplist[self.shipcnt].Shots -= 1
+        self.firecnt = 0
+        self.attackcnt = 0
+        self.damageship = 0
 
 
     def game_loop(self):
@@ -256,7 +258,7 @@ class Game:
 
                         
                     if event.key == pygame.K_LEFT:
-                        if self.shiplist[self.shipcnt].Steps == 0:
+                        if self.shiplist[self.shipcnt].Steps == 0 or self.attackcnt != 0:
                             break
                         self.shiplist[self.shipcnt].PosX += -1
                         for i in range(self.shiplist[self.shipcnt].ShipLength):
@@ -272,7 +274,7 @@ class Game:
                             self.shiplist[self.shipcnt].PosX += -1
                             self.shiplist[self.shipcnt].Steps -=1
                     if event.key == pygame.K_RIGHT:
-                        if self.shiplist[self.shipcnt].Steps == 0:
+                        if self.shiplist[self.shipcnt].Steps == 0 or self.attackcnt != 0:
                             break
                         self.shiplist[self.shipcnt].PosX += 1
                         
@@ -288,7 +290,7 @@ class Game:
                             self.shiplist[self.shipcnt].PosX += 1
                             self.shiplist[self.shipcnt].Steps -=1
                     if event.key == pygame.K_UP:
-                        if self.shiplist[self.shipcnt].Steps == 0:
+                        if self.shiplist[self.shipcnt].Steps == 0 or self.attackcnt != 0:
                             break
                         self.shiplist[self.shipcnt].PosY += -1
                         self.curshiplist = [(self.shiplist[self.shipcnt].PosX, self.shiplist[self.shipcnt].PosY)]
@@ -301,7 +303,7 @@ class Game:
                             self.shiplist[self.shipcnt].PosY += -1
                             self.shiplist[self.shipcnt].Steps -=1
                     if event.key == pygame.K_DOWN:
-                        if self.shiplist[self.shipcnt].Steps == 0:
+                        if self.shiplist[self.shipcnt].Steps == 0 or self.attackcnt != 0:
                             break
                         self.shiplist[self.shipcnt].PosY += 1
                         self.curshiplist = [(self.shiplist[self.shipcnt].PosX, (self.shiplist[self.shipcnt].PosY) + self.shiplist[self.shipcnt].ShipLength -1)]
@@ -326,23 +328,30 @@ class Game:
             
             globals.gameDisplay.fill(globals.black)
             self.board = playboard.Grid(globals.gameDisplay, globals.white,1)
-            text.button("End turn",675,25,100,50,globals.blue,globals.bright_blue,self.turn)
-            fbuty = 100
+            text.button("End turn",650,25,140,50,globals.blue,globals.bright_blue,self.turn)
+            text.button("Fire",650,100,140,50,globals.red,globals.bright_red,self.fire)
+            fbuty = 180
+            
             if self.firecnt in self.shipsinrange:
                 self.damageship = 0 + self.firecnt
-                text.button("Ship 1",675,fbuty,100,50,globals.blue,globals.bright_blue,self.damage)
+                text.button("",650,fbuty,140,50,globals.blue,globals.bright_blue,self.damage)
                 fbuty += 60
+                
             if self.firecnt+1 in self.shipsinrange:
                 self.damageship = 1 + self.firecnt
-                text.button("Ship 2",675,fbuty,100,50,globals.blue,globals.bright_blue,self.damage)
+                text.button("",650,fbuty,140,50,globals.blue,globals.bright_blue,self.damage)
                 fbuty += 60
+
             if self.firecnt+2 in self.shipsinrange:
                 self.damageship = 2 + self.firecnt
-                text.button("Ship 3",675,fbuty,100,50,globals.blue,globals.bright_blue,self.damage)
+                text.button("",650,fbuty,140,50,globals.blue,globals.bright_blue,self.damage)
                 fbuty += 60
+                
             if self.firecnt +3 in self.shipsinrange:
                 self.damageship = 3 + self.firecnt  
-                text.button("Ship 4",675,fbuty,100,50,globals.blue,globals.bright_blue,self.damage)
+                text.button("",650,fbuty,140,50,globals.blue,globals.bright_blue,self.damage)
+                
+
             for x in range(0,8):
                 self.shiplist[x].Board = self.board
 
@@ -415,7 +424,19 @@ class Game:
             currentshipdamage = globals.infoText.render("Damage: 1", True, globals.white)
             currentshipshots = globals.infoText.render("Shots left: " + str(self.shiplist[self.shipcnt].Shots), True, globals.white)
             currentshipsteps = globals.infoText.render("Steps left: " + str(self.shiplist[self.shipcnt].Steps), True, globals.white)
+            fbuty = 180
+            for i in range(0,self.attackcnt):
 
+                
+                attshipname = globals.infoText.render("Name: " + str(self.shiplist[self.shipsinrange[i]].Name), True, globals.white)
+                attshiphp = globals.infoText.render("HP: " + str(self.shiplist[self.shipsinrange[i]].Health), True, globals.white)
+                attshipxy = globals.infoText.render("Position: (" + str(self.shiplist[self.shipsinrange[i]].PosX) + " , " + str(self.shiplist[self.shipsinrange[i]].PosY) + ")", True, globals.white)
+
+
+                globals.gameDisplay.blit(attshipname, (655 , fbuty+2))
+                globals.gameDisplay.blit(attshiphp,(655, fbuty+18))
+                globals.gameDisplay.blit(attshipxy, (655, fbuty + 34))
+                fbuty += 60
 
             pygame.draw.rect(globals.gameDisplay, globals.white, (statsx, statsy , 140 , 140), 1)
             globals.gameDisplay.blit(currentshipname, (statsx +5 , statsy+10))

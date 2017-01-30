@@ -22,7 +22,7 @@ def game_intro():
 
         #Title        
         TextSurf, TextRect = text.text_objects("Battleport", globals.largeText)
-        TextRect.center = ((300),(150)) 
+        TextRect.center = ((300),(55)) 
         globals.gameDisplay.blit(TextSurf, TextRect)
         
         mouse = pygame.mouse.get_pos()
