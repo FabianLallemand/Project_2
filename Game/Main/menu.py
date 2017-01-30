@@ -30,7 +30,7 @@ def game_intro():
         mouse = pygame.mouse.get_pos()
 
         text.button("Start Game!",50,450,100,50,globals.green,globals.bright_green,game.program)
-        text.button("Settings",250,450,100,50,globals.grey,globals.bright_grey,None)
+        text.button("Highscore",250,450,100,50,globals.grey,globals.bright_grey,highscores)
         text.button("Quit Game!",450,450,100,50,globals.red,globals.bright_red,globals.quitgame)
         text.button("Game Rules",650,450,100,50,globals.blue,globals.bright_blue,instructions)
 
@@ -64,3 +64,22 @@ def instructions():
 
         pygame.display.update()
         globals.clock.tick(60)
+
+def highscores():
+    hscore = True
+
+
+    while hscore:
+        for event in pygame.event.get():
+
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                quit()
+        mouse = pygame.mouse.get_pos()
+        globals.gameDisplay.fill(globals.white)
+
+
+        text.button("Back!",650,50,100,50,globals.orange,globals.bright_red,game_intro)
+        
+        globals.clock.tick(60)
+        pygame.display.update()
