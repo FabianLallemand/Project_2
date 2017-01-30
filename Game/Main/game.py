@@ -38,17 +38,20 @@ class Game:
         if self.shiplist[self.shipcnt].Offensive:
             self.shiplist[self.shipcnt].PosX -= self.shiplist[self.shipcnt].Middle
             self.shiplist[self.shipcnt].PosY += self.shiplist[self.shipcnt].Middle
-            for i in range(self.shiplist[self.shipcnt].ShipLength):
-                self.curshiplist = self.curshiplist + [(self.shiplist[self.shipcnt].PosX + i, self.shiplist[self.shipcnt].PosY)]
-            self.shiplist[self.shipcnt].PosX += self.shiplist[self.shipcnt].Middle
-            self.shiplist[self.shipcnt].PosY -= self.shiplist[self.shipcnt].Middle
-            if set(self.shipxylist1) & set(self.curshiplist) == set():
-                self.shiplist[self.shipcnt].Offensive = False
-                self.shiplist[self.shipcnt].Range += 1
-                self.shiplist[self.shipcnt].PosX -= self.shiplist[self.shipcnt].Middle
-                self.shiplist[self.shipcnt].PosY += self.shiplist[self.shipcnt].Middle
-            print(self.curshiplist)
-            print(self.shipxylist1)            
+
+            if self.shiplist[self.shipcnt].PosX + self.shiplist[self.shipcnt].ShipLength <= 21 and self.shiplist[self.shipcnt].PosX > 0:
+                for i in range(self.shiplist[self.shipcnt].ShipLength):
+                    self.curshiplist = self.curshiplist + [(self.shiplist[self.shipcnt].PosX + i, self.shiplist[self.shipcnt].PosY)]
+                self.shiplist[self.shipcnt].PosX += self.shiplist[self.shipcnt].Middle
+                self.shiplist[self.shipcnt].PosY -= self.shiplist[self.shipcnt].Middle
+                if set(self.shipxylist1) & set(self.curshiplist) == set():
+                    self.shiplist[self.shipcnt].Offensive = False
+                    self.shiplist[self.shipcnt].Range += 1
+                    self.shiplist[self.shipcnt].PosX -= self.shiplist[self.shipcnt].Middle
+                    self.shiplist[self.shipcnt].PosY += self.shiplist[self.shipcnt].Middle
+            else:
+                self.shiplist[self.shipcnt].PosX += self.shiplist[self.shipcnt].Middle
+                self.shiplist[self.shipcnt].PosY -= self.shiplist[self.shipcnt].Middle
 
         else:
             self.shiplist[self.shipcnt].PosX += self.shiplist[self.shipcnt].Middle
