@@ -13,6 +13,7 @@ class Ship:
         self.Health = health
         self.Range = range
         self.XYlist = xylist
+        self.Shots = 1
 
     def draw(self):
         for length in range(1, self.ShipLength +1):

@@ -6,7 +6,7 @@ class Player:
         self.Name = name
         self.aColor = acolor
         self.iColor = icolor
-        
+        self.Shots = 2
         self.Cards = []
         self.Turn = False
         self.shipsplaced = 0
