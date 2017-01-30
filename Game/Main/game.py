@@ -32,27 +32,9 @@ class Game:
         self.db = mysql.connect(user='battleport', password='ditiseengeheim', database='highscores')
         self.cursor = self.db.cursor()
 
-    def shipswitch(self):
-        if self.shipcnt < 3 and self.player1.Turn:
-            self.shiplist[self.shipcnt].Color = self.player1.iColor
-            self.shipcnt += 1
-            self.shiplist[self.shipcnt].Color = self.player1.aColor
-        elif self.shipcnt == 3 and self.player1.Turn:
-            self.shiplist[self.shipcnt].Color = self.player1.iColor
-            self.shipcnt = 0
-            self.shiplist[self.shipcnt].Color = self.player1.aColor
-        elif self.shipcnt <7 and self.player2.Turn:
-            self.shiplist[self.shipcnt].Color = self.player2.iColor
-            self.shipcnt += 1
-            self.shiplist[self.shipcnt].Color = self.player2.aColor
-        elif self.shipcnt == 7 and self.player2.Turn:
-            self.shiplist[self.shipcnt].Color = self.player2.iColor
-            self.shipcnt = 4
-            self.shiplist[self.shipcnt].Color = self.player2.aColor
 
-        if self.shipcnt in self.deadships:
-            self.shipswitch()
-
+    def shiprotate(self):
+        pass
     def turn(self):
         for x in range(0,8):
             self.shiplist[x].Shots = 1
@@ -161,10 +143,10 @@ class Game:
                     else:
                         shiplength = 4
                     
-                    mousex1 = int(mouse[0]/20)
-                    if mousex1 == self.shiplist[0].PosX or mousex1 == self.shiplist[1].PosX or mousex1 == self.shiplist[2].PosX or mousex1 == self.shiplist[3].PosX or mousex1 >= 21:
+                    mousex = int(mouse[0]/20)
+                    if mousex == self.shiplist[0].PosX or mousex == self.shiplist[1].PosX or mousex == self.shiplist[2].PosX or mousex == self.shiplist[3].PosX or mousex >= 21:
                         break
-                    self.shiplist[self.player1.shipsplaced].PosX = mousex1
+                    self.shiplist[self.player1.shipsplaced].PosX = mousex
                     self.shiplist[self.player1.shipsplaced].ShipLength = shiplength
                     self.shiplist[self.player1.shipsplaced].PosY = 21 - shiplength
                     self.shiplist[self.player1.shipsplaced].draw()
@@ -196,10 +178,10 @@ class Game:
                     else:
                         shiplength = 4
                     
-                    mousex1 = int(mouse[0]/20)
-                    if mousex1 == self.shiplist[4].PosX or mousex1 == self.shiplist[5].PosX or mousex1 == self.shiplist[6].PosX or mousex1 == self.shiplist[7].PosX or mousex1 >= 21:
+                    mousex = int(mouse[0]/20)
+                    if mousex == self.shiplist[4].PosX or mousex == self.shiplist[5].PosX or mousex == self.shiplist[6].PosX or mousex == self.shiplist[7].PosX or mousex >= 21:
                         break
-                    self.shiplist[4+self.player2.shipsplaced].PosX = mousex1
+                    self.shiplist[4+self.player2.shipsplaced].PosX = mousex
                     self.shiplist[4+self.player2.shipsplaced].ShipLength = shiplength
                     self.shiplist[4+self.player2.shipsplaced].PosY = 1
                     self.shiplist[4+self.player2.shipsplaced].draw()
@@ -232,13 +214,73 @@ class Game:
             else:
                 self.shiplist[self.shipcnt].Color = self.player2.aColor
             for event in pygame.event.get():
+                
+                click = pygame.mouse.get_pressed()
+            
+                if click[0] == 1:
+                    time.sleep(0.2)
+                    mouse = pygame.mouse.get_pos()
+                    
+                    mousex = int(mouse[0]/20)
+                    mousey = int(mouse[1]/20)
+                    mousexy = (mousex, mousey)
+                    if self.player1.Turn:
+                        if mousexy in self.shiplist[0].XYlist:
+                            if 0 in self.deadships:
+                                break
+                            self.shiplist[self.shipcnt].Color = self.player1.iColor
+                            self.shipcnt = 0
+                            self.shiplist[self.shipcnt].Color = self.player1.aColor
+                        if mousexy in self.shiplist[1].XYlist:
+                            if 1 in self.deadships:
+                                break
+                            self.shiplist[self.shipcnt].Color = self.player1.iColor
+                            self.shipcnt = 1
+                            self.shiplist[self.shipcnt].Color = self.player1.aColor
+                        if mousexy in self.shiplist[2].XYlist:
+                            if 2 in self.deadships:
+                                break
+                            self.shiplist[self.shipcnt].Color = self.player1.iColor
+                            self.shipcnt = 2
+                            self.shiplist[self.shipcnt].Color = self.player1.aColor
+                        if mousexy in self.shiplist[3].XYlist:
+                            if 3 in self.deadships:
+                                break
+                            self.shiplist[self.shipcnt].Color = self.player1.iColor
+                            self.shipcnt = 3
+                            self.shiplist[self.shipcnt].Color = self.player1.aColor
+                    if self.player2.Turn:
+                        if mousexy in self.shiplist[4].XYlist:
+                            if 4 in self.deadships:
+                                break
+                            self.shiplist[self.shipcnt].Color = self.player2.iColor
+                            self.shipcnt = 4
+                            self.shiplist[self.shipcnt].Color = self.player2.aColor
+                        if mousexy in self.shiplist[5].XYlist:
+                            if 5 in self.deadships:
+                                break
+                            self.shiplist[self.shipcnt].Color = self.player2.iColor
+                            self.shipcnt = 5
+                            self.shiplist[self.shipcnt].Color = self.player2.aColor
+                        if mousexy in self.shiplist[6].XYlist:
+                            if 6 in self.deadships:
+                                break
+                            self.shiplist[self.shipcnt].Color = self.player2.iColor
+                            self.shipcnt = 6
+                            self.shiplist[self.shipcnt].Color = self.player2.aColor
+                        if mousexy in self.shiplist[7].XYlist:
+                            if 7 in self.deadships:
+                                break
+                            self.shiplist[self.shipcnt].Color = self.player2.iColor
+                            self.shipcnt = 7
+                            self.shiplist[self.shipcnt].Color = self.player2.aColor
                 if event.type == pygame.QUIT:
                     pygame.quit()
                     quit()
                 #Pause key
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_SPACE:
-                        self.shipswitch()
+                        self.shiprotate()
 
 
                     if event.key == pygame.K_f:
