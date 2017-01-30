@@ -23,7 +23,7 @@ class Game:
         self.shipcnt = 0    
         self.shipsinrange = []
         self.firecnt = 0
-        self.damageship = 0
+        self.damageship = 0 
         self.deadships = []
         self.GameStopped = False
 
@@ -395,10 +395,12 @@ class Game:
             if self.ship1.Health == 0 and self.ship2.Health == 0 and self.ship3.Health == 0 and self.ship4.Health == 0:
                 print("Player2 wins")
                 self.cursor.execute("UPDATE score SET points = points + 1 WHERE name = 'Player2'")
+                self.db.commit()
                 self.GameStopped = True
             elif self.ship5.Health == 0 and self.ship6.Health == 0 and self.ship7.Health == 0 and self.ship8.Health == 0:
                 print("Player1 wins")
                 self.cursor.execute("UPDATE score SET points = points + 1 WHERE name = 'Player1'")
+                self.db.commit()
                 self.GameStopped = True
 
 
