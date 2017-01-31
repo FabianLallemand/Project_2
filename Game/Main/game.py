@@ -246,7 +246,7 @@ class Game:
         self.attackcnt = 0
         self.damageship = 0
         self.shiplist[self.shipcnt].Damage = 1
-    
+        (globals.Explosionfx).play()
         
         
         
