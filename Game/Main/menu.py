@@ -22,15 +22,17 @@ def game_intro():
 
         #Title        
         TextSurf, TextRect = text.text_objects("Battleport", globals.largeText)
-        TextRect.center = ((300),(55)) 
+        TextRect.center = ((280),(55)) 
         globals.gameDisplay.blit(TextSurf, TextRect)
         
         mouse = pygame.mouse.get_pos()
 
-        text.button("Start Game!",50,450,100,50,globals.green,globals.bright_green,game.program)
-        text.button("Highscore",250,450,100,50,globals.grey,globals.bright_grey,highscores)
-        text.button("Quit Game!",450,450,100,50,globals.red,globals.bright_red,globals.quitgame)
-        text.button("Game Rules",650,450,100,50,globals.blue,globals.bright_blue,openrules)
+        text.button("Start Game!",75,450,100,50,globals.green,globals.bright_green,game.program)
+        text.button("Highscore",125,525,100,50,globals.grey,globals.bright_orange,highscores)
+        text.button("Game Rules",350,525,100,50,globals.grey,globals.bright_blue,openrules)
+        text.button("Settings",575,525,100,50,globals.grey,globals.bright_grey,None)
+        text.button("Quit Game!",625,450,100,50,globals.red,globals.bright_red,globals.quitgame)
+        text.button("Credits",690,10,100,50,globals.grey,globals.bright_grey,None)
 
         pygame.display.update()
         globals.clock.tick(60)

@@ -1,7 +1,7 @@
 import pygame, globals, time
 
 def text_objects(text, font):
-    textSurface = font.render(text, True, globals.white)
+    textSurface = font.render(text, True, globals.bright_grey)
     #titleSurface = font.render(text, True, globals.white)
     return textSurface, textSurface.get_rect()
 
