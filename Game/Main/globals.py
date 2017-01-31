@@ -66,3 +66,8 @@ extrafuel2 = pygame.image.load('assets/extrafuel2.png')
 extrafuel = pygame.image.load('assets/extrafuel.png')
 rally = pygame.image.load('assets/rally.png')
 adrenalinerush = pygame.image.load('assets/adrenalinerush.png')
+
+#sounds
+Explosionfx = pygame.mixer.Sound("assets/Explosion.ogg")
+MenuSoundfx = pygame.mixer.Sound("assets/MenuSound.ogg")
+Blopfx = pygame.mixer.Sound("assets/Blop.ogg")

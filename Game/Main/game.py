@@ -2,6 +2,7 @@ import pygame, globals, text, ships, time, playboard, players, random, cards, ca
 
 
 pygame.init()
+pygame.mixer.init()
 
 class Game:
     def __init__(self):
@@ -245,7 +246,8 @@ class Game:
         self.attackcnt = 0
         self.damageship = 0
         self.shiplist[self.shipcnt].Damage = 1
-    
+        (globals.Explosionfx).play()
+        
         
         
     def FMJ(self):
@@ -432,6 +434,7 @@ class Game:
                 if click[0] == 1:
                     time.sleep(0.2)
                     mouse = pygame.mouse.get_pos()
+                    #(globals.Blopfx).play()
 
                     if self.player1.shipsplaced == 0:
                         shiplength = 2
