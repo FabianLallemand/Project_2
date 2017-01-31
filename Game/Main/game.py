@@ -59,10 +59,10 @@ class Game:
         self.card19 = cards.Cards("Allu. Hull",self.FMJ)
         self.card20 = cards.Cards("J. Sparrow",self.FMJ)
 
-        self.cardlist2 = [self.card1] * 2 + [self.card2] * 2 + [self.card3] * 2 + [self.card4] * 6 + [self.card5] * 4 + [self.card6] * 2 + [self.card7] * 4 + [self.card8] * 2 + [self.card9] * 2 + [self.card10] * 2 + [self.card11] * 4 + [self.card12] * 6 + [self.card13] * 1 + [self.card14] * 2
-        self.cardlist = [self.card1] * 2 + [self.card2] * 2 + [self.card3] * 2 + [self.card4] * 6
+        self.cardlist = [self.card1] * 2 + [self.card2] * 2 + [self.card3] * 2 + [self.card4] * 6 + [self.card5] * 4 + [self.card6] * 2 + [self.card7] * 4 + [self.card8] * 2 + [self.card9] * 2 + [self.card10] * 2 + [self.card11] * 4 + [self.card12] * 6 + [self.card13] * 1 + [self.card14] * 4
+        #self.cardlist = [self.card1] * 2 + [self.card2] * 2 + [self.card3] * 2 + [self.card4] * 6
         
-        self.cardimglist = [globals.fmjupgrade] * 2 + [globals.rifling] * 2 + [globals.advancedrifling] * 2 + [globals.navalmine] * 6
+        self.cardimglist = [globals.fmjupgrade] * 2 + [globals.rifling] * 2 + [globals.advancedrifling] * 2 + [globals.navalmine] * 6 + [globals.emp] * 4 + [globals.hull] * 2 + [globals.sonar] * 4 + [globals.smokescreen] * 2 + [globals.sabotage] * 2 + [globals.backup] * 2 + [globals.extrafuel2] * 4 + [globals.extrafuel] * 6 + [globals.rally] * 1 + [globals.adrenalinerush] * 4
         
         #Database connections opzetten
         self.db = mysql.connect(user='battleport', password='ditiseengeheim', database='highscores')
@@ -141,13 +141,14 @@ class Game:
                 self.shipswitch()
             
             if len(self.cardlist) != 0:
-                index = random.randint(0,len(self.cardlist)-1)
-                card = self.cardlist[index]
-                cardimg = self.cardimglist[index]
-                self.player2.Cards.append(card)
-                self.player2.Cardimg.append(cardimg)
-                self.cardlist.pop(index)
-                self.cardimglist.pop(index)
+                if len(self.player2.Cards)+ 1 < 7:
+                    index = random.randint(0,len(self.cardlist)-1)
+                    card = self.cardlist[index]
+                    cardimg = self.cardimglist[index]
+                    self.player2.Cards.append(card)
+                    self.player2.Cardimg.append(cardimg)
+                    self.cardlist.pop(index)
+                    self.cardimglist.pop(index)
             
 
 
@@ -166,13 +167,14 @@ class Game:
             self.player2.Shots = 2
 
             if len(self.cardlist) != 0:
-                index = random.randint(0,len(self.cardlist)-1)
-                card = self.cardlist[index]
-                cardimg = self.cardimglist[index]
-                self.player1.Cards.append(card)
-                self.player1.Cardimg.append(cardimg)
-                self.cardlist.pop(index)
-                self.cardimglist.pop(index)
+                if len(self.player1.Cards)+ 1 < 7:
+                    index = random.randint(0,len(self.cardlist)-1)
+                    card = self.cardlist[index]
+                    cardimg = self.cardimglist[index]
+                    self.player1.Cards.append(card)
+                    self.player1.Cardimg.append(cardimg)
+                    self.cardlist.pop(index)
+                    self.cardimglist.pop(index)
 
 
             if self.shipcnt in self.deadships:
@@ -701,7 +703,7 @@ class Game:
                 for i in range(len(self.player1.Cards)):
                     self.index = i
                     globals.gameDisplay.blit(self.player1.Cardimg[i], (cardsy,450))
-                    text.button("",cardsy,450,100,125,globals.blue,globals.bright_blue,self.player1.Cards[i].Action)
+                    text.button("",cardsy,450,100,125,globals.black,globals.black,self.player1.Cards[i].Action)
                     if self.cardused:
                         break
                     cardsy += 120
@@ -709,7 +711,7 @@ class Game:
                 for i in range(len(self.player2.Cards)):
                     self.index = i
                     globals.gameDisplay.blit(self.player2.Cardimg[i], (cardsy,450))
-                    text.button("",cardsy,450,100,125,globals.blue,globals.bright_blue,self.player2.Cards[i].Action)
+                    text.button("",cardsy,450,100,125,globals.black,globals.black,self.player2.Cards[i].Action)
                     if self.cardused:
                         break
                     cardsy += 120

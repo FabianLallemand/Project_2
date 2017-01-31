@@ -42,7 +42,23 @@ smallText = pygame.font.SysFont("freesansbold.ttf",22)
 infoText = pygame.font.SysFont("freesansbold.ttf",18)
 
 #cardimages
+
+#offensive
 fmjupgrade = pygame.image.load('assets/FMJupgrade.png')
 rifling = pygame.image.load('assets/Rifling.png')
-advancedrifling = pygame.image.load('assets/Advancedrifling.png')
+advancedrifling = pygame.image.load('assets/advancedrifling.png')
 navalmine = pygame.image.load('assets/navalmine.png')
+emp = pygame.image.load('assets/emp.png')
+
+#defensive
+hull = pygame.image.load('assets/hull.png')
+sonar = pygame.image.load('assets/sonar.png')
+smokescreen = pygame.image.load('assets/smokescreen.png')
+sabotage = pygame.image.load('assets/sabotage.png')
+
+#help
+backup = pygame.image.load('assets/backup.png')
+extrafuel2 = pygame.image.load('assets/extrafuel2.png')
+extrafuel = pygame.image.load('assets/extrafuel.png')
+rally = pygame.image.load('assets/rally.png')
+adrenalinerush = pygame.image.load('assets/adrenalinerush.png')
