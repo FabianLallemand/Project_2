@@ -15,6 +15,7 @@ class Ship:
         self.XYlist = xylist
         self.Name = name
         self.Shots = 1
+        self.Damage = 1
         self.Offensive = offensive
         
 
