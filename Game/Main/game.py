@@ -63,10 +63,11 @@ class Game:
         self.card19 = cards.Cards("Allu. Hull",self.FMJ)
         self.card20 = cards.Cards("J. Sparrow",self.FMJ)
 
-        self.cardlist = [self.card1] * 2 + [self.card2] * 2 + [self.card3] * 2 + [self.card4] * 6 + [self.card5] * 4 + [self.card6] * 2 + [self.card7] * 4 + [self.card8] * 2 + [self.card9] * 2 + [self.card10] * 2 + [self.card11] * 4 + [self.card12] * 6 + [self.card13] * 1 + [self.card14] * 4
-        #self.cardlist = [self.card1] * 2 + [self.card2] * 2 + [self.card3] * 2 + [self.card4] * 6
+        self.cardlist2 = [self.card1] * 2 + [self.card2] * 2 + [self.card3] * 2 + [self.card4] * 6 + [self.card5] * 4 + [self.card6] * 2 + [self.card7] * 4 + [self.card8] * 2 + [self.card9] * 2 + [self.card10] * 2 + [self.card11] * 4 + [self.card12] * 6 + [self.card13] * 1 + [self.card14] * 4
+        self.cardlist = [self.card1] * 2 + [self.card2] * 2 + [self.card3] * 2 + [self.card6] * 2 + [self.card10] * 2 + [self.card11] * 4 + [self.card12] * 6 + [self.card13] * 1 + [self.card14] * 4
         
-        self.cardimglist = [globals.fmjupgrade] * 2 + [globals.rifling] * 2 + [globals.advancedrifling] * 2 + [globals.navalmine] * 6 + [globals.emp] * 4 + [globals.hull] * 2 + [globals.sonar] * 4 + [globals.smokescreen] * 2 + [globals.sabotage] * 2 + [globals.backup] * 2 + [globals.extrafuel2] * 4 + [globals.extrafuel] * 6 + [globals.rally] * 1 + [globals.adrenalinerush] * 4
+        self.cardimglist2 = [globals.fmjupgrade] * 2 + [globals.rifling] * 2 + [globals.advancedrifling] * 2 + [globals.navalmine] * 6 + [globals.emp] * 4 + [globals.hull] * 2 + [globals.sonar] * 4 + [globals.smokescreen] * 2 + [globals.sabotage] * 2 + [globals.backup] * 2 + [globals.extrafuel2] * 4 + [globals.extrafuel] * 6 + [globals.rally] * 1 + [globals.adrenalinerush] * 4
+        self.cardimglist = [globals.fmjupgrade] * 2 + [globals.rifling] * 2 + [globals.advancedrifling] * 2 + [globals.hull] * 2 + [globals.backup] * 2 + [globals.extrafuel2] * 4 + [globals.extrafuel] * 6 + [globals.rally] * 1 + [globals.adrenalinerush] * 4
         
         self.cardused = False
 
@@ -456,7 +457,10 @@ class Game:
             pygame.display.update()
             globals.clock.tick(60)
 
-        while self.player2.shipsplaced <4:            
+        globals.gameDisplay.fill(globals.black)
+        pygame.display.update()
+        while self.player2.shipsplaced <4:
+                        
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     pygame.quit()
