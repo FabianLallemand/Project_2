@@ -1,4 +1,4 @@
-import pygame, globals, text, ships, time, playboard, players, random, cards
+import pygame, globals, text, ships, time, playboard, players, random, cards, cardfunctions
 import mysql.connector as mysql
 
 pygame.init()
@@ -15,11 +15,13 @@ class Game:
         self.ship6 = ships.Ship(globals.red, 4, 0,1,1,2,self.board,3,3,[],"Sea Spirit",True)
         self.ship7 = ships.Ship(globals.red, 4, 0,1,1,2,self.board,3,3,[],"Intensity",True)
         self.ship8 = ships.Ship(globals.red, 4, 0,1,1,1,self.board,4,4,[],"Amadea",True)
+
+
         self.shiplist = [self.ship1,self.ship2,self.ship3,self.ship4,self.ship5,self.ship6,self.ship7,self.ship8]
         self.player1 = players.Player("Player1",globals.green,globals.bright_green)
         self.player2 = players.Player("Player2",globals.red,globals.bright_red)
-        self.cardlist = [cards.card1] * 2 + [cards.card2] * 2 + [cards.card3] * 2 + [cards.card4] * 6 + [cards.card5] * 4 + [cards.card6] * 2 + [cards.card7] * 4 + [cards.card8] * 2 + [cards.card9] * 2 + [cards.card10] * 2 + [cards.card11] * 4 + [cards.card12] * 6 + [cards.card13] * 1 + [cards.card14] * 2
-        self.shipxylist1 = []
+        
+        self.shipxylist1 = [] 
         self.curshiplist = []
         self.shipcnt = 0    
         self.shipsinrange = []
@@ -29,9 +31,44 @@ class Game:
         self.GameStopped = False
         self.attackcnt = 0
 
+        self.index = 0
+
+
+        #offensieve kaarten
+        self.card1 = cards.Cards("FMJ Upgrade",self.FMJ)
+        self.card2 = cards.Cards("Rifling",self.Rifling)
+        self.card3 = cards.Cards("Adv Rifling",self.advRifling)
+        self.card4 = cards.Cards("Naval Mine",self.FMJ)
+        self.card5 = cards.Cards("EMP Upgrade",self.FMJ)
+        #defensieve cards
+        self.card6 = cards.Cards("Hull",self.FMJ)
+        self.card7 = cards.Cards("Sonar",self.FMJ)
+        self.card8 = cards.Cards("Smokescreen",self.FMJ)
+        self.card9 = cards.Cards("Sabotage",self.FMJ)
+        #Helpende cards
+        self.card10 = cards.Cards("Backup",self.FMJ)
+        self.card11 = cards.Cards("Extrafuel2",self.FMJ)
+        self.card12 = cards.Cards("Extrafuel",self.FMJ)
+        self.card13 = cards.Cards("Rally",self.FMJ)
+        self.card14 = cards.Cards("Adr. Rush",self.FMJ)
+        #speciale cards
+        self.card15 = cards.Cards("Repair",self.FMJ)
+        self.card16 = cards.Cards("Flak Armor",self.FMJ)
+        self.card17 = cards.Cards("Hack Intel",self.FMJ)
+        self.card18 = cards.Cards("Far Sight",self.FMJ)
+        self.card19 = cards.Cards("Allu. Hull",self.FMJ)
+        self.card20 = cards.Cards("J. Sparrow",self.FMJ)
+
+        self.cardlist2 = [self.card1] * 2 + [self.card2] * 2 + [self.card3] * 2 + [self.card4] * 6 + [self.card5] * 4 + [self.card6] * 2 + [self.card7] * 4 + [self.card8] * 2 + [self.card9] * 2 + [self.card10] * 2 + [self.card11] * 4 + [self.card12] * 6 + [self.card13] * 1 + [self.card14] * 2
+        self.cardlist = [self.card1] * 2 + [self.card2] * 2 + [self.card3] * 2 + [self.card4] * 6
+        
+        self.cardimglist = [globals.fmjupgrade] * 2 + [globals.rifling] * 2 + [globals.advancedrifling] * 2 + [globals.navalmine] * 6
+        
         #Database connections opzetten
         self.db = mysql.connect(user='battleport', password='ditiseengeheim', database='highscores')
         self.cursor = self.db.cursor()
+
+        self.cardused = False
 
 
     def shiprotate(self):
@@ -86,7 +123,7 @@ class Game:
             self.shiplist[self.shipcnt].Color = self.player2.aColor
         if self.shipcnt in self.deadships:
             self.shipswitch() 
-                   
+                  
     def turn(self):
         for x in range(0,8):
             self.shiplist[x].Shots = 1
@@ -106,8 +143,15 @@ class Game:
             if len(self.cardlist) != 0:
                 index = random.randint(0,len(self.cardlist)-1)
                 card = self.cardlist[index]
+                cardimg = self.cardimglist[index]
                 self.player2.Cards.append(card)
-                self.cardlist.remove(card)
+                self.player2.Cardimg.append(cardimg)
+                self.cardlist.pop(index)
+                self.cardimglist.pop(index)
+            
+
+
+
 
   
         else:
@@ -124,8 +168,11 @@ class Game:
             if len(self.cardlist) != 0:
                 index = random.randint(0,len(self.cardlist)-1)
                 card = self.cardlist[index]
+                cardimg = self.cardimglist[index]
                 self.player1.Cards.append(card)
-                self.cardlist.remove(card)
+                self.player1.Cardimg.append(cardimg)
+                self.cardlist.pop(index)
+                self.cardimglist.pop(index)
 
 
             if self.shipcnt in self.deadships:
@@ -138,7 +185,7 @@ class Game:
                 self.firecnt = 0
                 if self.shiplist[self.shipcnt].Offensive:
                     for i in range(self.shiplist[self.shipcnt].ShipLength):
-                        for x in range(1, 1 + self.shiplist[self.shipcnt].ShipLength):
+                        for x in range(1, 1 + self.shiplist[self.shipcnt].Range):
                             self.curshiplist = self.curshiplist + [(self.shiplist[self.shipcnt].PosX + x, self.shiplist[self.shipcnt].PosY +i)] + [(self.shiplist[self.shipcnt].PosX - x, self.shiplist[self.shipcnt].PosY +i)]
                         self.curshiplist = self.curshiplist + [(self.shiplist[self.shipcnt].PosX, self.shiplist[self.shipcnt].PosY + self.shiplist[self.shipcnt].ShipLength+i)] + [(self.shiplist[self.shipcnt].PosX, self.shiplist[self.shipcnt].PosY -1 - i)]
             
@@ -179,21 +226,57 @@ class Game:
         self.firecnt = 0
         self.attackcnt = 0
         self.damageship = 0
-                
+    
+        
+        
+    def FMJ(self):
+        self.cardused = True
+        self.shiplist[self.shipcnt].Shots += 1
+        if self.player1.Turn:
+            self.player1.Cards.pop(self.index)
+        elif self.player2.Turn:
+            self.player2.Cards.pop(self.index)
+
+    def Rifling(self):
+        self.cardused = True
+        self.shiplist[self.shipcnt].Range += 1
+        if self.player1.Turn:
+            self.player1.Cards.pop(self.index)
+        elif self.player2.Turn:
+            self.player2.Cards.pop(self.index)
+
+        
+    def advRifling(self):
+        self.cardused = True
+        self.shiplist[self.shipcnt].Range += 2
+        if self.player1.Turn:
+            self.player1.Cards.pop(self.index)
+        elif self.player2.Turn:
+            self.player2.Cards.pop(self.index)
+        
+        
+        
+                    
     def game_loop(self):
         
         for x in range(0,2):
             index = random.randint(0,len(self.cardlist)-1)
             card = self.cardlist[index]
+            cardimg = self.cardimglist[index]
             self.player1.Cards.append(card)
-            self.cardlist.remove(card)
+            self.player1.Cardimg.append(cardimg)
+            self.cardlist.pop(index)
+            self.cardimglist.pop(index)
 
             index = random.randint(0,len(self.cardlist)-1)
             card = self.cardlist[index]
+            cardimg = self.cardimglist[index]
             self.player2.Cards.append(card)
-            self.cardlist.remove(card)
+            self.player2.Cardimg.append(cardimg)
+            self.cardlist.pop(index)
+            self.cardimglist.pop(index)
 
-        print(self.player1.Cards[0].Name, self.player1.Cards[1].Name, self.player2.Cards[0].Name, self.player2.Cards[1].Name)
+        #print(self.player1.Cards[0].Name, self.player1.Cards[1].Name, self.player2.Cards[0].Name, self.player2.Cards[1].Name)
 
         #self.player1.Turn = True
 
@@ -612,13 +695,23 @@ class Game:
             globals.gameDisplay.blit(currentshipshots, (statsx +5 , statsy+100))
             globals.gameDisplay.blit(currentshipsteps, (statsx +5 , statsy+118))
             cardsy = 20
+            self.cardused = False
+            
             if self.player1.Turn:
                 for i in range(len(self.player1.Cards)):
-                    text.button(self.player1.Cards[i].Name,cardsy,450,100,125,globals.blue,globals.bright_blue,self.player1.Cards[i].Action)
+                    self.index = i
+                    globals.gameDisplay.blit(self.player1.Cardimg[i], (cardsy,450))
+                    text.button("",cardsy,450,100,125,globals.blue,globals.bright_blue,self.player1.Cards[i].Action)
+                    if self.cardused:
+                        break
                     cardsy += 120
             else:
                 for i in range(len(self.player2.Cards)):
-                    text.button(self.player2.Cards[i].Name,cardsy,450,100,125,globals.blue,globals.bright_blue,self.player2.Cards[i].Action)
+                    self.index = i
+                    globals.gameDisplay.blit(self.player2.Cardimg[i], (cardsy,450))
+                    text.button("",cardsy,450,100,125,globals.blue,globals.bright_blue,self.player2.Cards[i].Action)
+                    if self.cardused:
+                        break
                     cardsy += 120
 
             self.ship1.draw()

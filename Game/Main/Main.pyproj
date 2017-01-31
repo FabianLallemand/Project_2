@@ -28,6 +28,9 @@
     <Compile Include="cards.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="credits.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="globals.py" />
     <Compile Include="main.py" />
     <Compile Include="menu.py" />

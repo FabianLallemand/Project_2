@@ -1,4 +1,4 @@
-import pygame, globals, text , game, webbrowser
+import pygame, globals, text , game, webbrowser, credits
 
 #game intro and button's
 def game_intro():
@@ -32,7 +32,7 @@ def game_intro():
         text.button("Game Rules",350,525,100,50,globals.grey,globals.bright_blue,openrules)
         text.button("Settings",575,525,100,50,globals.grey,globals.bright_grey,None)
         text.button("Quit Game!",625,450,100,50,globals.red,globals.bright_red,globals.quitgame)
-        text.button("Credits",690,10,100,50,globals.grey,globals.bright_grey,None)
+        text.button("Credits",690,10,100,50,globals.grey,globals.bright_grey,credits.show)
 
         pygame.display.update()
         globals.clock.tick(60)
@@ -51,7 +51,7 @@ def highscores():
         globals.gameDisplay.fill(globals.white)
 
 
-        text.button("Back!",650,50,100,50,globals.orange,globals.bright_red,game_intro)
+        text.button("Back!",690,10,100,50,globals.orange,globals.bright_red,game_intro)
         
         globals.clock.tick(60)
         pygame.display.update()
