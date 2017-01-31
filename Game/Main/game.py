@@ -18,7 +18,7 @@ class Game:
         self.shiplist = [self.ship1,self.ship2,self.ship3,self.ship4,self.ship5,self.ship6,self.ship7,self.ship8]
         self.player1 = players.Player("Player1",globals.green,globals.bright_green)
         self.player2 = players.Player("Player2",globals.red,globals.bright_red)
-        self.cardlist = [cards.card1, cards.card1, cards.card2, cards.card2, cards.card3, cards.card3]
+        self.cardlist = [cards.card1] * 2 + [cards.card2] * 2 + [cards.card3] * 2 + [cards.card4] * 6 + [cards.card5] * 4 + [cards.card6] * 2 + [cards.card7] * 4 + [cards.card8] * 2 + [cards.card9] * 2 + [cards.card10] * 2 + [cards.card11] * 4 + [cards.card12] * 6 + [cards.card13] * 1 + [cards.card14] * 2
         self.shipxylist1 = []
         self.curshiplist = []
         self.shipcnt = 0    
