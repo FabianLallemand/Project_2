@@ -8,5 +8,6 @@ class Player:
         self.iColor = icolor
         self.Shots = 2
         self.Cards = []
+        self.Cardimg = []
         self.Turn = False
         self.shipsplaced = 0
