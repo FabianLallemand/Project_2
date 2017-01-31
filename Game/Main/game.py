@@ -213,7 +213,7 @@ class Game:
                     for i in range(self.shiplist[self.shipcnt].ShipLength):
                         for x in range(1, 1 + self.shiplist[self.shipcnt].Range):
                             self.curshiplist = self.curshiplist + [(self.shiplist[self.shipcnt].PosX + i, self.shiplist[self.shipcnt].PosY +x)] + [(self.shiplist[self.shipcnt].PosX + i, self.shiplist[self.shipcnt].PosY -x)]
-                print(self.curshiplist)    
+                  
                         
                 if self.player1.Turn:
                     self.firecnt += 4
@@ -410,9 +410,7 @@ class Game:
             self.cardlist.pop(index)
             self.cardimglist.pop(index)
 
-        #print(self.player1.Cards[0].Name, self.player1.Cards[1].Name, self.player2.Cards[0].Name, self.player2.Cards[1].Name)
 
-        #self.player1.Turn = True
 
         pause_text = pygame.font.SysFont('freesansbold.ttf', 50).render('Paused', True, globals.white)
         RUNNING, PAUSE = 0, 1
@@ -457,8 +455,7 @@ class Game:
             pygame.display.update()
             globals.clock.tick(60)
 
-        globals.gameDisplay.fill(globals.black)
-        pygame.display.update()
+
         while self.player2.shipsplaced <4:
                         
             for event in pygame.event.get():
@@ -787,12 +784,12 @@ class Game:
                 self.deadships = self.deadships + [7]
 
 
-            if self.ship1.Health == 0 and self.ship2.Health == 0 and self.ship3.Health == 0 and self.ship4.Health == 0:
+            if self.ship1.Health <= 0 and self.ship2.Health <= 0 and self.ship3.Health <= 0 and self.ship4.Health <= 0:
                 print("Player2 wins")
                 mysql_con = mysql.mysql()
                 update = mysql_con.update("UPDATE score SET points = points + 1 WHERE name = 'Player2'")
                 self.GameStopped = True
-            elif self.ship5.Health == 0 and self.ship6.Health == 0 and self.ship7.Health == 0 and self.ship8.Health == 0:
+            elif self.ship5.Health <= 0 and self.ship6.Health <= 0 and self.ship7.Health <= 0 and self.ship8.Health <= 0:
                 print("Player1 wins")
                 mysql_con = mysql.mysql()
                 update = mysql_con.update("UPDATE score SET points = points + 1 WHERE name = 'Player1'")
