@@ -1,5 +1,5 @@
 import pygame, globals, text, ships, time, playboard, players, random, cards, cardfunctions
-import mysql.connector as mysql
+
 
 pygame.init()
 
