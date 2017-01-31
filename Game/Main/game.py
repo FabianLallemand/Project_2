@@ -42,7 +42,7 @@ class Game:
         self.card5 = cards.Cards("EMP Upgrade",self.FMJ)
 
         #defensieve cards
-        self.card6 = cards.Cards("Hull",self.FMJ)
+        self.card6 = cards.Cards("Hull",self.Hull)
         self.card7 = cards.Cards("Sonar",self.FMJ)
         self.card8 = cards.Cards("Smokescreen",self.FMJ)
         self.card9 = cards.Cards("Sabotage",self.FMJ)
@@ -126,6 +126,9 @@ class Game:
     def turn(self):
         for x in range(0,8):
             self.shiplist[x].Shots = 1
+            self.shiplist[x].Damage = 1
+            
+        
         if self.player1.Turn:
             self.player1.Turn = False
             self.player2.Turn = True
@@ -135,6 +138,13 @@ class Game:
             self.ship2.Steps = 2
             self.ship3.Steps = 2
             self.ship4.Steps = 1
+            self.ship1.Range = 2
+            self.ship2.Range = 3
+            self.ship3.Range = 3
+            self.ship4.Range = 4
+            for i in range(4,8):
+                if not self.shiplist[i].Offensive:
+                    self.shiplist[i].Range += 1
             self.player1.Shots = 2
             if self.shipcnt in self.deadships:
                 self.shipswitch()
@@ -163,6 +173,13 @@ class Game:
             self.ship6.Steps = 2
             self.ship7.Steps = 2
             self.ship8.Steps = 1
+            self.ship5.Range = 2
+            self.ship6.Range = 3
+            self.ship7.Range = 3
+            self.ship8.Range = 4
+            for i in range(0,4):
+                if not self.shiplist[i].Offensive:
+                    self.shiplist[i].Range += 1
             self.player2.Shots = 2
 
             if len(self.cardlist) != 0:
@@ -218,7 +235,7 @@ class Game:
         
     def damage(self):
         self.shipsinrange = []
-        self.shiplist[self.damageship].Health -= 1
+        self.shiplist[self.damageship].Health -= self.shiplist[self.shipcnt].Damage
         if self.player1.Turn:
             self.player1.Shots -= 1
         if self.player2.Turn:
@@ -227,35 +244,54 @@ class Game:
         self.firecnt = 0
         self.attackcnt = 0
         self.damageship = 0
+        self.shiplist[self.shipcnt].Damage = 1
     
         
         
     def FMJ(self):
         self.cardused = True
-        self.shiplist[self.shipcnt].Shots += 1
+        self.shiplist[self.shipcnt].Damage += 1
         if self.player1.Turn:
             self.player1.Cards.pop(self.index)
+            self.player1.Cardimg.pop(self.index)
+
         elif self.player2.Turn:
             self.player2.Cards.pop(self.index)
+            self.player2.Cardimg.pop(self.index)
 
     def Rifling(self):
         self.cardused = True
         self.shiplist[self.shipcnt].Range += 1
         if self.player1.Turn:
             self.player1.Cards.pop(self.index)
+            self.player1.Cardimg.pop(self.index)
+
         elif self.player2.Turn:
             self.player2.Cards.pop(self.index)
-
+            self.player2.Cardimg.pop(self.index)
         
     def advRifling(self):
         self.cardused = True
         self.shiplist[self.shipcnt].Range += 2
         if self.player1.Turn:
             self.player1.Cards.pop(self.index)
+            self.player1.Cardimg.pop(self.index)
+
         elif self.player2.Turn:
             self.player2.Cards.pop(self.index)
+            self.player2.Cardimg.pop(self.index)
         
-        
+    def Hull(self):
+        self.cardused = True
+        self.shiplist[self.shipcnt].Health += 1
+        if self.player1.Turn:
+            self.player1.Cards.pop(self.index)
+            self.player1.Cardimg.pop(self.index)
+
+        elif self.player2.Turn:
+            self.player2.Cards.pop(self.index)
+            self.player2.Cardimg.pop(self.index)
+           
         
                     
     def game_loop(self):
@@ -670,7 +706,7 @@ class Game:
             shipname = globals.infoText.render("Name: " + str(self.shiplist[self.shipcnt].Name), True, globals.white)
             currentshiphp = globals.infoText.render("HP: " + str(self.shiplist[self.shipcnt].Health), True, globals.white)
             currentshiprange = globals.infoText.render("Range: " + str(self.shiplist[self.shipcnt].Range), True, globals.white)
-            currentshipdamage = globals.infoText.render("Damage: 1", True, globals.white)
+            currentshipdamage = globals.infoText.render("Damage: " + str(self.shiplist[self.shipcnt].Damage), True, globals.white)
             currentshipshots = globals.infoText.render("Shots left: " + str(self.shiplist[self.shipcnt].Shots), True, globals.white)
             currentshipsteps = globals.infoText.render("Steps left: " + str(self.shiplist[self.shipcnt].Steps), True, globals.white)
             fbuty = 180
@@ -702,7 +738,7 @@ class Game:
                 for i in range(len(self.player1.Cards)):
                     self.index = i
                     globals.gameDisplay.blit(self.player1.Cardimg[i], (cardsy,450))
-                    text.button("",cardsy,450,100,125,globals.black,globals.black,self.player1.Cards[i].Action)
+                    text.button(self.player1.Cards[i].Name,cardsy,450,100,125,globals.black,globals.black,self.player1.Cards[i].Action)
                     if self.cardused:
                         break
                     cardsy += 120
@@ -710,7 +746,7 @@ class Game:
                 for i in range(len(self.player2.Cards)):
                     self.index = i
                     globals.gameDisplay.blit(self.player2.Cardimg[i], (cardsy,450))
-                    text.button("",cardsy,450,100,125,globals.black,globals.black,self.player2.Cards[i].Action)
+                    text.button(self.player2.Cards[i].Name,cardsy,450,100,125,globals.black,globals.black,self.player2.Cards[i].Action)
                     if self.cardused:
                         break
                     cardsy += 120
