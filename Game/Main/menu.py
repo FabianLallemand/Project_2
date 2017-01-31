@@ -1,8 +1,14 @@
 import pygame, globals, text , game, webbrowser, credits, highscores
 
+pygame.mixer.init()
 #game intro and button's
 def game_intro():
 
+
+    globals.MenuSoundfx.play().set_volume(0.3)
+    appel = pygame.mixer.music.get_volume()
+    print(appel)
+    
     intro = True
 
     while intro:
