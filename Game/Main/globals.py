@@ -42,7 +42,7 @@ bright_orange = (200,100,0)
 
 #texts
 largeText = pygame.font.Font("assets/piraat.ttf",75)
-smallText = pygame.font.SysFont("freesansbold.ttf",22)
+smallText = pygame.font.SysFont("freesansbold.ttf",24)
 infoText = pygame.font.SysFont("freesansbold.ttf",18)
 
 #cardimages
