@@ -183,7 +183,7 @@ class Game:
 
         
     def game_loop(self):
-
+        
         for x in range(0,2):
             index = random.randint(0,len(self.cardlist)-1)
             card = self.cardlist[index]

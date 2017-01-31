@@ -1,4 +1,5 @@
 import pygame,game
+pygame.init()
 
 def FMJ():
     gm = game.Game()
