@@ -18,7 +18,7 @@ class Game:
         self.shiplist = [self.ship1,self.ship2,self.ship3,self.ship4,self.ship5,self.ship6,self.ship7,self.ship8]
         self.player1 = players.Player("Player1",globals.green,globals.bright_green)
         self.player2 = players.Player("Player2",globals.red,globals.bright_red)
-        self.cardlist = [cards.card1, cards.card1, cards.card2, cards.card2]
+        self.cardlist = [cards.card1] * 2 + [cards.card2] * 2 + [cards.card3] * 2 + [cards.card4] * 6 + [cards.card5] * 4 + [cards.card6] * 2 + [cards.card7] * 4 + [cards.card8] * 2 + [cards.card9] * 2 + [cards.card10] * 2 + [cards.card11] * 4 + [cards.card12] * 6 + [cards.card13] * 1 + [cards.card14] * 2
         self.shipxylist1 = []
         self.curshiplist = []
         self.shipcnt = 0    
@@ -102,7 +102,14 @@ class Game:
             self.player1.Shots = 2
             if self.shipcnt in self.deadships:
                 self.shipswitch()
-                  
+            
+            if len(self.cardlist) != 0:
+                index = random.randint(0,len(self.cardlist)-1)
+                card = self.cardlist[index]
+                self.player2.Cards.append(card)
+                self.cardlist.remove(card)
+
+  
         else:
             self.player1.Turn = True
             self.player2.Turn = False
@@ -113,6 +120,14 @@ class Game:
             self.ship7.Steps = 2
             self.ship8.Steps = 1
             self.player2.Shots = 2
+
+            if len(self.cardlist) != 0:
+                index = random.randint(0,len(self.cardlist)-1)
+                card = self.cardlist[index]
+                self.player1.Cards.append(card)
+                self.cardlist.remove(card)
+
+
             if self.shipcnt in self.deadships:
                 self.shipswitch()
                 
@@ -179,7 +194,7 @@ class Game:
 
         print(self.player1.Cards[0].Name, self.player1.Cards[1].Name, self.player2.Cards[0].Name, self.player2.Cards[1].Name)
 
-        self.player1.Turn = True
+        #self.player1.Turn = True
 
         pause_text = pygame.font.SysFont('freesansbold.ttf', 50).render('Paused', True, globals.white)
         RUNNING, PAUSE = 0, 1
@@ -255,7 +270,9 @@ class Game:
             self.board.draw()
             pygame.display.update()
             
-            globals.clock.tick(60)    
+            globals.clock.tick(60)
+            if self.player1.shipsplaced == 4 and self.player2.shipsplaced == 4:
+                self.turn()    
             
         while self.player1.shipsplaced == 4 and self.player2.shipsplaced == 4 and not(self.GameStopped):
             self.shipxylist1 =[]
@@ -593,7 +610,15 @@ class Game:
             globals.gameDisplay.blit(currentshipdamage, (statsx +5 , statsy+82))
             globals.gameDisplay.blit(currentshipshots, (statsx +5 , statsy+100))
             globals.gameDisplay.blit(currentshipsteps, (statsx +5 , statsy+118))
-
+            cardsy = 20
+            if self.player1.Turn:
+                for i in range(len(self.player1.Cards)):
+                    text.button(self.player1.Cards[i].Name,cardsy,450,100,125,globals.blue,globals.bright_blue,self.player1.Cards[i].Action)
+                    cardsy += 120
+            else:
+                for i in range(len(self.player2.Cards)):
+                    text.button(self.player2.Cards[i].Name,cardsy,450,100,125,globals.blue,globals.bright_blue,self.player2.Cards[i].Action)
+                    cardsy += 120
 
             self.ship1.draw()
             self.ship2.draw()
