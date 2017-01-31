@@ -167,9 +167,22 @@ class Game:
         self.attackcnt = 0
         self.damageship = 0
 
-
-    def game_loop(self):
         
+    def game_loop(self):
+
+        for x in range(0,2):
+            index = random.randint(0,len(self.cardlist)-1)
+            card = self.cardlist[index]
+            self.player1.Cards.append(card)
+            self.cardlist.remove(card)
+
+            index = random.randint(0,len(self.cardlist)-1)
+            card = self.cardlist[index]
+            self.player2.Cards.append(card)
+            self.cardlist.remove(card)
+
+        print(self.player1.Cards[0].Name, self.player1.Cards[1].Name, self.player2.Cards[0].Name, self.player2.Cards[1].Name)
+
         self.player1.Turn = True
 
         pause_text = pygame.font.SysFont('freesansbold.ttf', 50).render('Paused', True, globals.white)
