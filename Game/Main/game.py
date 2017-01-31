@@ -48,11 +48,11 @@ class Game:
         self.card9 = cards.Cards("Sabotage",self.FMJ)
 
         #Helpende cards
-        self.card10 = cards.Cards("Backup",self.FMJ)
-        self.card11 = cards.Cards("Extrafuel2",self.FMJ)
-        self.card12 = cards.Cards("Extrafuel",self.FMJ)
-        self.card13 = cards.Cards("Rally",self.FMJ)
-        self.card14 = cards.Cards("Adr. Rush",self.FMJ)
+        self.card10 = cards.Cards("Backup",self.Backup)
+        self.card11 = cards.Cards("Extrafuel2",self.Extrafuel2)
+        self.card12 = cards.Cards("Extrafuel",self.Extrafuel)
+        self.card13 = cards.Cards("Rally",self.Rally)
+        self.card14 = cards.Cards("Adr. Rush",self.Adrenaline)
 
         #speciale cards
         self.card15 = cards.Cards("Repair",self.FMJ)
@@ -292,8 +292,102 @@ class Game:
             self.player2.Cards.pop(self.index)
             self.player2.Cardimg.pop(self.index)
            
+    def Backup(self):
+        self.cardused = True
+
+        if self.player1.Turn:
+            self.player1.Cards.pop(self.index)
+            self.player1.Cardimg.pop(self.index)
+            for i in range(0,2):
+                if len(self.cardlist) != 0:
+                    if len(self.player1.Cards)+ 1 < 7:
+                        index = random.randint(0,len(self.cardlist)-1)
+                        card = self.cardlist[index]
+                        cardimg = self.cardimglist[index]
+                        self.player1.Cards.append(card)
+                        self.player1.Cardimg.append(cardimg)
+                        self.cardlist.pop(index)
+                        self.cardimglist.pop(index) 
+        if self.player2.Turn:
+            self.player2.Cards.pop(self.index)
+            self.player2.Cardimg.pop(self.index)
+            for i in range(0,2):
+                if len(self.cardlist) != 0:
+                    if len(self.player2.Cards)+ 1 < 7:
+                        index = random.randint(0,len(self.cardlist)-1)
+                        card = self.cardlist[index]
+                        cardimg = self.cardimglist[index]
+                        self.player2.Cards.append(card)
+                        self.player2.Cardimg.append(cardimg)
+                        self.cardlist.pop(index)
+                        self.cardimglist.pop(index)
+
+    def Extrafuel2(self):
+        self.cardused = True
+        self.shiplist[self.shipcnt].Steps += 2
+        if self.player1.Turn:
+            self.player1.Cards.pop(self.index)
+            self.player1.Cardimg.pop(self.index)
+
+        elif self.player2.Turn:
+            self.player2.Cards.pop(self.index)
+            self.player2.Cardimg.pop(self.index)
+
+    def Extrafuel(self):
+        self.cardused = True
+        self.shiplist[self.shipcnt].Steps += 1
+        if self.player1.Turn:
+            self.player1.Cards.pop(self.index)
+            self.player1.Cardimg.pop(self.index)
+
+        elif self.player2.Turn:
+            self.player2.Cards.pop(self.index)
+            self.player2.Cardimg.pop(self.index)
+    
+    def Rally(self):
+        self.cardused = True
         
-                    
+        if self.player1.Turn:
+            self.player1.Cards.pop(self.index)
+            self.player1.Cardimg.pop(self.index)
+            for i in range(0,4):
+                self.shiplist[i].Steps += 1
+
+        elif self.player2.Turn:
+            self.player2.Cards.pop(self.index)
+            self.player2.Cardimg.pop(self.index)
+            for i in range(4,8):
+                self.shiplist[i].Steps += 1
+
+    def Adrenaline(self):
+        self.cardused = True
+        self.shiplist[self.shipcnt].Steps += 1
+        if self.player1.Turn:
+            if self.shipcnt == 0:
+                self.shiplist[self.shipcnt].Steps = 3
+            if self.shipcnt == 1:
+                self.shiplist[self.shipcnt].Steps = 2
+            if self.shipcnt == 2:
+                self.shiplist[self.shipcnt].Steps = 2
+            if self.shipcnt == 3:
+                self.shiplist[self.shipcnt].Steps = 1
+            
+            self.player1.Cards.pop(self.index)
+            self.player1.Cardimg.pop(self.index)
+
+        elif self.player2.Turn:
+            if self.shipcnt == 4:
+                self.shiplist[self.shipcnt].Steps = 3
+            if self.shipcnt == 5:
+                self.shiplist[self.shipcnt].Steps = 2
+            if self.shipcnt == 6:
+                self.shiplist[self.shipcnt].Steps = 2
+            if self.shipcnt == 7:
+                self.shiplist[self.shipcnt].Steps = 1
+
+            self.player2.Cards.pop(self.index)
+            self.player2.Cardimg.pop(self.index)
+   
     def game_loop(self):
         
         for x in range(0,2):
@@ -738,7 +832,7 @@ class Game:
                 for i in range(len(self.player1.Cards)):
                     self.index = i
                     globals.gameDisplay.blit(self.player1.Cardimg[i], (cardsy,450))
-                    text.button(self.player1.Cards[i].Name,cardsy,450,100,125,globals.black,globals.black,self.player1.Cards[i].Action)
+                    text.button("",cardsy,450,100,125,globals.black,globals.black,self.player1.Cards[i].Action)
                     if self.cardused:
                         break
                     cardsy += 120
@@ -746,7 +840,7 @@ class Game:
                 for i in range(len(self.player2.Cards)):
                     self.index = i
                     globals.gameDisplay.blit(self.player2.Cardimg[i], (cardsy,450))
-                    text.button(self.player2.Cards[i].Name,cardsy,450,100,125,globals.black,globals.black,self.player2.Cards[i].Action)
+                    text.button("",cardsy,450,100,125,globals.black,globals.black,self.player2.Cards[i].Action)
                     if self.cardused:
                         break
                     cardsy += 120
