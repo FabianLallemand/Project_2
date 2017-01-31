@@ -45,6 +45,20 @@ largeText = pygame.font.Font("assets/piraat.ttf",75)
 smallText = pygame.font.SysFont("freesansbold.ttf",24)
 infoText = pygame.font.SysFont("freesansbold.ttf",18)
 
+
+#shipimages
+boot1off = pygame.image.load('assets/Ships/Ship1off.png')
+boot1def = pygame.image.load('assets/Ships/Ship1def.png')
+
+boot3off = pygame.image.load('assets/Ships/Ship3off.png')
+boot3def = pygame.image.load('assets/Ships/Ship3def.png')
+
+boot4off = pygame.image.load('assets/Ships/Ship4off.png')
+boot4def = pygame.image.load('assets/Ships/Ship4def.png')
+boot4offdead = pygame.image.load('assets/Ships/Ship4offdead.png')
+boot4defdead = pygame.image.load('assets/Ships/Ship4defdead.png')
+
+
 #cardimages
 
 #offensive

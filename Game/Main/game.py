@@ -2,24 +2,23 @@ import pygame, globals, text, ships, time, playboard, players, random, cards, ca
 
 
 pygame.init()
-pygame.mixer.init()
 
 class Game:
     def __init__(self):
 
         self.board = playboard.Grid(globals.gameDisplay, globals.white,1)
-        self.ship1 = ships.Ship(globals.green, 4, 0,1,0,3,self.board,2,2,[],"Furgo Saltire",True)
-        self.ship2 = ships.Ship(globals.green, 4, 0,1,1,2,self.board,3,3,[],"Silver Whisper",True)
-        self.ship3 = ships.Ship(globals.green, 4, 0,1,1,2,self.board,3,3,[],"Windsurf",True)
-        self.ship4 = ships.Ship(globals.green, 4, 0,1,1,1,self.board,4,4,[],"Merapi",True)
-        self.ship5 = ships.Ship(globals.red, 4, 0,1,0,3,self.board,2,2,[],"Santa Bettina",True)
-        self.ship6 = ships.Ship(globals.red, 4, 0,1,1,2,self.board,3,3,[],"Sea Spirit",True)
-        self.ship7 = ships.Ship(globals.red, 4, 0,1,1,2,self.board,3,3,[],"Intensity",True)
-        self.ship8 = ships.Ship(globals.red, 4, 0,1,1,1,self.board,4,4,[],"Amadea",True)
+        self.ship1 = ships.Ship(globals.white, 4, -1,1,0,3,self.board,2,2,[],"Furgo Saltire",True)
+        self.ship2 = ships.Ship(globals.white, 4, -1,1,1,2,self.board,3,3,[],"Silver Whisper",True)
+        self.ship3 = ships.Ship(globals.white, 4, -1,1,1,2,self.board,3,3,[],"Windsurf",True)
+        self.ship4 = ships.Ship(globals.white, 4, -1,1,1,1,self.board,4,4,[],"Merapi",True)
+        self.ship5 = ships.Ship(globals.red, 4, -1,1,0,3,self.board,2,2,[],"Santa Bettina",True)
+        self.ship6 = ships.Ship(globals.red, 4, -1,1,1,2,self.board,3,3,[],"Sea Spirit",True)
+        self.ship7 = ships.Ship(globals.red, 4, -1,1,1,2,self.board,3,3,[],"Intensity",True)
+        self.ship8 = ships.Ship(globals.red, 4, -1,1,1,1,self.board,4,4,[],"Amadea",True)
 
 
         self.shiplist = [self.ship1,self.ship2,self.ship3,self.ship4,self.ship5,self.ship6,self.ship7,self.ship8]
-        self.player1 = players.Player("Player1",globals.green,globals.bright_green)
+        self.player1 = players.Player("Player1",globals.white,globals.white)
         self.player2 = players.Player("Player2",globals.red,globals.bright_red)
         
         self.shipxylist1 = [] 
@@ -453,8 +452,19 @@ class Game:
                     self.shiplist[self.player1.shipsplaced].PosY = 21 - shiplength
                     self.shiplist[self.player1.shipsplaced].draw()
                     self.player1.shipsplaced +=1
-                         
+                    
+                    
+                    
             self.board.draw()
+
+            globals.gameDisplay.blit(globals.boot1off, (self.ship1.PosX * 20,self.ship1.PosY * 20))
+
+            globals.gameDisplay.blit(globals.boot3off, (self.ship2.PosX * 20,self.ship2.PosY * 20))
+
+            globals.gameDisplay.blit(globals.boot3off, (self.ship3.PosX * 20,self.ship3.PosY * 20))
+ 
+            globals.gameDisplay.blit(globals.boot4off, (self.ship4.PosX * 20,self.ship4.PosY * 20))
+
             pygame.display.update()
             globals.clock.tick(60)
 
@@ -490,6 +500,14 @@ class Game:
                     self.player2.shipsplaced +=1
                                     
             self.board.draw()
+            globals.gameDisplay.blit(globals.boot1off, (self.ship1.PosX * 20,self.ship1.PosY * 20))
+
+            globals.gameDisplay.blit(globals.boot3off, (self.ship2.PosX * 20,self.ship2.PosY * 20))
+
+            globals.gameDisplay.blit(globals.boot3off, (self.ship3.PosX * 20,self.ship3.PosY * 20))
+ 
+            globals.gameDisplay.blit(globals.boot4off, (self.ship4.PosX * 20,self.ship4.PosY * 20))
+
             pygame.display.update()
             
             globals.clock.tick(60)
@@ -862,8 +880,32 @@ class Game:
             self.ship8.draw()
 
             self.board.draw()
-
-           
+            if self.ship1.Offensive:
+                globals.gameDisplay.blit(globals.boot1off, (self.ship1.PosX * 20,self.ship1.PosY * 20))
+            else:
+                globals.gameDisplay.blit(globals.boot1def, (self.ship1.PosX * 20,self.ship1.PosY * 20))
+            
+            if self.ship2.Offensive:
+                globals.gameDisplay.blit(globals.boot3off, (self.ship2.PosX * 20,self.ship2.PosY * 20))
+            else:
+                globals.gameDisplay.blit(globals.boot3def, (self.ship2.PosX * 20,self.ship2.PosY * 20))
+            
+            if self.ship3.Offensive:
+                globals.gameDisplay.blit(globals.boot3off, (self.ship3.PosX * 20,self.ship3.PosY * 20))
+            else:
+                globals.gameDisplay.blit(globals.boot3def, (self.ship3.PosX * 20,self.ship3.PosY * 20))
+            
+            if self.ship4.Offensive:
+                if self.ship4.Health > 0:
+                    globals.gameDisplay.blit(globals.boot4off, (self.ship4.PosX * 20,self.ship4.PosY * 20))
+                else:
+                    globals.gameDisplay.blit(globals.boot4offdead, (self.ship4.PosX * 20,self.ship4.PosY * 20))
+            else:
+                if self.ship4.Health > 0:
+                    globals.gameDisplay.blit(globals.boot4def, (self.ship4.PosX * 20,self.ship4.PosY * 20))
+                else:
+                    globals.gameDisplay.blit(globals.boot4defdead, (self.ship4.PosX * 20,self.ship4.PosY * 20))
+            
             pygame.display.update()
             globals.clock.tick(60)
 
