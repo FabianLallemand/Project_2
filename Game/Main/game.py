@@ -1,5 +1,5 @@
-import pygame, globals, text, ships, time, playboard, players, random, cards, cardfunctions
-import mysql.connector as mysql
+import pygame, globals, text, ships, time, playboard, players, random, cards, cardfunctions, mysql
+
 
 pygame.init()
 
@@ -40,17 +40,20 @@ class Game:
         self.card3 = cards.Cards("Adv Rifling",self.advRifling)
         self.card4 = cards.Cards("Naval Mine",self.FMJ)
         self.card5 = cards.Cards("EMP Upgrade",self.FMJ)
+
         #defensieve cards
         self.card6 = cards.Cards("Hull",self.FMJ)
         self.card7 = cards.Cards("Sonar",self.FMJ)
         self.card8 = cards.Cards("Smokescreen",self.FMJ)
         self.card9 = cards.Cards("Sabotage",self.FMJ)
+
         #Helpende cards
         self.card10 = cards.Cards("Backup",self.FMJ)
         self.card11 = cards.Cards("Extrafuel2",self.FMJ)
         self.card12 = cards.Cards("Extrafuel",self.FMJ)
         self.card13 = cards.Cards("Rally",self.FMJ)
         self.card14 = cards.Cards("Adr. Rush",self.FMJ)
+
         #speciale cards
         self.card15 = cards.Cards("Repair",self.FMJ)
         self.card16 = cards.Cards("Flak Armor",self.FMJ)
@@ -64,10 +67,6 @@ class Game:
         
         self.cardimglist = [globals.fmjupgrade] * 2 + [globals.rifling] * 2 + [globals.advancedrifling] * 2 + [globals.navalmine] * 6 + [globals.emp] * 4 + [globals.hull] * 2 + [globals.sonar] * 4 + [globals.smokescreen] * 2 + [globals.sabotage] * 2 + [globals.backup] * 2 + [globals.extrafuel2] * 4 + [globals.extrafuel] * 6 + [globals.rally] * 1 + [globals.adrenalinerush] * 4
         
-        #Database connections opzetten
-        self.db = mysql.connect(user='battleport', password='ditiseengeheim', database='highscores')
-        self.cursor = self.db.cursor()
-
         self.cardused = False
 
 
@@ -653,13 +652,13 @@ class Game:
 
             if self.ship1.Health == 0 and self.ship2.Health == 0 and self.ship3.Health == 0 and self.ship4.Health == 0:
                 print("Player2 wins")
-                self.cursor.execute("UPDATE score SET points = points + 1 WHERE name = 'Player2'")
-                self.db.commit()
+                mysql_con = mysql.mysql()
+                update = mysql_con.update("UPDATE score SET points = points + 1 WHERE name = 'Player2'")
                 self.GameStopped = True
             elif self.ship5.Health == 0 and self.ship6.Health == 0 and self.ship7.Health == 0 and self.ship8.Health == 0:
                 print("Player1 wins")
-                self.cursor.execute("UPDATE score SET points = points + 1 WHERE name = 'Player1'")
-                self.db.commit()
+                mysql_con = mysql.mysql()
+                update = mysql_con.update("UPDATE score SET points = points + 1 WHERE name = 'Player1'")
                 self.GameStopped = True
 
 

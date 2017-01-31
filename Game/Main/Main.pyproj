@@ -32,9 +32,15 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="globals.py" />
+    <Compile Include="highscores.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="main.py" />
     <Compile Include="menu.py" />
     <Compile Include="game.py" />
+    <Compile Include="mysql.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="players.py">
       <SubType>Code</SubType>
     </Compile>

@@ -3,6 +3,10 @@ import pygame
 pygame.init()
 clock = pygame.time.Clock()
 
+def openrules():
+    url = "https://www.dropbox.com/sh/fqanfbkw8l5y0b6/AAA8PrSl17eJWV_1DkiRGvVoa?dl=0"
+    webbrowser.open_new(url)
+
 def quitgame():
     pygame.quit()
     quit()
@@ -38,7 +42,7 @@ bright_orange = (200,100,0)
 
 #texts
 largeText = pygame.font.Font("assets/piraat.ttf",75)
-smallText = pygame.font.SysFont("freesansbold.ttf",22)
+smallText = pygame.font.SysFont("freesansbold.ttf",24)
 infoText = pygame.font.SysFont("freesansbold.ttf",18)
 
 #cardimages
