@@ -1,5 +1,5 @@
-import pygame, globals, text, ships, time, playboard, players, random, cards
-import mysql.connector as mysql
+import pygame, globals, text, ships, time, playboard, players, random, cards, database
+
 
 pygame.init()
 
@@ -28,10 +28,6 @@ class Game:
         self.deadships = []
         self.GameStopped = False
         self.attackcnt = 0
-
-        #Database connections opzetten
-        self.db = mysql.connect(user='battleport', password='ditiseengeheim', database='highscores')
-        self.cursor = self.db.cursor()
 
 
     def shiprotate(self):
@@ -66,8 +62,8 @@ class Game:
                 self.shiplist[self.shipcnt].Range -= 1
                 self.shiplist[self.shipcnt].PosX += self.shiplist[self.shipcnt].Middle
                 self.shiplist[self.shipcnt].PosY -= self.shiplist[self.shipcnt].Middle
-
-    def shipswitch(self): 
+    def shipswitch(self):
+ 
         if self.shipcnt < 3 and self.player1.Turn:
             self.shiplist[self.shipcnt].Color = self.player1.iColor
             self.shipcnt += 1
@@ -84,9 +80,9 @@ class Game:
             self.shiplist[self.shipcnt].Color = self.player2.iColor
             self.shipcnt = 4
             self.shiplist[self.shipcnt].Color = self.player2.aColor
+ 
         if self.shipcnt in self.deadships:
-            self.shipswitch() 
-                   
+            self.shipswitch()        
     def turn(self):
         for x in range(0,8):
             self.shiplist[x].Shots = 1
@@ -130,7 +126,8 @@ class Game:
 
             if self.shipcnt in self.deadships:
                 self.shipswitch()
-                
+
+
     def fire(self):
         if self.firecnt == 0:
             if ((self.player1.Turn and self.player1.Shots != 0) or (self.player2.Turn and self.player2.Shots != 0)) and self.shiplist[self.shipcnt].Shots != 0:
@@ -179,9 +176,10 @@ class Game:
         self.firecnt = 0
         self.attackcnt = 0
         self.damageship = 0
-                
-    def game_loop(self):
+
         
+    def game_loop(self):
+
         for x in range(0,2):
             index = random.randint(0,len(self.cardlist)-1)
             card = self.cardlist[index]
@@ -201,13 +199,17 @@ class Game:
         RUNNING, PAUSE = 0, 1
         state = RUNNING
 
+
         globals.gameDisplay.fill(globals.black)
         self.board.draw()
         pygame.display.update()
         self.shipcnt = 0
+
         shiplength = 0
 
-        while self.player1.shipsplaced <4:        
+        while self.player1.shipsplaced <4:
+            
+
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     pygame.quit()
@@ -234,12 +236,15 @@ class Game:
                     self.shiplist[self.player1.shipsplaced].PosY = 21 - shiplength
                     self.shiplist[self.player1.shipsplaced].draw()
                     self.player1.shipsplaced +=1
-                         
+           
+                
+
             self.board.draw()
             pygame.display.update()
             globals.clock.tick(60)
+        while self.player2.shipsplaced <4:
+            
 
-        while self.player2.shipsplaced <4:            
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     pygame.quit()
@@ -266,8 +271,11 @@ class Game:
                     self.shiplist[4+self.player2.shipsplaced].PosY = 1
                     self.shiplist[4+self.player2.shipsplaced].draw()
 
+
                     self.player2.shipsplaced +=1
-                                    
+                    
+                
+
             self.board.draw()
             pygame.display.update()
             
@@ -276,13 +284,19 @@ class Game:
                 self.turn()    
             
         while self.player1.shipsplaced == 4 and self.player2.shipsplaced == 4 and not(self.GameStopped):
+            
+            
+            
+
+
+
+
             self.shipxylist1 =[]
             self.curshiplist = []
-            
             for x in range(0,8):
                 self.shiplist[x].XYlist = []
-
-            for i in range(4):                 
+            for i in range(4):
+                 
                 for c in range(self.shiplist[i].ShipLength):
                     if (self.player1.Turn and i != self.shipcnt):
                         if self.shiplist[i].Offensive:
@@ -346,7 +360,6 @@ class Game:
                     mousex = int(mouse[0]/20)
                     mousey = int(mouse[1]/20)
                     mousexy = (mousex, mousey)
-
                     if self.player1.Turn:
                         if mousexy in self.shiplist[0].XYlist:
                             if 0 in self.deadships:
@@ -372,7 +385,6 @@ class Game:
                             self.shiplist[self.shipcnt].Color = self.player1.iColor
                             self.shipcnt = 3
                             self.shiplist[self.shipcnt].Color = self.player1.aColor
-
                     if self.player2.Turn:
                         if mousexy in self.shiplist[4].XYlist:
                             if 4 in self.deadships:
@@ -398,7 +410,6 @@ class Game:
                             self.shiplist[self.shipcnt].Color = self.player2.iColor
                             self.shipcnt = 7
                             self.shiplist[self.shipcnt].Color = self.player2.aColor
-
                 if event.type == pygame.QUIT:
                     pygame.quit()
                     quit()
@@ -406,6 +417,8 @@ class Game:
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_SPACE and self.firecnt ==0:
                         self.shiprotate()
+
+
                     if event.key == pygame.K_f:
                         self.fire()
                     if event.key == pygame.K_p:
@@ -567,14 +580,10 @@ class Game:
 
 
             if self.ship1.Health == 0 and self.ship2.Health == 0 and self.ship3.Health == 0 and self.ship4.Health == 0:
-                print("Player2 wins")
-                self.cursor.execute("UPDATE score SET points = points + 1 WHERE name = 'Player2'")
-                self.db.commit()
+                database.commit_winner("Player2")
                 self.GameStopped = True
             elif self.ship5.Health == 0 and self.ship6.Health == 0 and self.ship7.Health == 0 and self.ship8.Health == 0:
-                print("Player1 wins")
-                self.cursor.execute("UPDATE score SET points = points + 1 WHERE name = 'Player1'")
-                self.db.commit()
+                database.commit_winner("Player1")
                 self.GameStopped = True
 
 
