@@ -1,4 +1,4 @@
-import pygame, globals, text, ships, time, playboard, players
+import pygame, globals, text, ships, time, playboard, players, random, cards
 import mysql.connector as mysql
 
 pygame.init()
@@ -18,6 +18,7 @@ class Game:
         self.shiplist = [self.ship1,self.ship2,self.ship3,self.ship4,self.ship5,self.ship6,self.ship7,self.ship8]
         self.player1 = players.Player("Player1",globals.green,globals.bright_green)
         self.player2 = players.Player("Player2",globals.red,globals.bright_red)
+        self.cardlist = [cards.card1, cards.card1, cards.card2, cards.card2]
         self.shipxylist1 = []
         self.curshiplist = []
         self.shipcnt = 0    
@@ -149,6 +150,8 @@ class Game:
                     if set(self.shiplist[self.firecnt+3].XYlist) & set(self.curshiplist) != set() and self.shiplist[self.firecnt+3].Health > 0:
                         self.shipsinrange = self.shipsinrange + [self.firecnt + 3]
                         self.attackcnt += 1
+                if self.attackcnt == 0:
+                    self.firecnt = 0
                 pygame.display.update()
                 self.curshiplist = []
         
@@ -166,6 +169,7 @@ class Game:
 
 
     def game_loop(self):
+        
         self.player1.Turn = True
 
         pause_text = pygame.font.SysFont('freesansbold.ttf', 50).render('Paused', True, globals.white)
