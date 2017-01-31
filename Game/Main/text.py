@@ -18,8 +18,7 @@ def button(msg,x,y,w,h,ic,ac,action=None):
                     
     else:
         pygame.draw.rect(globals.gameDisplay, ic,(x,y,w,h),1)       
-    #button text
-    
+    #button text    
     textSurf, textRect = text_objects(msg, globals.smallText)
     textRect.center = ( (x+(w/2)), (y+(h/2)) )
     globals.gameDisplay.blit(textSurf, textRect)

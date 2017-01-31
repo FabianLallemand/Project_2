@@ -18,10 +18,15 @@ black = (0,0,0)
 white = (255,255,255)
 grey = (105,105,105)
 blue = (0,0,175)
+blue2 = (0, 131, 195)
+red2 =  (225,6,0)
 red = (170,0,0)
 green = (0,170,0)
+green2 = (27,171,11)
 orange = (200,50,0)
 brown = (139,69,19)
+purple = (124,70,145)
+
 
 #bright game colors
 bright_red = (255,0,0)
@@ -35,4 +40,3 @@ bright_orange = (200,100,0)
 largeText = pygame.font.Font("assets/piraat.ttf",75)
 smallText = pygame.font.SysFont("freesansbold.ttf",22)
 infoText = pygame.font.SysFont("freesansbold.ttf",18)
-
