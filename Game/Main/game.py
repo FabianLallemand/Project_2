@@ -37,7 +37,7 @@ class Game:
         #offensieve kaarten
         self.card1 = cards.Cards("FMJ Upgrade",self.FMJ)
         self.card2 = cards.Cards("Rifling",self.Rifling)
-        self.card3 = cards.Cards("Adv Rifling",self.FMJ)
+        self.card3 = cards.Cards("Adv Rifling",self.advRifling)
         self.card4 = cards.Cards("Naval Mine",self.FMJ)
         self.card5 = cards.Cards("EMP Upgrade",self.FMJ)
         #defensieve cards
@@ -246,7 +246,13 @@ class Game:
             self.player2.Cards.pop(self.index)
 
         
-        
+    def advRifling(self):
+        self.cardused = True
+        self.shiplist[self.shipcnt].Range += 2
+        if self.player1.Turn:
+            self.player1.Cards.pop(self.index)
+        elif self.player2.Turn:
+            self.player2.Cards.pop(self.index)
         
         
         
