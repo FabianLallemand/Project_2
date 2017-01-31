@@ -73,37 +73,39 @@ class Game:
 
 
     def shiprotate(self):
+        if self.firecnt == 0 and self.shiplist[self.shipcnt].Steps > 0:
+            if self.shiplist[self.shipcnt].Offensive:
+                self.shiplist[self.shipcnt].PosX -= self.shiplist[self.shipcnt].Middle
+                self.shiplist[self.shipcnt].PosY += self.shiplist[self.shipcnt].Middle
 
-        if self.shiplist[self.shipcnt].Offensive:
-            self.shiplist[self.shipcnt].PosX -= self.shiplist[self.shipcnt].Middle
-            self.shiplist[self.shipcnt].PosY += self.shiplist[self.shipcnt].Middle
+                if self.shiplist[self.shipcnt].PosX + self.shiplist[self.shipcnt].ShipLength <= 21 and self.shiplist[self.shipcnt].PosX > 0:
+                    for i in range(self.shiplist[self.shipcnt].ShipLength):
+                        self.curshiplist = self.curshiplist + [(self.shiplist[self.shipcnt].PosX + i, self.shiplist[self.shipcnt].PosY)]
+                    self.shiplist[self.shipcnt].PosX += self.shiplist[self.shipcnt].Middle
+                    self.shiplist[self.shipcnt].PosY -= self.shiplist[self.shipcnt].Middle
+                    if set(self.shipxylist1) & set(self.curshiplist) == set():
+                        self.shiplist[self.shipcnt].Offensive = False
+                        self.shiplist[self.shipcnt].Range += 1
+                        self.shiplist[self.shipcnt].Steps -= 1
+                        self.shiplist[self.shipcnt].PosX -= self.shiplist[self.shipcnt].Middle
+                        self.shiplist[self.shipcnt].PosY += self.shiplist[self.shipcnt].Middle
+                else:
+                    self.shiplist[self.shipcnt].PosX += self.shiplist[self.shipcnt].Middle
+                    self.shiplist[self.shipcnt].PosY -= self.shiplist[self.shipcnt].Middle
 
-            if self.shiplist[self.shipcnt].PosX + self.shiplist[self.shipcnt].ShipLength <= 21 and self.shiplist[self.shipcnt].PosX > 0:
-                for i in range(self.shiplist[self.shipcnt].ShipLength):
-                    self.curshiplist = self.curshiplist + [(self.shiplist[self.shipcnt].PosX + i, self.shiplist[self.shipcnt].PosY)]
-                self.shiplist[self.shipcnt].PosX += self.shiplist[self.shipcnt].Middle
-                self.shiplist[self.shipcnt].PosY -= self.shiplist[self.shipcnt].Middle
-                if set(self.shipxylist1) & set(self.curshiplist) == set():
-                    self.shiplist[self.shipcnt].Offensive = False
-                    self.shiplist[self.shipcnt].Range += 1
-                    self.shiplist[self.shipcnt].PosX -= self.shiplist[self.shipcnt].Middle
-                    self.shiplist[self.shipcnt].PosY += self.shiplist[self.shipcnt].Middle
             else:
                 self.shiplist[self.shipcnt].PosX += self.shiplist[self.shipcnt].Middle
                 self.shiplist[self.shipcnt].PosY -= self.shiplist[self.shipcnt].Middle
-
-        else:
-            self.shiplist[self.shipcnt].PosX += self.shiplist[self.shipcnt].Middle
-            self.shiplist[self.shipcnt].PosY -= self.shiplist[self.shipcnt].Middle
-            for i in range(self.shiplist[self.shipcnt].ShipLength):
-                self.curshiplist = self.curshiplist + [(self.shiplist[self.shipcnt].PosX, self.shiplist[self.shipcnt].PosY + i)]
-            self.shiplist[self.shipcnt].PosX -= self.shiplist[self.shipcnt].Middle
-            self.shiplist[self.shipcnt].PosY += self.shiplist[self.shipcnt].Middle
-            if set(self.shipxylist1) & set(self.curshiplist) == set():
-                self.shiplist[self.shipcnt].Offensive = True
-                self.shiplist[self.shipcnt].Range -= 1
-                self.shiplist[self.shipcnt].PosX += self.shiplist[self.shipcnt].Middle
-                self.shiplist[self.shipcnt].PosY -= self.shiplist[self.shipcnt].Middle
+                for i in range(self.shiplist[self.shipcnt].ShipLength):
+                    self.curshiplist = self.curshiplist + [(self.shiplist[self.shipcnt].PosX, self.shiplist[self.shipcnt].PosY + i)]
+                self.shiplist[self.shipcnt].PosX -= self.shiplist[self.shipcnt].Middle
+                self.shiplist[self.shipcnt].PosY += self.shiplist[self.shipcnt].Middle
+                if set(self.shipxylist1) & set(self.curshiplist) == set():
+                    self.shiplist[self.shipcnt].Offensive = True
+                    self.shiplist[self.shipcnt].Range -= 1
+                    self.shiplist[self.shipcnt].Steps -= 1
+                    self.shiplist[self.shipcnt].PosX += self.shiplist[self.shipcnt].Middle
+                    self.shiplist[self.shipcnt].PosY -= self.shiplist[self.shipcnt].Middle
 
     def shipswitch(self): 
         if self.shipcnt < 3 and self.player1.Turn:
@@ -126,80 +128,81 @@ class Game:
             self.shipswitch() 
                   
     def turn(self):
-        for x in range(0,8):
-            self.shiplist[x].Shots = 1
-            self.shiplist[x].Damage = 1
+        if self.firecnt == 0:
+            for x in range(0,8):
+                self.shiplist[x].Shots = 1
+                self.shiplist[x].Damage = 1
             
         
-        if self.player1.Turn:
-            self.player1.Turn = False
-            self.player2.Turn = True
-            self.shiplist[self.shipcnt].Color = self.player1.iColor
-            self.shipcnt = 4
-            self.ship1.Steps = 3
-            self.ship2.Steps = 2
-            self.ship3.Steps = 2
-            self.ship4.Steps = 1
-            self.ship1.Range = 2
-            self.ship2.Range = 3
-            self.ship3.Range = 3
-            self.ship4.Range = 4
-            for i in range(4,8):
-                if not self.shiplist[i].Offensive:
-                    self.shiplist[i].Range += 1
-            self.player1.Shots = 2
-            if self.shipcnt in self.deadships:
-                self.shipswitch()
+            if self.player1.Turn:
+                self.player1.Turn = False
+                self.player2.Turn = True
+                self.shiplist[self.shipcnt].Color = self.player1.iColor
+                self.shipcnt = 4
+                self.ship1.Steps = 3
+                self.ship2.Steps = 2
+                self.ship3.Steps = 2
+                self.ship4.Steps = 1
+                self.ship1.Range = 2
+                self.ship2.Range = 3
+                self.ship3.Range = 3
+                self.ship4.Range = 4
+                for i in range(4,8):
+                    if not self.shiplist[i].Offensive:
+                        self.shiplist[i].Range += 1
+                self.player1.Shots = 2
+                if self.shipcnt in self.deadships:
+                    self.shipswitch()
             
-            if len(self.cardlist) != 0:
-                if len(self.player2.Cards)+ 1 < 7:
-                    index = random.randint(0,len(self.cardlist)-1)
-                    card = self.cardlist[index]
-                    cardimg = self.cardimglist[index]
-                    self.player2.Cards.append(card)
-                    self.player2.Cardimg.append(cardimg)
-                    self.cardlist.pop(index)
-                    self.cardimglist.pop(index)
+                if len(self.cardlist) != 0:
+                    if len(self.player2.Cards)+ 1 < 7:
+                        index = random.randint(0,len(self.cardlist)-1)
+                        card = self.cardlist[index]
+                        cardimg = self.cardimglist[index]
+                        self.player2.Cards.append(card)
+                        self.player2.Cardimg.append(cardimg)
+                        self.cardlist.pop(index)
+                        self.cardimglist.pop(index)
             
 
 
 
 
   
-        else:
-            self.player1.Turn = True
-            self.player2.Turn = False
-            self.shiplist[self.shipcnt].Color = self.player2.iColor
-            self.shipcnt = 0
-            self.ship5.Steps = 3
-            self.ship6.Steps = 2
-            self.ship7.Steps = 2
-            self.ship8.Steps = 1
-            self.ship5.Range = 2
-            self.ship6.Range = 3
-            self.ship7.Range = 3
-            self.ship8.Range = 4
-            for i in range(0,4):
-                if not self.shiplist[i].Offensive:
-                    self.shiplist[i].Range += 1
-            self.player2.Shots = 2
+            else:
+                self.player1.Turn = True
+                self.player2.Turn = False
+                self.shiplist[self.shipcnt].Color = self.player2.iColor
+                self.shipcnt = 0
+                self.ship5.Steps = 3
+                self.ship6.Steps = 2
+                self.ship7.Steps = 2
+                self.ship8.Steps = 1
+                self.ship5.Range = 2
+                self.ship6.Range = 3
+                self.ship7.Range = 3
+                self.ship8.Range = 4
+                for i in range(0,4):
+                    if not self.shiplist[i].Offensive:
+                        self.shiplist[i].Range += 1
+                self.player2.Shots = 2
 
-            if len(self.cardlist) != 0:
-                if len(self.player1.Cards)+ 1 < 7:
-                    index = random.randint(0,len(self.cardlist)-1)
-                    card = self.cardlist[index]
-                    cardimg = self.cardimglist[index]
-                    self.player1.Cards.append(card)
-                    self.player1.Cardimg.append(cardimg)
-                    self.cardlist.pop(index)
-                    self.cardimglist.pop(index)
+                if len(self.cardlist) != 0:
+                    if len(self.player1.Cards)+ 1 < 7:
+                        index = random.randint(0,len(self.cardlist)-1)
+                        card = self.cardlist[index]
+                        cardimg = self.cardimglist[index]
+                        self.player1.Cards.append(card)
+                        self.player1.Cardimg.append(cardimg)
+                        self.cardlist.pop(index)
+                        self.cardimglist.pop(index)
 
 
-            if self.shipcnt in self.deadships:
-                self.shipswitch()
+                if self.shipcnt in self.deadships:
+                    self.shipswitch()
                 
     def fire(self):
-        if self.firecnt == 0:
+        if self.attackcnt == 0:
             if ((self.player1.Turn and self.player1.Shots != 0) or (self.player2.Turn and self.player2.Shots != 0)) and self.shiplist[self.shipcnt].Shots != 0:
                 self.curshiplist = []
                 self.firecnt = 0
@@ -554,68 +557,68 @@ class Game:
             else:
                 self.shiplist[self.shipcnt].Color = self.player2.aColor
             for event in pygame.event.get():
-                
-                click = pygame.mouse.get_pressed()
+                if self.firecnt == 0:
+                    click = pygame.mouse.get_pressed()
             
-                if click[0] == 1:
-                    time.sleep(0.2)
-                    mouse = pygame.mouse.get_pos()
+                    if click[0] == 1:
+                        time.sleep(0.2)
+                        mouse = pygame.mouse.get_pos()
                     
-                    mousex = int(mouse[0]/20)
-                    mousey = int(mouse[1]/20)
-                    mousexy = (mousex, mousey)
+                        mousex = int(mouse[0]/20)
+                        mousey = int(mouse[1]/20)
+                        mousexy = (mousex, mousey)
 
-                    if self.player1.Turn:
-                        if mousexy in self.shiplist[0].XYlist:
-                            if 0 in self.deadships:
-                                break
-                            self.shiplist[self.shipcnt].Color = self.player1.iColor
-                            self.shipcnt = 0
-                            self.shiplist[self.shipcnt].Color = self.player1.aColor
-                        if mousexy in self.shiplist[1].XYlist:
-                            if 1 in self.deadships:
-                                break
-                            self.shiplist[self.shipcnt].Color = self.player1.iColor
-                            self.shipcnt = 1
-                            self.shiplist[self.shipcnt].Color = self.player1.aColor
-                        if mousexy in self.shiplist[2].XYlist:
-                            if 2 in self.deadships:
-                                break
-                            self.shiplist[self.shipcnt].Color = self.player1.iColor
-                            self.shipcnt = 2
-                            self.shiplist[self.shipcnt].Color = self.player1.aColor
-                        if mousexy in self.shiplist[3].XYlist:
-                            if 3 in self.deadships:
-                                break
-                            self.shiplist[self.shipcnt].Color = self.player1.iColor
-                            self.shipcnt = 3
-                            self.shiplist[self.shipcnt].Color = self.player1.aColor
+                        if self.player1.Turn:
+                            if mousexy in self.shiplist[0].XYlist:
+                                if 0 in self.deadships:
+                                    break
+                                self.shiplist[self.shipcnt].Color = self.player1.iColor
+                                self.shipcnt = 0
+                                self.shiplist[self.shipcnt].Color = self.player1.aColor
+                            if mousexy in self.shiplist[1].XYlist:
+                                if 1 in self.deadships:
+                                    break
+                                self.shiplist[self.shipcnt].Color = self.player1.iColor
+                                self.shipcnt = 1
+                                self.shiplist[self.shipcnt].Color = self.player1.aColor
+                            if mousexy in self.shiplist[2].XYlist:
+                                if 2 in self.deadships:
+                                    break
+                                self.shiplist[self.shipcnt].Color = self.player1.iColor
+                                self.shipcnt = 2
+                                self.shiplist[self.shipcnt].Color = self.player1.aColor
+                            if mousexy in self.shiplist[3].XYlist:
+                                if 3 in self.deadships:
+                                    break
+                                self.shiplist[self.shipcnt].Color = self.player1.iColor
+                                self.shipcnt = 3
+                                self.shiplist[self.shipcnt].Color = self.player1.aColor
 
-                    if self.player2.Turn:
-                        if mousexy in self.shiplist[4].XYlist:
-                            if 4 in self.deadships:
-                                break
-                            self.shiplist[self.shipcnt].Color = self.player2.iColor
-                            self.shipcnt = 4
-                            self.shiplist[self.shipcnt].Color = self.player2.aColor
-                        if mousexy in self.shiplist[5].XYlist:
-                            if 5 in self.deadships:
-                                break
-                            self.shiplist[self.shipcnt].Color = self.player2.iColor
-                            self.shipcnt = 5
-                            self.shiplist[self.shipcnt].Color = self.player2.aColor
-                        if mousexy in self.shiplist[6].XYlist:
-                            if 6 in self.deadships:
-                                break
-                            self.shiplist[self.shipcnt].Color = self.player2.iColor
-                            self.shipcnt = 6
-                            self.shiplist[self.shipcnt].Color = self.player2.aColor
-                        if mousexy in self.shiplist[7].XYlist:
-                            if 7 in self.deadships:
-                                break
-                            self.shiplist[self.shipcnt].Color = self.player2.iColor
-                            self.shipcnt = 7
-                            self.shiplist[self.shipcnt].Color = self.player2.aColor
+                        if self.player2.Turn:
+                            if mousexy in self.shiplist[4].XYlist:
+                                if 4 in self.deadships:
+                                    break
+                                self.shiplist[self.shipcnt].Color = self.player2.iColor
+                                self.shipcnt = 4
+                                self.shiplist[self.shipcnt].Color = self.player2.aColor
+                            if mousexy in self.shiplist[5].XYlist:
+                                if 5 in self.deadships:
+                                    break
+                                self.shiplist[self.shipcnt].Color = self.player2.iColor
+                                self.shipcnt = 5
+                                self.shiplist[self.shipcnt].Color = self.player2.aColor
+                            if mousexy in self.shiplist[6].XYlist:
+                                if 6 in self.deadships:
+                                    break
+                                self.shiplist[self.shipcnt].Color = self.player2.iColor
+                                self.shipcnt = 6
+                                self.shiplist[self.shipcnt].Color = self.player2.aColor
+                            if mousexy in self.shiplist[7].XYlist:
+                                if 7 in self.deadships:
+                                    break
+                                self.shiplist[self.shipcnt].Color = self.player2.iColor
+                                self.shipcnt = 7
+                                self.shiplist[self.shipcnt].Color = self.player2.aColor
 
                 if event.type == pygame.QUIT:
                     pygame.quit()
