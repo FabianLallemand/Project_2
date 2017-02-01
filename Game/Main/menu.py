@@ -12,14 +12,13 @@ def game_intro():
         for event in pygame.event.get():
             click = pygame.mouse.get_pressed()
 
-
+    
             if event.type == pygame.QUIT:
                 pygame.quit()
                 quit()
 
         #Background code
-        BackGround = pygame.image.load('assets/background.jpg')
-        globals.gameDisplay.blit(BackGround, (0,0))
+        globals.gameDisplay.blit(globals.Background, (0,0))
         
  
 

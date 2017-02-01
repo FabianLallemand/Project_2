@@ -40,11 +40,16 @@ bright_grey = (211,211,211)
 bright_blue = (0,0,255)
 bright_orange = (200,100,0)
 
+#backgrounds
+Background = pygame.image.load('assets/background.jpg')
+BackgroundBlur = pygame.image.load('assets/background_blur.jpg')
+
+
 #texts
 largeText = pygame.font.Font("assets/piraat.ttf",75)
 smallText = pygame.font.SysFont("freesansbold.ttf",24)
 infoText = pygame.font.SysFont("freesansbold.ttf",18)
-
+smallText = pygame.font.SysFont("freesansbold.ttf",24)
 
 #shipimages
 boot1off = pygame.image.load('assets/Ships/Ship1off.png')
