@@ -20,9 +20,9 @@ def settings():
         globals.gameDisplay.blit(TextSurf, TextRect)
         
 
-        text.button("Back!",690,10,100,50,globals.grey,globals.bright_red,menu.game_intro)
-        text.button("Music",350,100,100,50,globals.grey,globals.bright_red,lambda: music("start"))
-        text.button("Music",350,175,100,50,globals.grey,globals.bright_red, lambda: music("stop"))
+        text.button("Back!",690,10,100,50,globals.red,globals.bright_red,menu.game_intro)
+        text.button("Music ON",350,100,100,50,globals.orange,globals.bright_orange,lambda: music("start"))
+        text.button("Music OFF",350,175,100,50,globals.blue,globals.bright_blue, lambda: music("stop"))
 
         mouse = pygame.mouse.get_pos()
         pygame.display.update()
