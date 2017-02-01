@@ -889,49 +889,98 @@ class Game:
 
             self.board.draw()
             if self.ship1.Offensive:
-                globals.gameDisplay.blit(globals.boot1off, (self.ship1.PosX * 20,self.ship1.PosY * 20))
+                if self.shipcnt == 0:
+                    globals.gameDisplay.blit(globals.boot1offact, (self.ship1.PosX * 20,self.ship1.PosY * 20))
+                else:    
+                    globals.gameDisplay.blit(globals.boot1off, (self.ship1.PosX * 20,self.ship1.PosY * 20))
             else:
-                globals.gameDisplay.blit(globals.boot1def, (self.ship1.PosX * 20,self.ship1.PosY * 20))
+                if self.shipcnt == 0:
+                    globals.gameDisplay.blit(globals.boot1defact, (self.ship1.PosX * 20,self.ship1.PosY * 20))
+                else:
+                    globals.gameDisplay.blit(globals.boot1def, (self.ship1.PosX * 20,self.ship1.PosY * 20))
             
             if self.ship2.Offensive:
-                globals.gameDisplay.blit(globals.boot3off, (self.ship2.PosX * 20,self.ship2.PosY * 20))
+                if self.shipcnt == 1:
+                    globals.gameDisplay.blit(globals.boot3offact, (self.ship2.PosX * 20,self.ship2.PosY * 20))
+                else:    
+                    globals.gameDisplay.blit(globals.boot3off, (self.ship2.PosX * 20,self.ship2.PosY * 20))
             else:
-                globals.gameDisplay.blit(globals.boot3def, (self.ship2.PosX * 20,self.ship2.PosY * 20))
+                if self.shipcnt == 1:
+                    globals.gameDisplay.blit(globals.boot3defact, (self.ship2.PosX * 20,self.ship2.PosY * 20))
+                else:    
+                    globals.gameDisplay.blit(globals.boot3def, (self.ship2.PosX * 20,self.ship2.PosY * 20))
             
             if self.ship3.Offensive:
-                globals.gameDisplay.blit(globals.boot3off, (self.ship3.PosX * 20,self.ship3.PosY * 20))
+                if self.shipcnt == 2:
+                    globals.gameDisplay.blit(globals.boot3offact, (self.ship3.PosX * 20,self.ship3.PosY * 20))
+                else:    
+                    globals.gameDisplay.blit(globals.boot3off, (self.ship3.PosX * 20,self.ship3.PosY * 20))
             else:
-                globals.gameDisplay.blit(globals.boot3def, (self.ship3.PosX * 20,self.ship3.PosY * 20))
+                if self.shipcnt == 2:
+                    globals.gameDisplay.blit(globals.boot3defact, (self.ship3.PosX * 20,self.ship3.PosY * 20))
+                else:    
+                    globals.gameDisplay.blit(globals.boot3def, (self.ship3.PosX * 20,self.ship3.PosY * 20))
             
             if self.ship4.Offensive:
                 if self.ship4.Health > 0:
-                    globals.gameDisplay.blit(globals.boot4off, (self.ship4.PosX * 20,self.ship4.PosY * 20))
+                    if self.shipcnt == 3:
+                        globals.gameDisplay.blit(globals.boot4offact, (self.ship4.PosX * 20,self.ship4.PosY * 20))
+                    else:    
+                        globals.gameDisplay.blit(globals.boot4off, (self.ship4.PosX * 20,self.ship4.PosY * 20))
                 else:
                     globals.gameDisplay.blit(globals.boot4offdead, (self.ship4.PosX * 20,self.ship4.PosY * 20))
             else:
                 if self.ship4.Health > 0:
-                    globals.gameDisplay.blit(globals.boot4def, (self.ship4.PosX * 20,self.ship4.PosY * 20))
+                    if self.shipcnt == 3:
+                        globals.gameDisplay.blit(globals.boot4defact, (self.ship4.PosX * 20,self.ship4.PosY * 20))
+                    else:    
+                        globals.gameDisplay.blit(globals.boot4def, (self.ship4.PosX * 20,self.ship4.PosY * 20))
                 else:
                     globals.gameDisplay.blit(globals.boot4defdead, (self.ship4.PosX * 20,self.ship4.PosY * 20))
+            
             if self.ship5.Offensive:
-                globals.gameDisplay.blit(globals.boot5off, (self.ship5.PosX * 20,self.ship5.PosY * 20))
+                if self.shipcnt == 4:
+                    globals.gameDisplay.blit(globals.boot5offact, (self.ship5.PosX * 20,self.ship5.PosY * 20))
+                else:    
+                    globals.gameDisplay.blit(globals.boot5off, (self.ship5.PosX * 20,self.ship5.PosY * 20))
             else:
-                globals.gameDisplay.blit(globals.boot5def, (self.ship5.PosX * 20,self.ship5.PosY * 20))
+                if self.shipcnt == 4:
+                    globals.gameDisplay.blit(globals.boot5defact, (self.ship5.PosX * 20,self.ship5.PosY * 20))
+                else:    
+                    globals.gameDisplay.blit(globals.boot5def, (self.ship5.PosX * 20,self.ship5.PosY * 20))
             
             if self.ship6.Offensive:
-                globals.gameDisplay.blit(globals.boot7off, (self.ship6.PosX * 20,self.ship6.PosY * 20))
+                if self.shipcnt == 5:
+                    globals.gameDisplay.blit(globals.boot7offact, (self.ship6.PosX * 20,self.ship6.PosY * 20))
+                else:    
+                    globals.gameDisplay.blit(globals.boot7off, (self.ship6.PosX * 20,self.ship6.PosY * 20))
             else:
-                globals.gameDisplay.blit(globals.boot7def, (self.ship6.PosX * 20,self.ship6.PosY * 20))
+                if self.shipcnt == 5:
+                    globals.gameDisplay.blit(globals.boot7defact, (self.ship6.PosX * 20,self.ship6.PosY * 20))
+                else:    
+                    globals.gameDisplay.blit(globals.boot7def, (self.ship6.PosX * 20,self.ship6.PosY * 20))
             
             if self.ship7.Offensive:
-                globals.gameDisplay.blit(globals.boot7off, (self.ship7.PosX * 20,self.ship7.PosY * 20))
+                if self.shipcnt == 6:
+                    globals.gameDisplay.blit(globals.boot7offact, (self.ship7.PosX * 20,self.ship7.PosY * 20))
+                else:    
+                    globals.gameDisplay.blit(globals.boot7off, (self.ship7.PosX * 20,self.ship7.PosY * 20))
             else:
-                globals.gameDisplay.blit(globals.boot7def, (self.ship7.PosX * 20,self.ship7.PosY * 20))
+                if self.shipcnt == 6:
+                    globals.gameDisplay.blit(globals.boot7defact, (self.ship7.PosX * 20,self.ship7.PosY * 20))
+                else:    
+                    globals.gameDisplay.blit(globals.boot7def, (self.ship7.PosX * 20,self.ship7.PosY * 20))
             
             if self.ship8.Offensive:
-                globals.gameDisplay.blit(globals.boot8off, (self.ship8.PosX * 20,self.ship8.PosY * 20))
+                if self.shipcnt == 7:
+                    globals.gameDisplay.blit(globals.boot8offact, (self.ship8.PosX * 20,self.ship8.PosY * 20))
+                else:    
+                    globals.gameDisplay.blit(globals.boot8off, (self.ship8.PosX * 20,self.ship8.PosY * 20))
             else:
-                globals.gameDisplay.blit(globals.boot8def, (self.ship8.PosX * 20,self.ship8.PosY * 20))
+                if self.shipcnt == 7:
+                    globals.gameDisplay.blit(globals.boot8defact, (self.ship8.PosX * 20,self.ship8.PosY * 20))
+                else:    
+                    globals.gameDisplay.blit(globals.boot8def, (self.ship8.PosX * 20,self.ship8.PosY * 20))
  
             pygame.display.update()
             globals.clock.tick(60)
