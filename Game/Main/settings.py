@@ -30,6 +30,6 @@ def settings():
 
 def music(state):
     if state == "start":
-        globals.MenuSoundfx.play()
+        globals.MenuSoundfx.play(-1)
     elif state == "stop":
         globals.MenuSoundfx.stop()
