@@ -94,7 +94,7 @@ boot8defact = pygame.image.load('assets/Ships/Ship8defact.png')
 boot8offdead = pygame.image.load('assets/Ships/Ship8offdead.png')
 boot8defdead = pygame.image.load('assets/Ships/Ship8defdead.png')
 
-
+overlay = pygame.image.load('assets/overlay.png')
 #cardimages
 
 #offensive
