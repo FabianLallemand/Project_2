@@ -24,7 +24,7 @@ def game_intro():
  
 
         #Title        
-        TextSurf, TextRect = text.text_objects("Battleport", globals.largeText)
+        TextSurf, TextRect = text.text_objects("Battleport", globals.largeText, globals.bright_grey)
         TextRect.center = ((280),(55)) 
         globals.gameDisplay.blit(TextSurf, TextRect)
         
