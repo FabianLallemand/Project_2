@@ -125,3 +125,4 @@ Canonfx = pygame.mixer.Sound("assets/Canon.ogg")
 MenuSoundfx = pygame.mixer.Sound("assets/MenuSound.ogg")
 Blopfx = pygame.mixer.Sound("assets/Blop.ogg")
 Deadshipfx = pygame.mixer.Sound("assets/deadship.ogg")
+music_playing = False
