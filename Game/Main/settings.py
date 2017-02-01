@@ -13,7 +13,7 @@ def settings():
         #Background code
         globals.gameDisplay.blit(globals.BackgroundBlur,(0,0))
         
-        TextSurf, TextRect = text.text_objects("Credits", globals.largeText, globals.bright_grey)
+        TextSurf, TextRect = text.text_objects("Settings", globals.largeText, globals.bright_grey)
         TextRect.center = ((400),(55)) 
         globals.gameDisplay.blit(TextSurf, TextRect)
         
