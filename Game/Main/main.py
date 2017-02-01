@@ -9,6 +9,7 @@ import pygame, menu, globals
 
 pygame.init()
 pygame.display.set_caption('Battleport')
+pygame.display.set_icon(globals.gameIcon)
 
 pygame.mixer.init()
 (globals.MenuSoundfx).play()

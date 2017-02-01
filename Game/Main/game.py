@@ -474,7 +474,7 @@ class Game:
                         shiplength = 4
                     
                     mousex = int(mouse[0]/20)
-                    if mousex == self.shiplist[0].PosX or mousex == self.shiplist[1].PosX or mousex == self.shiplist[2].PosX or mousex == self.shiplist[3].PosX or mousex >= 21:
+                    if mousex == self.shiplist[0].PosX or mousex == self.shiplist[1].PosX or mousex == self.shiplist[2].PosX or mousex == self.shiplist[3].PosX or mousex >= 21 or mousex <= 0:
                         break
                     self.shiplist[self.player1.shipsplaced].PosX = mousex
                     self.shiplist[self.player1.shipsplaced].ShipLength = shiplength
@@ -519,7 +519,7 @@ class Game:
                         shiplength = 4
                     
                     mousex = int(mouse[0]/20)
-                    if mousex == self.shiplist[4].PosX or mousex == self.shiplist[5].PosX or mousex == self.shiplist[6].PosX or mousex == self.shiplist[7].PosX or mousex >= 21:
+                    if mousex == self.shiplist[4].PosX or mousex == self.shiplist[5].PosX or mousex == self.shiplist[6].PosX or mousex == self.shiplist[7].PosX or mousex >= 21 or mousex <= 0:
                         break
                     self.shiplist[4+self.player2.shipsplaced].PosX = mousex
                     self.shiplist[4+self.player2.shipsplaced].ShipLength = shiplength
