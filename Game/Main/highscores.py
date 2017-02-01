@@ -33,9 +33,32 @@ def show():
         pygame.display.update()
 
 def playerwon(winner):
-        globals.gameDisplay.blit(globals.BackgroundBlur, (0,0))
-        TextSurf, TextRect = text.text_objects(( str(winner)+ " wins"), globals.largeText, globals.bright_grey)
-        TextRect.center = ((400),(120))
-        globals.gameDisplay.blit(TextSurf, TextRect)
-        pygame.display.update()
-        time.sleep(10)
+    intro = True        
+    
+    while intro:
+        for event in pygame.event.get():
+            click = pygame.mouse.get_pressed()
+
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                quit()
+
+
+            #Background code
+            BackGround = pygame.image.load('assets/background.jpg')
+        
+            globals.gameDisplay.blit(globals.BackgroundBlur, (0,0))
+            TextSurf, TextRect = text.text_objects(( str(winner)+ " wins"), globals.largeText, globals.bright_grey)
+            TextRect.center = ((400),(120))
+            globals.gameDisplay.blit(TextSurf, TextRect)
+            pygame.display.update()
+          
+            text.button("Back to Menu!",325,500,150,50,globals.red,globals.bright_red,menu.game_intro)
+
+            mouse = pygame.mouse.get_pos()
+            pygame.display.update()
+            globals.clock.tick(60)
+
+
+
+        

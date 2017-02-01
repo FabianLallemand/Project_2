@@ -18,6 +18,9 @@ display_height = 600
 display_resolution = (display_width,display_height)
 gameDisplay = pygame.display.set_mode((display_width,display_height))
 
+
+gameIcon = pygame.image.load('assets/Logo.png')
+
 #backgrounds
 Background = pygame.image.load('assets/background.jpg')
 BackgroundBlur = pygame.image.load('assets/background_blur.jpg')
