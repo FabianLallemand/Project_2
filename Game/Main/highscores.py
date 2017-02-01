@@ -26,7 +26,7 @@ def show():
             globals.gameDisplay.blit(name_result, ((globals.display_width/2 - 100), x))
             globals.gameDisplay.blit(score_result, ((globals.display_width/2 + 65), x))
             x = x + 25
-        TextSurf, TextRect = text.text_objects("Highscores", globals.largeText)
+        TextSurf, TextRect = text.text_objects("Highscores", globals.largeText, globals.bright_grey)
         TextRect.center = ((400),(55)) 
         globals.gameDisplay.blit(TextSurf, TextRect)
         text.button("Back!",690,10,100,50,globals.grey,globals.bright_red,menu.game_intro)
