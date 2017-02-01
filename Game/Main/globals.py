@@ -18,6 +18,9 @@ display_height = 600
 display_resolution = (display_width,display_height)
 gameDisplay = pygame.display.set_mode((display_width,display_height))
 
+
+gameIcon = pygame.image.load('assets/Logo.png')
+
 #backgrounds
 Background = pygame.image.load('assets/background.jpg')
 BackgroundBlur = pygame.image.load('assets/background_blur.jpg')
@@ -94,7 +97,7 @@ boot8defact = pygame.image.load('assets/Ships/Ship8defact.png')
 boot8offdead = pygame.image.load('assets/Ships/Ship8offdead.png')
 boot8defdead = pygame.image.load('assets/Ships/Ship8defdead.png')
 
-
+overlay = pygame.image.load('assets/overlay.png')
 #cardimages
 
 #offensive

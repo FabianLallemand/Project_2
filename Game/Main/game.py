@@ -1,4 +1,4 @@
-import pygame, globals, text, ships, time, playboard, players, random, cards, cardfunctions, mysql, highscores
+import pygame, globals, text, ships, time, playboard, players, random, cards, cardfunctions, mysql, highscores, menu
 
 
 pygame.init()
@@ -18,8 +18,8 @@ class Game:
 
 
         self.shiplist = [self.ship1,self.ship2,self.ship3,self.ship4,self.ship5,self.ship6,self.ship7,self.ship8]
-        self.player1 = players.Player("Player1",globals.white,globals.white)
-        self.player2 = players.Player("Player2",globals.white,globals.white)
+        self.player1 = players.Player("Gijsbrecht",globals.white,globals.white)
+        self.player2 = players.Player("Klaasjan",globals.white,globals.white)
         
         self.shipxylist1 = [] 
         self.curshiplist = []
@@ -474,7 +474,7 @@ class Game:
                         shiplength = 4
                     
                     mousex = int(mouse[0]/20)
-                    if mousex == self.shiplist[0].PosX or mousex == self.shiplist[1].PosX or mousex == self.shiplist[2].PosX or mousex == self.shiplist[3].PosX or mousex >= 21:
+                    if mousex == self.shiplist[0].PosX or mousex == self.shiplist[1].PosX or mousex == self.shiplist[2].PosX or mousex == self.shiplist[3].PosX or mousex >= 21 or mousex <= 0:
                         break
                     self.shiplist[self.player1.shipsplaced].PosX = mousex
                     self.shiplist[self.player1.shipsplaced].ShipLength = shiplength
@@ -519,7 +519,7 @@ class Game:
                         shiplength = 4
                     
                     mousex = int(mouse[0]/20)
-                    if mousex == self.shiplist[4].PosX or mousex == self.shiplist[5].PosX or mousex == self.shiplist[6].PosX or mousex == self.shiplist[7].PosX or mousex >= 21:
+                    if mousex == self.shiplist[4].PosX or mousex == self.shiplist[5].PosX or mousex == self.shiplist[6].PosX or mousex == self.shiplist[7].PosX or mousex >= 21 or mousex <= 0:
                         break
                     self.shiplist[4+self.player2.shipsplaced].PosX = mousex
                     self.shiplist[4+self.player2.shipsplaced].ShipLength = shiplength
@@ -769,9 +769,10 @@ class Game:
             
             globals.gameDisplay.fill(globals.black)
             self.board = playboard.Grid(globals.gameDisplay, globals.white,1)
-            text.button("End turn",650,25,140,50,globals.blue,globals.bright_blue,self.turn)
-            text.button("Fire",650,100,140,50,globals.red,globals.bright_red,self.fire)
-            fbuty = 180
+            text.button("Main Menu",650,25,140,50,globals.orange,globals.bright_orange,menu.game_intro)
+            text.button("End turn",650,90,140,50,globals.blue,globals.bright_blue,self.turn)
+            text.button("Fire",650,155,140,50,globals.red,globals.bright_red,self.fire)
+            fbuty = 220
             
             if self.firecnt in self.shipsinrange:
                 self.damageship = 0 + self.firecnt
@@ -844,24 +845,31 @@ class Game:
 
 
             if self.ship1.Health <= 0 and self.ship2.Health <= 0 and self.ship3.Health <= 0 and self.ship4.Health <= 0:
-                print("Player2 wins")
                 mysql_con = mysql.mysql()
-                update = mysql_con.update("UPDATE score SET points = points + 1 WHERE name = 'Player2'")
-                highscores.playerwon("Player 2")
+                update = mysql_con.update('UPDATE score SET points = points + 1 WHERE name ="' + str(self.player2.Name) + '"')
+                highscores.playerwon(self.player2.Name)
                 self.GameStopped = True
 
-            elif self.ship5.Health <= 0 and self.ship6.Health <= 0 and self.ship7.Health <= 0 and self.ship8.Health <= 0:
-                print("Player1 wins")
+            elif self.ship5.Health <= 0 and self.ship6.Health <= 0 and self.ship7.Health <= 0 and self.ship8.Health <= 0:              
                 mysql_con = mysql.mysql()
-                update = mysql_con.update("UPDATE score SET points = points + 1 WHERE name = 'Player1'")
-                highscores.playerwon("Player 1")
+                update = mysql_con.update('UPDATE score SET points = points + 1 WHERE name = "' + str(self.player1.Name) + '"')
+                highscores.playerwon(self.player1.Name)
                 self.GameStopped = True
 
 
 
-            statsx = 500
-            statsy = 25
-
+            statsx = 465
+            statsy = 50
+            if self.player1.Turn:
+                currentplayer = globals.smallText.render("Current player: ", True, globals.white)
+                currentplayername = globals.infoText.render("Name: " + str(self.player1.Name), True, globals.white)
+                currentcardsleft = globals.infoText.render("Card uses left: " + str(self.player1.Cardscnt), True, globals.white)
+            
+            else:
+                currentplayer = globals.smallText.render("Current player: " , True, globals.white)
+                currentplayername = globals.infoText.render("Name: " + str(self.player2.Name), True, globals.white)
+                currentcardsleft = globals.infoText.render("Card uses left: " + str(self.player2.Cardscnt), True, globals.white)
+            
             currentshipname = globals.smallText.render("Current ship: ", True, globals.white)
             shipname = globals.infoText.render("Name: " + str(self.shiplist[self.shipcnt].Name), True, globals.white)
             currentshiphp = globals.infoText.render("HP: " + str(self.shiplist[self.shipcnt].Health), True, globals.white)
@@ -869,7 +877,9 @@ class Game:
             currentshipdamage = globals.infoText.render("Damage: " + str(self.shiplist[self.shipcnt].Damage), True, globals.white)
             currentshipshots = globals.infoText.render("Shots left: " + str(self.shiplist[self.shipcnt].Shots), True, globals.white)
             currentshipsteps = globals.infoText.render("Steps left: " + str(self.shiplist[self.shipcnt].Steps), True, globals.white)
-            fbuty = 180
+            currentshipsteps = globals.infoText.render("Steps left: " + str(self.shiplist[self.shipcnt].Steps), True, globals.white)
+
+            fbuty = 220
             for i in range(0,self.attackcnt):
 
                 
@@ -882,31 +892,37 @@ class Game:
                 globals.gameDisplay.blit(attshiphp,(655, fbuty+18))
                 globals.gameDisplay.blit(attshipxy, (655, fbuty + 34))
                 fbuty += 60
+            
+            pygame.draw.rect(globals.gameDisplay, globals.black, (statsx, statsy , 140 , 200), 1)
+            globals.gameDisplay.blit(globals.overlay, (statsx -35, statsy-35))
+            globals.gameDisplay.blit(currentplayer, (statsx +5, statsy+10))
+            globals.gameDisplay.blit(currentplayername, (statsx +5, statsy+28))
+            globals.gameDisplay.blit(currentcardsleft, (statsx +5 , statsy+46))
+            globals.gameDisplay.blit(currentshipname, (statsx +5 , statsy+64))
+            globals.gameDisplay.blit(shipname, (statsx +5 , statsy+82))
+            globals.gameDisplay.blit(currentshiphp, (statsx +5 , statsy+100))
+            globals.gameDisplay.blit(currentshiprange, (statsx +5 , statsy+118))
+            globals.gameDisplay.blit(currentshipdamage, (statsx +5 , statsy+136))
+            globals.gameDisplay.blit(currentshipshots, (statsx +5 , statsy+154))
+            globals.gameDisplay.blit(currentshipsteps, (statsx +5 , statsy+172))
+            
 
-            pygame.draw.rect(globals.gameDisplay, globals.white, (statsx, statsy , 140 , 140), 1)
-            globals.gameDisplay.blit(currentshipname, (statsx +5 , statsy+10))
-            globals.gameDisplay.blit(shipname, (statsx +5 , statsy+28))
-            globals.gameDisplay.blit(currentshiphp, (statsx +5 , statsy+46))
-            globals.gameDisplay.blit(currentshiprange, (statsx +5 , statsy+64))
-            globals.gameDisplay.blit(currentshipdamage, (statsx +5 , statsy+82))
-            globals.gameDisplay.blit(currentshipshots, (statsx +5 , statsy+100))
-            globals.gameDisplay.blit(currentshipsteps, (statsx +5 , statsy+118))
             cardsy = 20
             self.cardused = False
             
             if self.player1.Turn:
                 for i in range(len(self.player1.Cards)):
                     self.index = i
-                    globals.gameDisplay.blit(self.player1.Cardimg[i], (cardsy,450))
-                    text.button("",cardsy,450,100,125,globals.black,globals.black,self.player1.Cards[i].Action)
+                    globals.gameDisplay.blit(self.player1.Cardimg[i], (cardsy,470))
+                    text.button("",cardsy,470,100,125,globals.black,globals.black,self.player1.Cards[i].Action)
                     if self.cardused:
                         break
                     cardsy += 120
             else:
                 for i in range(len(self.player2.Cards)):
                     self.index = i
-                    globals.gameDisplay.blit(self.player2.Cardimg[i], (cardsy,450))
-                    text.button("",cardsy,450,100,125,globals.black,globals.black,self.player2.Cards[i].Action)
+                    globals.gameDisplay.blit(self.player2.Cardimg[i], (cardsy,470))
+                    text.button("",cardsy,470,100,125,globals.black,globals.black,self.player2.Cards[i].Action)
                     if self.cardused:
                         break
                     cardsy += 120
