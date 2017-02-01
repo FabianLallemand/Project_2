@@ -51,11 +51,15 @@ boot1off = pygame.image.load('assets/Ships/Ship1off.png')
 boot1def = pygame.image.load('assets/Ships/Ship1def.png')
 boot1offact = pygame.image.load('assets/Ships/Ship1offact.png')
 boot1defact = pygame.image.load('assets/Ships/Ship1defact.png')
+boot1offdead = pygame.image.load('assets/Ships/Ship1offdead.png')
+boot1defdead = pygame.image.load('assets/Ships/Ship1defdead.png')
 
 boot3off = pygame.image.load('assets/Ships/Ship3off.png')
 boot3def = pygame.image.load('assets/Ships/Ship3def.png')
 boot3offact = pygame.image.load('assets/Ships/Ship3offact.png')
 boot3defact = pygame.image.load('assets/Ships/Ship3defact.png')
+boot3offdead = pygame.image.load('assets/Ships/Ship3offdead.png')
+boot3defdead = pygame.image.load('assets/Ships/Ship3defdead.png')
 
 boot4off = pygame.image.load('assets/Ships/Ship4off.png')
 boot4def = pygame.image.load('assets/Ships/Ship4def.png')
@@ -68,16 +72,24 @@ boot5off = pygame.image.load('assets/Ships/Ship5off.png')
 boot5def = pygame.image.load('assets/Ships/Ship5def.png')
 boot5offact = pygame.image.load('assets/Ships/Ship5offact.png')
 boot5defact = pygame.image.load('assets/Ships/Ship5defact.png')
+boot5offdead = pygame.image.load('assets/Ships/Ship5offdead.png')
+boot5defdead = pygame.image.load('assets/Ships/Ship5defdead.png')
 
 boot7off = pygame.image.load('assets/Ships/Ship7off.png')
 boot7def = pygame.image.load('assets/Ships/Ship7def.png')
 boot7offact = pygame.image.load('assets/Ships/Ship7offact.png')
 boot7defact = pygame.image.load('assets/Ships/Ship7defact.png')
+boot7offdead = pygame.image.load('assets/Ships/Ship7offdead.png')
+boot7defdead = pygame.image.load('assets/Ships/Ship7defdead.png')
 
 boot8off = pygame.image.load('assets/Ships/Ship8off.png')
 boot8def = pygame.image.load('assets/Ships/Ship8def.png')
 boot8offact = pygame.image.load('assets/Ships/Ship8offact.png')
 boot8defact = pygame.image.load('assets/Ships/Ship8defact.png')
+boot8offdead = pygame.image.load('assets/Ships/Ship8offdead.png')
+boot8defdead = pygame.image.load('assets/Ships/Ship8defdead.png')
+
+
 #cardimages
 
 #offensive
