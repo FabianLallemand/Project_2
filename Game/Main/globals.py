@@ -49,16 +49,35 @@ infoText = pygame.font.SysFont("freesansbold.ttf",18)
 #shipimages
 boot1off = pygame.image.load('assets/Ships/Ship1off.png')
 boot1def = pygame.image.load('assets/Ships/Ship1def.png')
+boot1offact = pygame.image.load('assets/Ships/Ship1offact.png')
+boot1defact = pygame.image.load('assets/Ships/Ship1defact.png')
 
 boot3off = pygame.image.load('assets/Ships/Ship3off.png')
 boot3def = pygame.image.load('assets/Ships/Ship3def.png')
+boot3offact = pygame.image.load('assets/Ships/Ship3offact.png')
+boot3defact = pygame.image.load('assets/Ships/Ship3defact.png')
 
 boot4off = pygame.image.load('assets/Ships/Ship4off.png')
 boot4def = pygame.image.load('assets/Ships/Ship4def.png')
+boot4offact = pygame.image.load('assets/Ships/Ship4offact.png')
+boot4defact = pygame.image.load('assets/Ships/Ship4defact.png')
 boot4offdead = pygame.image.load('assets/Ships/Ship4offdead.png')
 boot4defdead = pygame.image.load('assets/Ships/Ship4defdead.png')
 
+boot5off = pygame.image.load('assets/Ships/Ship5off.png')
+boot5def = pygame.image.load('assets/Ships/Ship5def.png')
+boot5offact = pygame.image.load('assets/Ships/Ship5offact.png')
+boot5defact = pygame.image.load('assets/Ships/Ship5defact.png')
 
+boot7off = pygame.image.load('assets/Ships/Ship7off.png')
+boot7def = pygame.image.load('assets/Ships/Ship7def.png')
+boot7offact = pygame.image.load('assets/Ships/Ship7offact.png')
+boot7defact = pygame.image.load('assets/Ships/Ship7defact.png')
+
+boot8off = pygame.image.load('assets/Ships/Ship8off.png')
+boot8def = pygame.image.load('assets/Ships/Ship8def.png')
+boot8offact = pygame.image.load('assets/Ships/Ship8offact.png')
+boot8defact = pygame.image.load('assets/Ships/Ship8defact.png')
 #cardimages
 
 #offensive
