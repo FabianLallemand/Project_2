@@ -962,7 +962,7 @@ class Game:
                     else:    
                         globals.gameDisplay.blit(globals.boot3off, (self.ship3.PosX * 20,self.ship3.PosY * 20))
                 else:
-                    globals.gameDisplay.blit(globals.boot3offfdead, (self.ship3.PosX * 20,self.ship3.PosY * 20))
+                    globals.gameDisplay.blit(globals.boot3offdead, (self.ship3.PosX * 20,self.ship3.PosY * 20))
             else:
                 if self.ship3.Health > 0:
                     if self.shipcnt == 2:
