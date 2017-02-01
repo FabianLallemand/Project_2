@@ -10,7 +10,7 @@ def show():
                 pygame.quit()
                 quit()
         mouse = pygame.mouse.get_pos()
-        globals.gameDisplay.fill(globals.black)
+        globals.gameDisplay.blit(globals.BackgroundBlur,(0,0))
     
         mysql_con = mysql.mysql()
         result = mysql_con.select("SELECT * FROM score ORDER BY points DESC LIMIT 10")
