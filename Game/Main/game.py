@@ -128,6 +128,8 @@ class Game:
                   
     def turn(self):
         if self.firecnt == 0:
+            self.player1.Cardscnt = 2
+            self.player2.Cardscnt = 2
             for x in range(0,8):
                 self.shiplist[x].Shots = 1
                 self.shiplist[x].Damage = 1
@@ -253,144 +255,172 @@ class Game:
         
         
     def FMJ(self):
-        self.cardused = True
-        self.shiplist[self.shipcnt].Damage += 1
-        if self.player1.Turn:
-            self.player1.Cards.pop(self.index)
-            self.player1.Cardimg.pop(self.index)
+        if (self.player1.Turn and self.player1.Cardscnt >= 1) or (self.player2.Turn and self.player2.Cardscnt >= 1):
+            self.cardused = True
+        
+            self.shiplist[self.shipcnt].Damage += 1
+            if self.player1.Turn:
+                self.player1.Cardscnt -= 1
+                self.player1.Cards.pop(self.index)
+                self.player1.Cardimg.pop(self.index)
 
-        elif self.player2.Turn:
-            self.player2.Cards.pop(self.index)
-            self.player2.Cardimg.pop(self.index)
+            elif self.player2.Turn:
+                self.player2.Cardscnt -= 1
+                self.player2.Cards.pop(self.index)
+                self.player2.Cardimg.pop(self.index)
 
     def Rifling(self):
-        self.cardused = True
-        self.shiplist[self.shipcnt].Range += 1
-        if self.player1.Turn:
-            self.player1.Cards.pop(self.index)
-            self.player1.Cardimg.pop(self.index)
+        if (self.player1.Turn and self.player1.Cardscnt >= 1) or (self.player2.Turn and self.player2.Cardscnt >= 1):
+            self.cardused = True
+            self.shiplist[self.shipcnt].Range += 1
+            if self.player1.Turn:
+                self.player1.Cardscnt -= 1
+                self.player1.Cards.pop(self.index)
+                self.player1.Cardimg.pop(self.index)
 
-        elif self.player2.Turn:
-            self.player2.Cards.pop(self.index)
-            self.player2.Cardimg.pop(self.index)
+            elif self.player2.Turn:
+                self.player2.Cardscnt -= 1
+                self.player2.Cards.pop(self.index)
+                self.player2.Cardimg.pop(self.index)
         
     def advRifling(self):
-        self.cardused = True
-        self.shiplist[self.shipcnt].Range += 2
-        if self.player1.Turn:
-            self.player1.Cards.pop(self.index)
-            self.player1.Cardimg.pop(self.index)
+        if (self.player1.Turn and self.player1.Cardscnt >= 1) or (self.player2.Turn and self.player2.Cardscnt >= 1):
+            self.cardused = True
+            self.shiplist[self.shipcnt].Range += 2
+            if self.player1.Turn:
+                self.player1.Cardscnt -= 1
+                self.player1.Cards.pop(self.index)
+                self.player1.Cardimg.pop(self.index)
 
-        elif self.player2.Turn:
-            self.player2.Cards.pop(self.index)
-            self.player2.Cardimg.pop(self.index)
+            elif self.player2.Turn:
+                self.player2.Cardscnt -= 1
+                self.player2.Cards.pop(self.index)
+                self.player2.Cardimg.pop(self.index)
         
     def Hull(self):
-        self.cardused = True
-        self.shiplist[self.shipcnt].Health += 1
-        if self.player1.Turn:
-            self.player1.Cards.pop(self.index)
-            self.player1.Cardimg.pop(self.index)
+        if (self.player1.Turn and self.player1.Cardscnt >= 1) or (self.player2.Turn and self.player2.Cardscnt >= 1):
+            self.cardused = True
+            self.shiplist[self.shipcnt].Health += 1
+            if self.player1.Turn:
+                self.player1.Cardscnt -= 1
+                self.player1.Cards.pop(self.index)
+                self.player1.Cardimg.pop(self.index)
 
-        elif self.player2.Turn:
-            self.player2.Cards.pop(self.index)
-            self.player2.Cardimg.pop(self.index)
+            elif self.player2.Turn:
+                self.player2.Cardscnt -= 1
+                self.player2.Cards.pop(self.index)
+                self.player2.Cardimg.pop(self.index)
            
     def Backup(self):
-        self.cardused = True
+        if (self.player1.Turn and self.player1.Cardscnt >= 1) or (self.player2.Turn and self.player2.Cardscnt >= 1):
+            self.cardused = True
 
-        if self.player1.Turn:
-            self.player1.Cards.pop(self.index)
-            self.player1.Cardimg.pop(self.index)
-            for i in range(0,2):
-                if len(self.cardlist) != 0:
-                    if len(self.player1.Cards)+ 1 < 7:
-                        index = random.randint(0,len(self.cardlist)-1)
-                        card = self.cardlist[index]
-                        cardimg = self.cardimglist[index]
-                        self.player1.Cards.append(card)
-                        self.player1.Cardimg.append(cardimg)
-                        self.cardlist.pop(index)
-                        self.cardimglist.pop(index) 
-        if self.player2.Turn:
-            self.player2.Cards.pop(self.index)
-            self.player2.Cardimg.pop(self.index)
-            for i in range(0,2):
-                if len(self.cardlist) != 0:
-                    if len(self.player2.Cards)+ 1 < 7:
-                        index = random.randint(0,len(self.cardlist)-1)
-                        card = self.cardlist[index]
-                        cardimg = self.cardimglist[index]
-                        self.player2.Cards.append(card)
-                        self.player2.Cardimg.append(cardimg)
-                        self.cardlist.pop(index)
-                        self.cardimglist.pop(index)
+            if self.player1.Turn:
+                self.player1.Cardscnt -= 1
+                self.player1.Cards.pop(self.index)
+                self.player1.Cardimg.pop(self.index)
+                for i in range(0,2):
+                    if len(self.cardlist) != 0:
+                        if len(self.player1.Cards)+ 1 < 7:
+                            index = random.randint(0,len(self.cardlist)-1)
+                            card = self.cardlist[index]
+                            cardimg = self.cardimglist[index]
+                            self.player1.Cards.append(card)
+                            self.player1.Cardimg.append(cardimg)
+                            self.cardlist.pop(index)
+                            self.cardimglist.pop(index) 
+            if self.player2.Turn:
+                self.player2.Cardscnt -= 1
+                self.player2.Cards.pop(self.index)
+                self.player2.Cardimg.pop(self.index)
+                for i in range(0,2):
+                    if len(self.cardlist) != 0:
+                        if len(self.player2.Cards)+ 1 < 7:
+                            index = random.randint(0,len(self.cardlist)-1)
+                            card = self.cardlist[index]
+                            cardimg = self.cardimglist[index]
+                            self.player2.Cards.append(card)
+                            self.player2.Cardimg.append(cardimg)
+                            self.cardlist.pop(index)
+                            self.cardimglist.pop(index)
 
     def Extrafuel2(self):
-        self.cardused = True
-        self.shiplist[self.shipcnt].Steps += 2
-        if self.player1.Turn:
-            self.player1.Cards.pop(self.index)
-            self.player1.Cardimg.pop(self.index)
+        if (self.player1.Turn and self.player1.Cardscnt >= 1) or (self.player2.Turn and self.player2.Cardscnt >= 1):
+            self.cardused = True
+            self.shiplist[self.shipcnt].Steps += 2
+            if self.player1.Turn:
+                self.player1.Cardscnt -= 1
+                self.player1.Cards.pop(self.index)
+                self.player1.Cardimg.pop(self.index)
 
-        elif self.player2.Turn:
-            self.player2.Cards.pop(self.index)
-            self.player2.Cardimg.pop(self.index)
+            elif self.player2.Turn:
+                self.player2.Cardscnt -= 1
+                self.player2.Cards.pop(self.index)
+                self.player2.Cardimg.pop(self.index)
 
     def Extrafuel(self):
-        self.cardused = True
-        self.shiplist[self.shipcnt].Steps += 1
-        if self.player1.Turn:
-            self.player1.Cards.pop(self.index)
-            self.player1.Cardimg.pop(self.index)
+        if (self.player1.Turn and self.player1.Cardscnt >= 1) or (self.player2.Turn and self.player2.Cardscnt >= 1):
+            self.cardused = True
+            self.shiplist[self.shipcnt].Steps += 1
+            if self.player1.Turn:
+                self.player1.Cardscnt -= 1
+                self.player1.Cards.pop(self.index)
+                self.player1.Cardimg.pop(self.index)
 
-        elif self.player2.Turn:
-            self.player2.Cards.pop(self.index)
-            self.player2.Cardimg.pop(self.index)
+            elif self.player2.Turn:
+                self.player2.Cardscnt -= 1
+                self.player2.Cards.pop(self.index)
+                self.player2.Cardimg.pop(self.index)
     
     def Rally(self):
-        self.cardused = True
+        if (self.player1.Turn and self.player1.Cardscnt >= 1) or (self.player2.Turn and self.player2.Cardscnt >= 1):
+            self.cardused = True
         
-        if self.player1.Turn:
-            self.player1.Cards.pop(self.index)
-            self.player1.Cardimg.pop(self.index)
-            for i in range(0,4):
-                self.shiplist[i].Steps += 1
+            if self.player1.Turn:
+                self.player1.Cardscnt -= 1
+                self.player1.Cards.pop(self.index)
+                self.player1.Cardimg.pop(self.index)
+                for i in range(0,4):
+                    self.shiplist[i].Steps += 1
 
-        elif self.player2.Turn:
-            self.player2.Cards.pop(self.index)
-            self.player2.Cardimg.pop(self.index)
-            for i in range(4,8):
-                self.shiplist[i].Steps += 1
+            elif self.player2.Turn:
+                self.player2.Cardscnt -= 1
+                self.player2.Cards.pop(self.index)
+                self.player2.Cardimg.pop(self.index)
+                for i in range(4,8):
+                    self.shiplist[i].Steps += 1
 
     def Adrenaline(self):
-        self.cardused = True
-        self.shiplist[self.shipcnt].Steps += 1
-        if self.player1.Turn:
-            if self.shipcnt == 0:
-                self.shiplist[self.shipcnt].Steps = 3
-            if self.shipcnt == 1:
-                self.shiplist[self.shipcnt].Steps = 2
-            if self.shipcnt == 2:
-                self.shiplist[self.shipcnt].Steps = 2
-            if self.shipcnt == 3:
-                self.shiplist[self.shipcnt].Steps = 1
+        if (self.player1.Turn and self.player1.Cardscnt >= 1) or (self.player2.Turn and self.player2.Cardscnt >= 1):
+            self.cardused = True
+            self.shiplist[self.shipcnt].Steps += 1
+            if self.player1.Turn:
+                self.player1.Cardscnt -= 1
+                if self.shipcnt == 0:
+                    self.shiplist[self.shipcnt].Steps = 3
+                if self.shipcnt == 1:
+                    self.shiplist[self.shipcnt].Steps = 2
+                if self.shipcnt == 2:
+                    self.shiplist[self.shipcnt].Steps = 2
+                if self.shipcnt == 3:
+                    self.shiplist[self.shipcnt].Steps = 1
             
-            self.player1.Cards.pop(self.index)
-            self.player1.Cardimg.pop(self.index)
+                self.player1.Cards.pop(self.index)
+                self.player1.Cardimg.pop(self.index)
 
-        elif self.player2.Turn:
-            if self.shipcnt == 4:
-                self.shiplist[self.shipcnt].Steps = 3
-            if self.shipcnt == 5:
-                self.shiplist[self.shipcnt].Steps = 2
-            if self.shipcnt == 6:
-                self.shiplist[self.shipcnt].Steps = 2
-            if self.shipcnt == 7:
-                self.shiplist[self.shipcnt].Steps = 1
+            elif self.player2.Turn:
+                self.player2.Cardscnt -= 1
+                if self.shipcnt == 4:
+                    self.shiplist[self.shipcnt].Steps = 3
+                if self.shipcnt == 5:
+                    self.shiplist[self.shipcnt].Steps = 2
+                if self.shipcnt == 6:
+                    self.shiplist[self.shipcnt].Steps = 2
+                if self.shipcnt == 7:
+                    self.shiplist[self.shipcnt].Steps = 1
 
-            self.player2.Cards.pop(self.index)
-            self.player2.Cardimg.pop(self.index)
+                self.player2.Cards.pop(self.index)
+                self.player2.Cardimg.pop(self.index)
    
     def game_loop(self):
         
