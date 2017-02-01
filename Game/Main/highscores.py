@@ -34,7 +34,7 @@ def show():
 
 def playerwon(winner):
         globals.gameDisplay.blit(globals.BackgroundBlur, (0,0))
-        TextSurf, TextRect = text.text_objects(( str(winner)+ " wins"), globals.largeText)
+        TextSurf, TextRect = text.text_objects(( str(winner)+ " wins"), globals.largeText, globals.bright_grey)
         TextRect.center = ((400),(120))
         globals.gameDisplay.blit(TextSurf, TextRect)
         pygame.display.update()

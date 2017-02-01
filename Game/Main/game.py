@@ -1,4 +1,4 @@
-import pygame, globals, text, ships, time, playboard, players, random, cards, cardfunctions, mysql
+import pygame, globals, text, ships, time, playboard, players, random, cards, cardfunctions, mysql, highscores
 
 
 pygame.init()
