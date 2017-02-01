@@ -11,8 +11,8 @@ pygame.init()
 pygame.display.set_caption('Battleport')
 
 pygame.mixer.init()
+(globals.MenuSoundfx).play()
 
-    
 menu.game_intro()
 pygame.quit()
 quit()
