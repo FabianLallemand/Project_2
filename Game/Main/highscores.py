@@ -31,12 +31,3 @@ def show():
         globals.gameDisplay.blit(TextSurf, TextRect)
         text.button("Back!",690,10,100,50,globals.grey,globals.bright_red,menu.game_intro)
         pygame.display.update()
-
-
-def playerwon(winner):
-        globals.gameDisplay.blit(globals.BackgroundBlur, (0,0))
-        TextSurf, TextRect = text.text_objects(( str(winner)+ " wins"), globals.largeText)
-        TextRect.center = ((400),(120))
-        globals.gameDisplay.blit(TextSurf, TextRect)
-        pygame.display.update()
-        time.sleep(10)
