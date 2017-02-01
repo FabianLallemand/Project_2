@@ -119,6 +119,6 @@ adrenalinerush = pygame.image.load('assets/adrenalinerush.png')
 
 #sounds
 Canonfx = pygame.mixer.Sound("assets/Canon.ogg")
-MenuSoundfx = pygame.mixer.Sound("assets/MenuSound.ogg")
+Menufx = pygame.mixer.Sound("assets/MenuSound.ogg")
 Blopfx = pygame.mixer.Sound("assets/Blop.ogg")
 Deadshipfx = pygame.mixer.Sound("assets/deadship.ogg")

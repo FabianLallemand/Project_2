@@ -38,4 +38,5 @@ def playerwon(winner):
         TextRect.center = ((400),(120))
         globals.gameDisplay.blit(TextSurf, TextRect)
         pygame.display.update()
+
         time.sleep(10)
