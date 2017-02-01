@@ -17,6 +17,11 @@ display_width = 800
 display_height = 600
 display_resolution = (display_width,display_height)
 gameDisplay = pygame.display.set_mode((display_width,display_height))
+
+#backgrounds
+Background = pygame.image.load('assets/background.jpg')
+BackgroundBlur = pygame.image.load('assets/background_blur.jpg')
+
 #game colors 
 black = (0,0,0)
 white = (255,255,255)

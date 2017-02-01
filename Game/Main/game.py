@@ -817,11 +817,14 @@ class Game:
                 print("Player2 wins")
                 mysql_con = mysql.mysql()
                 update = mysql_con.update("UPDATE score SET points = points + 1 WHERE name = 'Player2'")
+                highscores.playerwon("Player 2")
                 self.GameStopped = True
+
             elif self.ship5.Health <= 0 and self.ship6.Health <= 0 and self.ship7.Health <= 0 and self.ship8.Health <= 0:
                 print("Player1 wins")
                 mysql_con = mysql.mysql()
                 update = mysql_con.update("UPDATE score SET points = points + 1 WHERE name = 'Player1'")
+                highscores.playerwon("Player 1")
                 self.GameStopped = True
 
 
