@@ -82,6 +82,7 @@ rally = pygame.image.load('assets/rally.png')
 adrenalinerush = pygame.image.load('assets/adrenalinerush.png')
 
 #sounds
-Explosionfx = pygame.mixer.Sound("assets/Explosion.ogg")
+Canonfx = pygame.mixer.Sound("assets/Canon.ogg")
 MenuSoundfx = pygame.mixer.Sound("assets/MenuSound.ogg")
 Blopfx = pygame.mixer.Sound("assets/Blop.ogg")
+Deadshipfx = pygame.mixer.Sound("assets/deadship.ogg")

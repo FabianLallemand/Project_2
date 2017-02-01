@@ -240,6 +240,10 @@ class Game:
     def damage(self):
         self.shipsinrange = []
         self.shiplist[self.damageship].Health -= self.shiplist[self.shipcnt].Damage
+        if self.shiplist[self.damageship].Health <= 0:
+            globals.Deadshipfx.play()
+        else:
+            (globals.Canonfx).play()
         if self.player1.Turn:
             self.player1.Shots -= 1
         if self.player2.Turn:
@@ -249,7 +253,7 @@ class Game:
         self.attackcnt = 0
         self.damageship = 0
         self.shiplist[self.shipcnt].Damage = 1
-        (globals.Explosionfx).play()
+        
         
         
         
@@ -775,6 +779,7 @@ class Game:
             if self.ship1.Health <= 0:
                 self.ship1.Color = globals.brown
                 self.deadships = self.deadships + [0]
+
 
             if self.ship2.Health <= 0:
                 self.ship2.Color = globals.brown
