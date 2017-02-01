@@ -35,9 +35,10 @@ def show():
 
 def playerwon(winner, loser):
     intro = True        
-    globals.MenuSoundfx.stop()
-    globals.music_playing = False
-    globals.Winfx.play()
+    if globals.music_playing == True:        
+        globals.MenuSoundfx.stop()
+        globals.Winfx.play()
+    
     while intro:
         for event in pygame.event.get():
             click = pygame.mouse.get_pressed()
@@ -66,5 +67,8 @@ def playerwon(winner, loser):
 
 def backtomenu():
     globals.Winfx.stop()
-    globals.MenuSoundfx.play(-1)  
-    menu.game_intro()
+    if globals.music_playing == True:
+        globals.MenuSoundfx.play(-1)  
+        menu.game_intro()
+    elif globals.music_playing == False:
+        menu.game_intro()

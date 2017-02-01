@@ -449,7 +449,8 @@ class Game:
                 click = pygame.mouse.get_pressed()
             
                 if click[0] == 1:
-                    (globals.Blopfx).play()
+                    if globals.music_playing == True:        
+                        globals.Blopfx.play()
                     time.sleep(0.2)
                     mouse = pygame.mouse.get_pos()
                     
@@ -495,7 +496,8 @@ class Game:
                 click = pygame.mouse.get_pressed()
             
                 if click[0] == 1:
-                    (globals.Blopfx).play()
+                    if globals.music_playing == True:        
+                        globals.Blopfx.play()
                     time.sleep(0.2)
                     mouse = pygame.mouse.get_pos()
                     
