@@ -12,13 +12,10 @@ def quitgame():
     quit()
 
 shipdrawn = False
-
 display_width = 800
 display_height = 600
 display_resolution = (display_width,display_height)
 gameDisplay = pygame.display.set_mode((display_width,display_height))
-
-
 gameIcon = pygame.image.load('assets/Logo.png')
 
 #backgrounds
@@ -39,7 +36,6 @@ orange = (200,50,0)
 brown = (139,69,19)
 purple = (124,70,145)
 
-
 #bright game colors
 bright_red = (255,0,0)
 bright_green = (0,255,0)
@@ -50,9 +46,9 @@ bright_orange = (200,100,0)
 
 #texts
 largeText = pygame.font.Font("assets/piraat.ttf",75)
+mediumText = pygame.font.Font("assets/piraat.ttf",45)
 smallText = pygame.font.SysFont("freesansbold.ttf",24)
 infoText = pygame.font.SysFont("freesansbold.ttf",18)
-
 
 #shipimages
 boot1off = pygame.image.load('assets/Ships/Ship1off.png')
@@ -97,9 +93,10 @@ boot8defact = pygame.image.load('assets/Ships/Ship8defact.png')
 boot8offdead = pygame.image.load('assets/Ships/Ship8offdead.png')
 boot8defdead = pygame.image.load('assets/Ships/Ship8defdead.png')
 
+#Overlay for the current turn/ship stats
 overlay = pygame.image.load('assets/overlay.png')
-#cardimages
 
+#cardimages:
 #offensive
 fmjupgrade = pygame.image.load('assets/FMJupgrade.png')
 rifling = pygame.image.load('assets/Rifling.png')
@@ -125,4 +122,5 @@ Canonfx = pygame.mixer.Sound("assets/Canon.ogg")
 MenuSoundfx = pygame.mixer.Sound("assets/MenuSound.ogg")
 Blopfx = pygame.mixer.Sound("assets/Blop.ogg")
 Deadshipfx = pygame.mixer.Sound("assets/deadship.ogg")
+Winfx = pygame.mixer.Sound("assets/Win.ogg")
 music_playing = False

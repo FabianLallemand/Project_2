@@ -1,4 +1,4 @@
-import pygame, globals, text, ships, time, playboard, players, random, cards, cardfunctions, mysql, highscores, menu
+import pygame, globals, text, ships, time, playboard, players, random, cards, mysql, highscores, menu
 
 
 pygame.init()
@@ -16,7 +16,6 @@ class Game:
         self.ship7 = ships.Ship(globals.white, 4, -1,1,1,2,self.board,3,3,[],"Intensity",True)
         self.ship8 = ships.Ship(globals.white, 4, -1,1,1,1,self.board,4,4,[],"Amadea",True)
 
-
         self.shiplist = [self.ship1,self.ship2,self.ship3,self.ship4,self.ship5,self.ship6,self.ship7,self.ship8]
         self.player1 = players.Player("Gijsbrecht",globals.white,globals.white)
         self.player2 = players.Player("Klaasjan",globals.white,globals.white)
@@ -30,9 +29,7 @@ class Game:
         self.deadships = []
         self.GameStopped = False
         self.attackcnt = 0
-
         self.index = 0
-
 
         #offensieve kaarten
         self.card1 = cards.Cards("FMJ Upgrade",self.FMJ)
@@ -69,7 +66,6 @@ class Game:
         self.cardimglist = [globals.fmjupgrade] * 2 + [globals.rifling] * 2 + [globals.advancedrifling] * 2 + [globals.hull] * 2 + [globals.backup] * 2 + [globals.extrafuel2] * 4 + [globals.extrafuel] * 6 + [globals.rally] * 1 + [globals.adrenalinerush] * 4
         
         self.cardused = False
-
 
     def shiprotate(self):
         if self.firecnt == 0 and self.shiplist[self.shipcnt].Steps > 0:
@@ -133,8 +129,7 @@ class Game:
             for x in range(0,8):
                 self.shiplist[x].Shots = 1
                 self.shiplist[x].Damage = 1
-            
-        
+                    
             if self.player1.Turn:
                 self.player1.Turn = False
                 self.player2.Turn = True
@@ -193,7 +188,6 @@ class Game:
                         self.cardlist.pop(index)
                         self.cardimglist.pop(index)
 
-
                 if self.shipcnt in self.deadships:
                     self.shipswitch()
                 
@@ -211,8 +205,7 @@ class Game:
                 else:
                     for i in range(self.shiplist[self.shipcnt].ShipLength):
                         for x in range(1, 1 + self.shiplist[self.shipcnt].Range):
-                            self.curshiplist = self.curshiplist + [(self.shiplist[self.shipcnt].PosX + i, self.shiplist[self.shipcnt].PosY +x)] + [(self.shiplist[self.shipcnt].PosX + i, self.shiplist[self.shipcnt].PosY -x)]
-                  
+                            self.curshiplist = self.curshiplist + [(self.shiplist[self.shipcnt].PosX + i, self.shiplist[self.shipcnt].PosY +x)] + [(self.shiplist[self.shipcnt].PosX + i, self.shiplist[self.shipcnt].PosY -x)]                 
                         
                 if self.player1.Turn:
                     self.firecnt += 4
@@ -250,10 +243,7 @@ class Game:
         self.attackcnt = 0
         self.damageship = 0
         self.shiplist[self.shipcnt].Damage = 1
-        
-        
-        
-        
+                               
     def FMJ(self):
         if (self.player1.Turn and self.player1.Cardscnt >= 1) or (self.player2.Turn and self.player2.Cardscnt >= 1):
             self.cardused = True
@@ -422,8 +412,7 @@ class Game:
                 self.player2.Cards.pop(self.index)
                 self.player2.Cardimg.pop(self.index)
    
-    def game_loop(self):
-        
+    def game_loop(self):        
         for x in range(0,2):
             index = random.randint(0,len(self.cardlist)-1)
             card = self.cardlist[index]
@@ -440,8 +429,6 @@ class Game:
             self.player2.Cardimg.append(cardimg)
             self.cardlist.pop(index)
             self.cardimglist.pop(index)
-
-
 
         pause_text = pygame.font.SysFont('freesansbold.ttf', 50).render('Paused', True, globals.white)
         RUNNING, PAUSE = 0, 1
@@ -462,10 +449,10 @@ class Game:
                 click = pygame.mouse.get_pressed()
             
                 if click[0] == 1:
+                    (globals.Blopfx).play()
                     time.sleep(0.2)
                     mouse = pygame.mouse.get_pos()
-                    #(globals.Blopfx).play()
-
+                    
                     if self.player1.shipsplaced == 0:
                         shiplength = 2
                     elif self.player1.shipsplaced == 1 or self.player1.shipsplaced == 2:
@@ -508,9 +495,10 @@ class Game:
                 click = pygame.mouse.get_pressed()
             
                 if click[0] == 1:
+                    (globals.Blopfx).play()
                     time.sleep(0.2)
                     mouse = pygame.mouse.get_pos()
-
+                    
                     if self.player2.shipsplaced == 0:
                         shiplength = 2
                     elif self.player2.shipsplaced == 1 or self.player2.shipsplaced == 2:
@@ -678,12 +666,13 @@ class Game:
                 if event.type == pygame.QUIT:
                     pygame.quit()
                     quit()
-                #Pause key
+               
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_SPACE and self.firecnt ==0:
                         self.shiprotate()
                     if event.key == pygame.K_f:
                         self.fire()
+                    #Pause key
                     if event.key == pygame.K_p:
                         state = PAUSE
                     if event.key == pygame.K_u:
@@ -847,13 +836,13 @@ class Game:
             if self.ship1.Health <= 0 and self.ship2.Health <= 0 and self.ship3.Health <= 0 and self.ship4.Health <= 0:
                 mysql_con = mysql.mysql()
                 update = mysql_con.update('UPDATE score SET points = points + 1 WHERE name ="' + str(self.player2.Name) + '"')
-                highscores.playerwon(self.player2.Name)
+                highscores.playerwon(self.player2.Name, self.player1.Name)
                 self.GameStopped = True
 
             elif self.ship5.Health <= 0 and self.ship6.Health <= 0 and self.ship7.Health <= 0 and self.ship8.Health <= 0:              
                 mysql_con = mysql.mysql()
                 update = mysql_con.update('UPDATE score SET points = points + 1 WHERE name = "' + str(self.player1.Name) + '"')
-                highscores.playerwon(self.player1.Name)
+                highscores.playerwon(self.player1.Name, self.player2.Name)
                 self.GameStopped = True
 
 

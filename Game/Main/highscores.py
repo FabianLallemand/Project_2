@@ -1,5 +1,6 @@
-import pygame, globals, text, menu, mysql, pymysql, time
+import pygame, globals, text, menu, mysql, pymysql, time, settings
 pygame.init()
+pygame.mixer.init()
 
 def show():
     show = True
@@ -18,10 +19,10 @@ def show():
         x = 125
         for player in result:
             score = str((player['points']))
-            score_result= font.render(score, 1 ,(globals.white))
+            score_result= font.render(score, 1 ,(globals.bright_black))
             score_position = score_result.get_rect()
             name = str((player['name']))
-            name_result = font.render(name, 1, (globals.white))
+            name_result = font.render(name, 1, (globals.bright_black))
             name_position = name_result.get_rect()
             globals.gameDisplay.blit(name_result, ((globals.display_width/2 - 100), x))
             globals.gameDisplay.blit(score_result, ((globals.display_width/2 + 65), x))
@@ -32,9 +33,11 @@ def show():
         text.button("Back!",690,10,100,50,globals.grey,globals.bright_red,menu.game_intro)
         pygame.display.update()
 
-def playerwon(winner):
+def playerwon(winner, loser):
     intro = True        
-    
+    globals.MenuSoundfx.stop()
+    globals.music_playing = False
+    globals.Winfx.play()
     while intro:
         for event in pygame.event.get():
             click = pygame.mouse.get_pressed()
@@ -43,22 +46,25 @@ def playerwon(winner):
                 pygame.quit()
                 quit()
 
-
             #Background code
             BackGround = pygame.image.load('assets/background.jpg')
-        
+
             globals.gameDisplay.blit(globals.BackgroundBlur, (0,0))
-            TextSurf, TextRect = text.text_objects(( str(winner)+ " wins"), globals.largeText, globals.bright_grey)
+            TextSurf, TextRect = text.text_objects(( str(winner)+ " wins"), globals.largeText, globals.bright_black)
             TextRect.center = ((400),(120))
+            globals.gameDisplay.blit(TextSurf, TextRect)
+            TextSurf, TextRect = text.text_objects(( str(loser)+ " loses"), globals.mediumText, globals.bright_black)
+            TextRect.center = ((400),(250))
             globals.gameDisplay.blit(TextSurf, TextRect)
             pygame.display.update()
           
-            text.button("Back to Menu!",325,500,150,50,globals.red,globals.bright_red,menu.game_intro)
+            text.button("Back to Menu!",325,500,150,50,globals.red,globals.bright_red,backtomenu)
 
             mouse = pygame.mouse.get_pos()
             pygame.display.update()
             globals.clock.tick(60)
 
-
-
-        
+def backtomenu():
+    globals.Winfx.stop()
+    globals.MenuSoundfx.play(-1)  
+    menu.game_intro()

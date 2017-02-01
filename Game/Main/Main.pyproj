@@ -22,9 +22,6 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="cardfunctions.py">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="cards.py">
       <SubType>Code</SubType>
     </Compile>

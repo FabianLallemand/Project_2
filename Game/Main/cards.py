@@ -1,4 +1,4 @@
-import pygame,cardfunctions,game
+import pygame, game
 
 class Cards:
     def __init__(self, name, action):
