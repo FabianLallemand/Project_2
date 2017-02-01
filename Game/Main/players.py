@@ -7,6 +7,7 @@ class Player:
         self.aColor = acolor
         self.iColor = icolor
         self.Shots = 2
+        self.Cardscnt = 2
         self.Cards = []
         self.Cardimg = []
         self.Turn = False
