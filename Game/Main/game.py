@@ -11,15 +11,15 @@ class Game:
         self.ship2 = ships.Ship(globals.white, 4, -1,1,1,2,self.board,3,3,[],"Silver Whisper",True)
         self.ship3 = ships.Ship(globals.white, 4, -1,1,1,2,self.board,3,3,[],"Windsurf",True)
         self.ship4 = ships.Ship(globals.white, 4, -1,1,1,1,self.board,4,4,[],"Merapi",True)
-        self.ship5 = ships.Ship(globals.red, 4, -1,1,0,3,self.board,2,2,[],"Santa Bettina",True)
-        self.ship6 = ships.Ship(globals.red, 4, -1,1,1,2,self.board,3,3,[],"Sea Spirit",True)
-        self.ship7 = ships.Ship(globals.red, 4, -1,1,1,2,self.board,3,3,[],"Intensity",True)
-        self.ship8 = ships.Ship(globals.red, 4, -1,1,1,1,self.board,4,4,[],"Amadea",True)
+        self.ship5 = ships.Ship(globals.white, 4, -1,1,0,3,self.board,2,2,[],"Santa Bettina",True)
+        self.ship6 = ships.Ship(globals.white, 4, -1,1,1,2,self.board,3,3,[],"Sea Spirit",True)
+        self.ship7 = ships.Ship(globals.white, 4, -1,1,1,2,self.board,3,3,[],"Intensity",True)
+        self.ship8 = ships.Ship(globals.white, 4, -1,1,1,1,self.board,4,4,[],"Amadea",True)
 
 
         self.shiplist = [self.ship1,self.ship2,self.ship3,self.ship4,self.ship5,self.ship6,self.ship7,self.ship8]
         self.player1 = players.Player("Player1",globals.white,globals.white)
-        self.player2 = players.Player("Player2",globals.red,globals.bright_red)
+        self.player2 = players.Player("Player2",globals.white,globals.white)
         
         self.shipxylist1 = [] 
         self.curshiplist = []
@@ -508,6 +508,14 @@ class Game:
  
             globals.gameDisplay.blit(globals.boot4off, (self.ship4.PosX * 20,self.ship4.PosY * 20))
 
+            globals.gameDisplay.blit(globals.boot5off, (self.ship5.PosX * 20,self.ship5.PosY * 20))
+            
+            globals.gameDisplay.blit(globals.boot7off, (self.ship6.PosX * 20,self.ship6.PosY * 20))
+            
+            globals.gameDisplay.blit(globals.boot7off, (self.ship7.PosX * 20,self.ship7.PosY * 20))
+                      
+            globals.gameDisplay.blit(globals.boot8off, (self.ship8.PosX * 20,self.ship8.PosY * 20))
+            
             pygame.display.update()
             
             globals.clock.tick(60)
@@ -905,7 +913,26 @@ class Game:
                     globals.gameDisplay.blit(globals.boot4def, (self.ship4.PosX * 20,self.ship4.PosY * 20))
                 else:
                     globals.gameDisplay.blit(globals.boot4defdead, (self.ship4.PosX * 20,self.ship4.PosY * 20))
+            if self.ship5.Offensive:
+                globals.gameDisplay.blit(globals.boot5off, (self.ship5.PosX * 20,self.ship5.PosY * 20))
+            else:
+                globals.gameDisplay.blit(globals.boot5def, (self.ship5.PosX * 20,self.ship5.PosY * 20))
             
+            if self.ship6.Offensive:
+                globals.gameDisplay.blit(globals.boot7off, (self.ship6.PosX * 20,self.ship6.PosY * 20))
+            else:
+                globals.gameDisplay.blit(globals.boot7def, (self.ship6.PosX * 20,self.ship6.PosY * 20))
+            
+            if self.ship7.Offensive:
+                globals.gameDisplay.blit(globals.boot7off, (self.ship7.PosX * 20,self.ship7.PosY * 20))
+            else:
+                globals.gameDisplay.blit(globals.boot7def, (self.ship7.PosX * 20,self.ship7.PosY * 20))
+            
+            if self.ship8.Offensive:
+                globals.gameDisplay.blit(globals.boot8off, (self.ship8.PosX * 20,self.ship8.PosY * 20))
+            else:
+                globals.gameDisplay.blit(globals.boot8def, (self.ship8.PosX * 20,self.ship8.PosY * 20))
+ 
             pygame.display.update()
             globals.clock.tick(60)
 
