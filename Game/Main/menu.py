@@ -1,11 +1,10 @@
-import pygame, globals, text , game, webbrowser, credits, highscores
+import pygame, globals, text , game, webbrowser, credits, highscores, settings
 
 pygame.mixer.init()
 #game intro and button's
 def game_intro():
 
-    
-    
+  
     intro = True
 
     while intro:
@@ -32,7 +31,7 @@ def game_intro():
         text.button("Start Game!",75,450,100,50,globals.green,globals.bright_green,game.program)
         text.button("Highscores",125,525,100,50,globals.grey,globals.bright_orange,highscores.show)
         text.button("Game Rules",350,525,100,50,globals.grey,globals.bright_blue,globals.openrules)
-        text.button("Settings",575,525,100,50,globals.grey,globals.bright_grey,None)
+        text.button("Settings",575,525,100,50,globals.grey,globals.bright_grey,settings.settings)
         text.button("Quit Game!",625,450,100,50,globals.red,globals.bright_red,globals.quitgame)
         text.button("Credits",690,10,100,50,globals.grey,globals.bright_grey,credits.show)
 

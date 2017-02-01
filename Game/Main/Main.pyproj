@@ -44,6 +44,9 @@
     <Compile Include="players.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="settings.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="ships.py" />
     <Compile Include="text.py" />
     <Compile Include="playboard.py" />
