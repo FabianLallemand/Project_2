@@ -27,3 +27,4 @@ def settings():
         mouse = pygame.mouse.get_pos()
         pygame.display.update()
         globals.clock.tick(60)
+
