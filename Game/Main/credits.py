@@ -1,39 +1,42 @@
 import pygame, globals, text, menu, webbrowser
 
 def show():
+
     credits = True
+
     while credits:
         for event in pygame.event.get():
 
             if event.type == pygame.QUIT:
                 pygame.quit()
                 quit()
+
         mouse = pygame.mouse.get_pos()
-        globals.gameDisplay.fill(globals.black)
+        globals.gameDisplay.blit(globals.BackgroundBlur, (0,0))
 
         TextSurf, TextRect = text.text_objects("Credits", globals.largeText, globals.bright_grey)
         TextRect.center = ((400),(55)) 
         globals.gameDisplay.blit(TextSurf, TextRect)
 
-        TextSurf, TextRect = text.text_objects("The Development team of this game is very proud to present!", globals.smallText, globals.bright_grey)
+        TextSurf, TextRect = text.text_objects("The Development team of this game is very proud to present!", globals.smallText, globals.white)
         TextRect.center = ((400),(120))
         globals.gameDisplay.blit(TextSurf, TextRect)
-        TextSurf, TextRect = text.text_objects("The Development team of this game is very proud to present!", globals.smallText, globals.bright_grey)
+        TextSurf, TextRect = text.text_objects("The Development team of this game is very proud to present!", globals.smallText, globals.white)
         TextRect.center = ((400),(145))
         globals.gameDisplay.blit(TextSurf, TextRect)
-        TextSurf, TextRect = text.text_objects("The Development team of this game is very proud to present!", globals.smallText, globals.bright_grey)
+        TextSurf, TextRect = text.text_objects("The Development team of this game is very proud to present!", globals.smallText, globals.white)
         TextRect.center = ((400),(170))
         globals.gameDisplay.blit(TextSurf, TextRect)
-        TextSurf, TextRect = text.text_objects("The Development team of this game is very proud to present!", globals.smallText, globals.bright_grey)
+        TextSurf, TextRect = text.text_objects("The Development team of this game is very proud to present!", globals.smallText, globals.white)
         TextRect.center = ((400),(195))
         globals.gameDisplay.blit(TextSurf, TextRect)
-        TextSurf, TextRect = text.text_objects("The Development team of this game is very proud to present!", globals.smallText, globals.bright_grey)
+        TextSurf, TextRect = text.text_objects("The Development team of this game is very proud to present!", globals.smallText, globals.white)
         TextRect.center = ((400),(220))
         globals.gameDisplay.blit(TextSurf, TextRect)
-        TextSurf, TextRect = text.text_objects("The Development team of this game is very proud to present!", globals.smallText, globals.bright_grey)
+        TextSurf, TextRect = text.text_objects("The Development team of this game is very proud to present!", globals.smallText, globals.white)
         TextRect.center = ((400),(245))
         globals.gameDisplay.blit(TextSurf, TextRect)
-        TextSurf, TextRect = text.text_objects("The Development team of this game is very proud to present!", globals.smallText, globals.bright_grey)
+        TextSurf, TextRect = text.text_objects("The Development team of this game is very proud to present!", globals.smallText, globals.white)
         TextRect.center = ((400),(270))
         globals.gameDisplay.blit(TextSurf, TextRect)
 
