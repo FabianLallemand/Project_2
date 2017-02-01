@@ -3,7 +3,7 @@ PyGame Battleport
 Fabian Lallemand, Tim van Leeuwen, Bob Verkaik & Damian van Vuuren
 """
 
-import pygame, menu, globals, settings
+import pygame, menu, globals
 
 
 
@@ -11,7 +11,7 @@ pygame.init()
 pygame.display.set_caption('Battleport')
 
 pygame.mixer.init()
-settings.music("start")
+(globals.MenuSoundfx).play()
 
 menu.game_intro()
 pygame.quit()

@@ -1,13 +1,16 @@
-import pygame, globals, text , game, credits, highscores, settings
+import pygame, globals, text , game, webbrowser, credits, highscores, settings
 
 pygame.mixer.init()
 #game intro and button's
 def game_intro():
+
+  
     intro = True
 
     while intro:
         for event in pygame.event.get():
             click = pygame.mouse.get_pressed()
+
 
             if event.type == pygame.QUIT:
                 pygame.quit()
